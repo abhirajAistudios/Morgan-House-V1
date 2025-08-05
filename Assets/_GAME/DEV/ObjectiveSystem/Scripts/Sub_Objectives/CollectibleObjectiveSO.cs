@@ -11,7 +11,7 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
     {
         currentCount = 0;
         Debug.Log($"[Collectible Init] {objectiveName}");
-        GameService.Instance.EventService.OnDialPuzzleObjectCollected.AddListener(OnItemCollected);
+        GameService.Instance.EventService.OnPuzzleObjectCollected.AddListener(OnItemCollected);
     }
 
     public void OnItemCollected(string collectedItemId)

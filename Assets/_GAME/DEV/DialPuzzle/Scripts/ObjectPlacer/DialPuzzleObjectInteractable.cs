@@ -73,7 +73,7 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
 
         // Add item to inventory
         InventoryManager.Instance.AddItem(item);
-        GameService.Instance.EventService.OnDialPuzzleObjectCollected.InvokeEvent(ItemId);
+        GameService.Instance.EventService.OnPuzzleObjectCollected.InvokeEvent(ItemId);
         Debug.Log($"Picked up: {item.itemName}");
 
         hasBeenUsed = true;

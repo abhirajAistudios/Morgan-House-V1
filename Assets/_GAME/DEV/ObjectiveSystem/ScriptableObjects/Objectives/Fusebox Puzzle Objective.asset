@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 550508325445efc4a8075660662eea4e, type: 3}
+  m_Name: Fusebox Puzzle Objective
+  m_EditorClassIdentifier: 
+  objectiveName: 'Fusebox Puzzle '
+  dialogDisplay: Solve to fusebox puzzle
+  objective: 3
+  objectiveType: 0
+  objectiveState: 1
+  objectiveStatus: 0
+  hasUnlockables: 0
+  parentObjective: {fileID: 0}
+  unlockingObjective: {fileID: 0}
+  ChildObjectives:
+  - {fileID: 11400000, guid: d18c2627eeeea1b41a0ed499838bfac0, type: 2}
+  UnlockOnComplete: []
+  ItemId: FuseBox

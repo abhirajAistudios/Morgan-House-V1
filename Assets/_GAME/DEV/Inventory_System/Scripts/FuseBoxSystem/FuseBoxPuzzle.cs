@@ -21,6 +21,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public string requiredItemName = "Fuse";
     public Behaviour stopInteract;
 
+
     private int fusesInserted = 0;
     public bool isSolved = false;
 
@@ -143,6 +144,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public void MarkSolved()
     {
         isSolved = true;
+        GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(displayName);
         Debug.Log($"{name} (ID: {puzzleID}) has been marked solved and is no longer interactable.");
     }
 

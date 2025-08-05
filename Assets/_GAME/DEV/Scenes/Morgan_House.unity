@@ -261,7 +261,7 @@ MonoBehaviour:
   stopInteract: {fileID: 0}
   isSolved: 0
   puzzleID: e7cf81a7-4cc8-4008-8cfa-98103a7a16d2
-  displayName: Fuse Box
+  displayName: FuseBox
   description: Insert fuses to power the system.
   tooltip: Insert Fuse
   player: {fileID: 1797156413}
@@ -538,6 +538,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8343465268297892269, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
       propertyPath: m_Name
+      value: Fuse
+      objectReference: {fileID: 0}
+    - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
+      propertyPath: ItemName
       value: Fuse
       objectReference: {fileID: 0}
     - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
@@ -1072,6 +1076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   totalObjectives:
+  - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
   - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
 --- !u!4 &256880762
 Transform:
@@ -1990,6 +1995,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: e44f74b7c4703d1448785831b37dcbd7, type: 2}
+    - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
+      propertyPath: ItemName
+      value: Fuse
+      objectReference: {fileID: 0}
     - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
       propertyPath: uniqueID
       value: gg
@@ -4726,6 +4735,10 @@ PrefabInstance:
       propertyPath: data
       value: 
       objectReference: {fileID: 11400000, guid: e44f74b7c4703d1448785831b37dcbd7, type: 2}
+    - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
+      propertyPath: ItemName
+      value: Fuse
+      objectReference: {fileID: 0}
     - target: {fileID: 8473312424272220998, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
       propertyPath: uniqueID
       value: rr
@@ -10619,7 +10632,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4347642221027323968, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6003911679820989181, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
       propertyPath: m_Size

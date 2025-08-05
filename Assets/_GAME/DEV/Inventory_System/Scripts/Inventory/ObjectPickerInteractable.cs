@@ -9,6 +9,9 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
     [Header("Unique ID")]
     [SerializeField] private string uniqueID;
 
+
+   [SerializeField] private string ItemName;
+
     private bool isCollected = false;
 
     private void Awake()
@@ -27,6 +30,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         if (!IsInteractable || isCollected) return;
 
         InventoryManager.Instance.AddItem(item);
+        GameService.Instance.EventService.OnPuzzleObjectCollected.InvokeEvent(ItemName);
         Debug.Log($"Picked up: {item.itemName}");
 
         isCollected = true;

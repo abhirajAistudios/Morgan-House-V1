@@ -9,6 +9,8 @@ public class DoorInteraction : BaseInteractable
 {
     public DoorState currentState = DoorState.Locked;
 
+    public string itemname;
+
     [Tooltip("Name of the key item required to unlock the door.")]
     public string requiredKeyName = "Key";
 
@@ -145,6 +147,7 @@ public class DoorInteraction : BaseInteractable
         {
             case DoorState.Unlocked:
                 GameService.Instance.UIService.ShowMessage("The door is unlocked.", 1.5f);
+               
                 OpenDoorBasedOnPlayerSide();
                 break;
 
@@ -164,6 +167,8 @@ public class DoorInteraction : BaseInteractable
             InventoryItem item = InventoryManager.Instance.itemSlots[i];
             if (item != null && item.itemData.itemName == requiredKeyName)
             {
+
+                GameService.Instance.EventService.OnObjectUsed.InvokeEvent(itemname);
                 InventoryManager.Instance.UseItemByIndex(i);
                 currentState = DoorState.Unlocked;
                 PlaySound(soundUnlock);

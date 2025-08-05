@@ -26,7 +26,7 @@ public class SaveSystem : MonoBehaviour
 
     private void Update()
     {
-       if(Input.GetKeyDown(KeyCode.R))
+       if(Input.GetKeyDown(KeyCode.P))
         {
             RestartGame();
         }

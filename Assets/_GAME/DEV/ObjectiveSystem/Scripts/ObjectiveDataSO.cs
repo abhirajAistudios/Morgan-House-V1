@@ -35,8 +35,7 @@ public abstract class ObjectiveDataSO : ScriptableObject
         Debug.Log("Objective Complete " + objectiveName);
         ObjectiveManager.Instance.OnObjectiveCompleted(this);
 
-        // DO NOT auto-complete parent here!
-        // Instead, notify parent to check if it can now be completed.
+        // Notify parent that a child has completed
         if (parentObjective != null)
         {
             parentObjective.CheckReadyForCompletion();
@@ -47,11 +46,12 @@ public abstract class ObjectiveDataSO : ScriptableObject
     {
         if (AreChildrenComplete() && objectiveStatus != ObjectiveStatus.COMPLETED)
         {
-            Debug.Log($"[ObjectiveDataSO] {objectiveName} is now ready for completion.");
-            // At this point, you should trigger manual player input or auto-complete if desired
-            // Example: Show a UI prompt for the player to "Complete" this objective
+            Debug.Log($"[ObjectiveDataSO] {objectiveName} is now ready for manual completion.");
+            // TODO: Trigger UI prompt to inform player to manually complete this objective.
+            ObjectiveManager.Instance.objectiveUIManager.ShowParentCompletionPrompt(this);
         }
     }
+
 
     public abstract void Initialize();
 

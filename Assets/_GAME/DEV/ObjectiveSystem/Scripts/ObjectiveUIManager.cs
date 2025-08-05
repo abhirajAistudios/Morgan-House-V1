@@ -1,6 +1,3 @@
-// ===============================
-// ObjectiveUIManager.cs
-// ===============================
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +12,9 @@ public class ObjectiveUIManager : MonoBehaviour
 
     private ObjectiveManager objectiveManager;
     private List<TMP_Text> spawnedTexts = new();
+
+    // NEW: Track Objectives that had their UI destroyed
+    private HashSet<ObjectiveDataSO> uiRemovedObjectives = new();
 
     private void Awake()
     {
@@ -42,6 +42,10 @@ public class ObjectiveUIManager : MonoBehaviour
 
         foreach (var objective in allObjectives)
         {
+            // SKIP objectives whose UI has already been destroyed
+            if (uiRemovedObjectives.Contains(objective))
+                continue;
+
             if (IsChildObjective(objective)) continue;
 
             var parentText = CreateTextElement(objective, true);
@@ -73,7 +77,7 @@ public class ObjectiveUIManager : MonoBehaviour
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             if (isParent || parent == null)
-                StartCoroutine(DestroyAfterDelay(textObj, 3f));
+                StartCoroutine(DestroyAfterDelay(objective, textObj, 3f));
             else
                 StartCoroutine(WaitForParentThenDestroy(objective, parent, textObj));
         }
@@ -81,11 +85,14 @@ public class ObjectiveUIManager : MonoBehaviour
         return text;
     }
 
-    private IEnumerator DestroyAfterDelay(GameObject obj, float delay)
+    private IEnumerator DestroyAfterDelay(ObjectiveDataSO objective, GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
         if (obj != null)
+        {
             Destroy(obj);
+            uiRemovedObjectives.Add(objective);  // Mark as UI removed
+        }
     }
 
     private IEnumerator WaitForParentThenDestroy(ObjectiveDataSO child, ObjectiveDataSO parent, GameObject obj)
@@ -96,17 +103,30 @@ public class ObjectiveUIManager : MonoBehaviour
         yield return new WaitForSeconds(3f);
 
         if (obj != null)
+        {
             Destroy(obj);
+            uiRemovedObjectives.Add(child);  // Mark child as UI removed
+        }
     }
 
     private bool IsChildObjective(ObjectiveDataSO objective)
     {
-        foreach (var parent in objectiveManager.activeObjectives.Union(objectiveManager.completedObjectives))
+        foreach (var parent in objectiveManager.activeObjectives
+                     .Union(objectiveManager.completedObjectives))
         {
             if (parent.ChildObjectives != null && parent.ChildObjectives.Contains(objective))
                 return true;
         }
         return false;
+    }
+    
+    public void ShowParentCompletionPrompt(ObjectiveDataSO parentObjective)
+    {
+        Debug.Log($"[ObjectiveUI] Prompting completion for Parent Objective: {parentObjective.objectiveName}");
+
+        // Here, you can display a button or popup to the player
+        // Example: Show "Complete Objective" button, when clicked:
+        // parentObjective.CompleteObjective();
     }
 
     public void OnObjectiveUpdated()

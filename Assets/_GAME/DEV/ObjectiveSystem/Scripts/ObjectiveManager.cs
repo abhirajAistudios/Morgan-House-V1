@@ -49,9 +49,13 @@ public class ObjectiveManager : MonoBehaviour
 
         Debug.Log($"[ObjectiveManager] Completed: {completedObjective.objectiveName}");
 
+        // REMOVE from Active Objectives List
+        if (activeObjectives.Contains(completedObjective))
+            activeObjectives.Remove(completedObjective);
+
         completedObjectives.Add(completedObjective);
 
-        // Notify Parent Objective to check if it’s ready (but don’t auto-complete it)
+        // Notify Parent Objective to check if it's ready for completion
         if (completedObjective.parentObjective != null)
         {
             completedObjective.parentObjective.CheckReadyForCompletion();
@@ -75,6 +79,7 @@ public class ObjectiveManager : MonoBehaviour
         // Notify GameManager to progress
         GameManager.Instance.OnObjectiveCompleted(completedObjective);
     }
+
 
     public void ResetObjectives()
     {

@@ -17,7 +17,7 @@ MonoBehaviour:
   objective: 2
   objectiveType: 0
   objectiveState: 1
-  objectiveStatus: 0
+  objectiveStatus: 1
   hasUnlockables: 0
   parentObjective: {fileID: 0}
   unlockingObjective: {fileID: 0}

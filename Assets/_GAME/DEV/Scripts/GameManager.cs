@@ -1,6 +1,3 @@
-// ===============================
-// GameManager.cs
-// ===============================
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -31,6 +28,7 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        ResetAllObjectives();
         TryStartNextObjective();
     }
 
@@ -45,8 +43,24 @@ public class GameManager : MonoBehaviour
 
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
     {
+        // If it's a child, do NOT dequeue next. Just check if parent is ready.
+        if (completedObjective.parentObjective != null)
+        {
+            if (!completedObjective.parentObjective.AreChildrenComplete())
+            {
+                Debug.Log("[GameManager] Waiting for other child objectives to complete.");
+                return; // Wait for all children to finish.
+            }
+
+            // Parent is ready but WAIT for manual trigger to complete it.
+            completedObjective.parentObjective.CheckReadyForCompletion();
+            return; // Do NOT dequeue next objective here.
+        }
+
+        // If this is a parent and completed, proceed to next.
         TryStartNextObjective();
     }
+
 
     public void QueueObjective(ObjectiveDataSO objective)
     {
@@ -55,4 +69,27 @@ public class GameManager : MonoBehaviour
             objectiveQueue.Enqueue(objective);
         }
     }
+    
+    public void ResetAllObjectives()
+    {
+        foreach (var objective in totalObjectives)
+        {
+            ResetObjectiveRecursive(objective);
+        }
+        Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
+    }
+
+    private void ResetObjectiveRecursive(ObjectiveDataSO objective)
+    {
+        objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                ResetObjectiveRecursive(child);
+            }
+        }
+    }
+
 }

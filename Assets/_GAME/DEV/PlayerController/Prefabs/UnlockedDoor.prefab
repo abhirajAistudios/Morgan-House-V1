@@ -276,6 +276,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
   currentState: 1
+  itemname: Door
   requiredKeyName: Key
   doorHinge: {fileID: 1800977072116607452}
   audioSource: {fileID: 0}
@@ -289,7 +290,6 @@ MonoBehaviour:
   autoCloseEnabled: 1
   autoCloseDistance: 5
   canBeLockpicked: 1
-  lockpickSceneName: Lockpick
   transition: {fileID: 0}
 --- !u!82 &4946206172470417656
 AudioSource:

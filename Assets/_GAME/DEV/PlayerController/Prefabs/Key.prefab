@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 6040879858385109709}
   - component: {fileID: 8305226363128086688}
   - component: {fileID: 3386182434973339843}
+  - component: {fileID: 2955956078353598520}
   m_Layer: 6
   m_Name: Key
   m_TagString: Untagged
@@ -123,6 +124,18 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d4255fe534acab743a220fb309325ac8, type: 2}
   item: {fileID: 11400000, guid: d1d75114c6d2b664d9121b440908e32c, type: 2}
-  customTooltip: Key
-  displayName: Key
-  description: No description provided.
+  uniqueID: pl
+  ItemName: Key
+--- !u!114 &2955956078353598520
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5995896520113746243}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22beb0c4126566945abd5fcbc9ce74e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 11400000, guid: d1d75114c6d2b664d9121b440908e32c, type: 2}

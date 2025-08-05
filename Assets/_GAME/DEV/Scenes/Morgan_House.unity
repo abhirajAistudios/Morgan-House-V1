@@ -1077,9 +1077,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   totalObjectives:
   - {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
-  - {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
   - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
   - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
+  - {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
 --- !u!4 &256880762
 Transform:
   m_ObjectHideFlags: 0

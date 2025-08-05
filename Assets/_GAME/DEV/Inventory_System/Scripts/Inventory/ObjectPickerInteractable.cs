@@ -30,7 +30,8 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         if (!IsInteractable || isCollected) return;
 
         InventoryManager.Instance.AddItem(item);
-        GameService.Instance.EventService.OnPuzzleObjectCollected.InvokeEvent(ItemName);
+        //GameService.Instance.EventService.OnObjectCollected.InvokeEvent(ItemName);
+        ItemTracker.Instance.OnPlayerCollectedItem(ItemName);
         Debug.Log($"Picked up: {item.itemName}");
 
         isCollected = true;

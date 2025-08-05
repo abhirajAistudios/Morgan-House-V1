@@ -9,10 +9,22 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
 
     public override void Initialize()
     {
-        currentCount = 0;
-        Debug.Log($"[Collectible Init] {objectiveName}");
-        GameService.Instance.EventService.OnPuzzleObjectCollected.AddListener(OnItemCollected);
+        Debug.Log($"[CollectibleObjectiveSO] Initialized: {objectiveName}");
+
+        // Check if this item was already collected
+        if (ItemTracker.Instance.HasCollected(ItemId))
+        {
+            currentCount = RequiredCount;
+            Debug.Log($"[CollectibleObjectiveSO] Item {ItemId} was pre-collected.");
+            CompleteObjective();
+            return; // Already done
+        }
+
+        // Otherwise, listen for future collection events
+        GameService.Instance.EventService.OnObjectCollected.AddListener(OnItemCollected);
     }
+
+
 
     public void OnItemCollected(string collectedItemId)
     {

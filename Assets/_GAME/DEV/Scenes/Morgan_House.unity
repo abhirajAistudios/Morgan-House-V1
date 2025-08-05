@@ -10589,45 +10589,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2453117794877407185, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_AnchorMax.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2453117794877407185, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2453117794877407185, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2551615999203711746, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_Spacing
-      value: -190
-      objectReference: {fileID: 0}
-    - target: {fileID: 4347642221027323968, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 413.9627
-      objectReference: {fileID: 0}
     - target: {fileID: 4347642221027323968, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5652522928640512505, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_SizeDelta.x
-      value: 766.5665
-      objectReference: {fileID: 0}
-    - target: {fileID: 5652522928640512505, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 262.0971
-      objectReference: {fileID: 0}
-    - target: {fileID: 5652522928640512505, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 392.59943
-      objectReference: {fileID: 0}
-    - target: {fileID: 5652522928640512505, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -223.08936
+      value: 30.09843
       objectReference: {fileID: 0}
     - target: {fileID: 6003911679820989181, guid: fe96ac495b93e5f4797136a40e1bfef5, type: 3}
       propertyPath: m_Size

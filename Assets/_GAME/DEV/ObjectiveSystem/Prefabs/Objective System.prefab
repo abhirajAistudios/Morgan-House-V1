@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8153191627070567016}
   - component: {fileID: 7336789044731584156}
+  - component: {fileID: 1644046316418157307}
   m_Layer: 0
   m_Name: Objective Manager
   m_TagString: Untagged
@@ -47,6 +48,18 @@ MonoBehaviour:
   activeObjectives: []
   completedObjectives: []
   objectiveUIManager: {fileID: 5090686207773152160}
+--- !u!114 &1644046316418157307
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 907062613156365142}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4707292d73a10d148a162ed00d9df20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2084396650559477430
 GameObject:
   m_ObjectHideFlags: 0
@@ -116,8 +129,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 100.00068}
-  m_SizeDelta: {x: 0, y: 300}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 126.5552}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &2551615999203711746
 MonoBehaviour:
@@ -134,17 +147,17 @@ MonoBehaviour:
   m_Padding:
     m_Left: 25
     m_Right: 0
-    m_Top: 0
+    m_Top: 35
     m_Bottom: 0
   m_ChildAlignment: 0
-  m_Spacing: -190
+  m_Spacing: -150
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
   m_ChildControlWidth: 0
   m_ChildControlHeight: 0
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
-  m_ReverseArrangement: 0
+  m_ReverseArrangement: 1
 --- !u!1 &5566873935020786785
 GameObject:
   m_ObjectHideFlags: 0
@@ -340,8 +353,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6834218052645090038}
   m_HandleRect: {fileID: 8702447771488486178}
   m_Direction: 2
-  m_Value: -0.0000073242186
-  m_Size: 0.6620398
+  m_Value: 0.99999976
+  m_Size: 0.76217335
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -417,8 +430,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 278, y: -196}
-  m_SizeDelta: {x: 537.3676, y: 200}
+  m_AnchoredPosition: {x: 264.12704, y: -90}
+  m_SizeDelta: {x: 509.6217, y: 96.457}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3462932690107446910
 CanvasRenderer:
@@ -577,7 +590,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
   m_ReferenceResolution: {x: 800, y: 600}

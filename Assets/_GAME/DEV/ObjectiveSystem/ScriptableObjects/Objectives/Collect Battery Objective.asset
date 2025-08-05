@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 93ef342518ef4d24fbce05679980b1a1, type: 3}
+  m_Name: Collect Battery Objective
+  m_EditorClassIdentifier: 
+  objectiveName: Collect Battery
+  dialogDisplay: Collect The Batteries
+  objective: 1
+  objectiveType: 1
+  objectiveState: 1
+  objectiveStatus: 0
+  hasUnlockables: 0
+  parentObjective: {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
+  unlockingObjective: {fileID: 0}
+  ChildObjectives: []
+  UnlockOnComplete: []
+  ItemId: Battery
+  RequiredCount: 1

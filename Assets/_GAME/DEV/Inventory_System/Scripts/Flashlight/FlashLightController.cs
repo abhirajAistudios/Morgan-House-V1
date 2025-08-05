@@ -12,7 +12,8 @@ public class FlashlightController : MonoBehaviour
     public float batteryDrainPerSecond = 5f;
     public float currentBattery;
 
-    [Header("UI")]
+    [Header("UI")] 
+    public string ItemID;
     public Slider batterySlider;
     public Image sliderFill;
     public Color normalColor = Color.green;
@@ -64,7 +65,7 @@ public class FlashlightController : MonoBehaviour
 
         if (flashlight != null)
             flashlight.enabled = false; // ⚠️ Keep it off initially
-
+        
         isOn = false; // Must toggle manually
         batterySlider.value = 1f;
         batterySlider.gameObject.SetActive(true);
@@ -87,6 +88,7 @@ public class FlashlightController : MonoBehaviour
             currentBattery -= batteryDrainPerSecond * Time.deltaTime;
             currentBattery = Mathf.Clamp(currentBattery, 0, maxBattery);
 
+            GameService.Instance.EventService.OnObjectUsed.InvokeEvent(ItemID);
             flashlight.intensity = Mathf.Lerp(0f, 1.5f, currentBattery / maxBattery);
 
             if (currentBattery <= 0f)

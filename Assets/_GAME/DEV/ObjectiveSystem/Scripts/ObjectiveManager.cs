@@ -17,39 +17,47 @@ public class ObjectiveManager : MonoBehaviour
             Destroy(gameObject);
             return;
         }
-
         Instance = this;
-    }
-
-    private void Start()
-    {
-        objectiveUIManager = FindAnyObjectByType<ObjectiveUIManager>();
-
-        foreach (var objective in activeObjectives)
-        {
-            if (objective.objectiveState == ObjectiveState.UNLOCKED &&
-                objective.objectiveStatus == ObjectiveStatus.NOTSTARTED)
-            {
-                StartObjective(objective);
-            }
-        }
     }
 
     public void StartObjective(ObjectiveDataSO objective)
     {
+        if (objective == null || activeObjectives.Contains(objective) || objective.objectiveStatus == ObjectiveStatus.COMPLETED)
+            return;
+
+        Debug.Log($"[ObjectiveManager] Starting Objective: {objective.objectiveName}");
+
+        activeObjectives.Add(objective);
         objective.StartObjective();
+
+        // Auto-start Child Objectives
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                StartObjective(child);
+            }
+        }
+
         objectiveUIManager?.OnObjectiveUpdated();
     }
 
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
     {
+        if (completedObjective == null || completedObjectives.Contains(completedObjective))
+            return;
+
+        Debug.Log($"[ObjectiveManager] Completed: {completedObjective.objectiveName}");
 
         completedObjectives.Add(completedObjective);
 
-        // DO NOT remove from activeObjectives – we want to keep showing it
-        Debug.Log($"[ObjectiveManager] Completed: {completedObjective.objectiveName}");
+        // Notify Parent Objective to check if it’s ready (but don’t auto-complete it)
+        if (completedObjective.parentObjective != null)
+        {
+            completedObjective.parentObjective.CheckReadyForCompletion();
+        }
 
-        // Unlock new ones
+        // Handle Unlockables
         if (completedObjective.hasUnlockables)
         {
             foreach (var unlock in completedObjective.UnlockOnComplete)
@@ -57,12 +65,15 @@ public class ObjectiveManager : MonoBehaviour
                 if (unlock.objectiveState == ObjectiveState.LOCKED)
                 {
                     unlock.objectiveState = ObjectiveState.UNLOCKED;
-                    StartObjective(unlock);
+                    GameManager.Instance.QueueObjective(unlock);
                 }
             }
         }
 
         objectiveUIManager?.OnObjectiveUpdated();
+
+        // Notify GameManager to progress
+        GameManager.Instance.OnObjectiveCompleted(completedObjective);
     }
 
     public void ResetObjectives()

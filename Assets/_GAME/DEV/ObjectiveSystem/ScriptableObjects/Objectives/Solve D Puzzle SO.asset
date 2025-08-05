@@ -12,17 +12,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 550508325445efc4a8075660662eea4e, type: 3}
   m_Name: Solve D Puzzle SO
   m_EditorClassIdentifier: 
-  objectiveName: Dial Puzzle
+  objectiveName: Dial Puzzle 2
   dialogDisplay: Solve The Dial Puzzle
-  objective: 0
+  objective: 3
   objectiveType: 0
   objectiveState: 1
-  objectiveStatus: 2
+  objectiveStatus: 0
   hasUnlockables: 0
   parentObjective: {fileID: 0}
   unlockingObjective: {fileID: 0}
   ChildObjectives:
   - {fileID: 11400000, guid: ec911ad5a7eb5364f9081541a7b4f88b, type: 2}
   UnlockOnComplete:
-  - {fileID: 11400000, guid: 67c4d04816d1bde41b4009f60dc65d12, type: 2}
-  ItemId: Dial Puzzle
+  - {fileID: 0}
+  ItemId: Dial Puzzle 2

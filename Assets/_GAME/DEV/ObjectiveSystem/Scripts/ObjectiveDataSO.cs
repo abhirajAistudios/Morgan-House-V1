@@ -29,18 +29,34 @@ public abstract class ObjectiveDataSO : ScriptableObject
 
     public virtual void CompleteObjective()
     {
-        if (objectiveStatus == ObjectiveStatus.COMPLETED) return;
+        if (objectiveStatus == ObjectiveStatus.COMPLETED || objectiveState == ObjectiveState.LOCKED) return;
 
         objectiveStatus = ObjectiveStatus.COMPLETED;
-        Debug.Log($"[Objective Completed] {objectiveName}");
-
+        Debug.Log("Objective Complete " + objectiveName);
         ObjectiveManager.Instance.OnObjectiveCompleted(this);
+
+        // DO NOT auto-complete parent here!
+        // Instead, notify parent to check if it can now be completed.
+        if (parentObjective != null)
+        {
+            parentObjective.CheckReadyForCompletion();
+        }
+    }
+
+    public virtual void CheckReadyForCompletion()
+    {
+        if (AreChildrenComplete() && objectiveStatus != ObjectiveStatus.COMPLETED)
+        {
+            Debug.Log($"[ObjectiveDataSO] {objectiveName} is now ready for completion.");
+            // At this point, you should trigger manual player input or auto-complete if desired
+            // Example: Show a UI prompt for the player to "Complete" this objective
+        }
     }
 
     public abstract void Initialize();
 
     public bool AreChildrenComplete()
     {
-        return ChildObjectives == null || ChildObjectives.All(child => child.objectiveStatus == ObjectiveStatus.COMPLETED);
+        return ChildObjectives != null && ChildObjectives.All(child => child.objectiveStatus == ObjectiveStatus.COMPLETED);
     }
 }

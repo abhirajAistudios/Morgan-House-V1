@@ -5,13 +5,15 @@ public class SolvePuzzleObjectiveSO : ObjectiveDataSO
 {
     public string ItemId;
     
+    
+    public override void Initialize()
+    {
+        GameService.Instance.EventService.OnPuzzleSolved.AddListener(OnPuzzleSolved);
+    }
+    
     public void OnPuzzleSolved(string itemId)
     {
         if (itemId != ItemId || objectiveStatus != ObjectiveStatus.INPROGRESS) return;
         CompleteObjective();
-    }
-    public override void Initialize()
-    {
-        GameService.Instance.EventService.OnPuzzleSolved.AddListener(OnPuzzleSolved);
     }
 }

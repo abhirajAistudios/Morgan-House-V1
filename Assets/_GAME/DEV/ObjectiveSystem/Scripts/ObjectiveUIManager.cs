@@ -1,3 +1,6 @@
+// ===============================
+// ObjectiveUIManager.cs
+// ===============================
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,19 +70,12 @@ public class ObjectiveUIManager : MonoBehaviour
 
         text.text = prefix + objective.dialogDisplay;
 
-        // Schedule destroy only if completed
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             if (isParent || parent == null)
-            {
-                // Top-level or has no parent → destroy after delay
                 StartCoroutine(DestroyAfterDelay(textObj, 3f));
-            }
             else
-            {
-                // Is a child — wait until parent is also completed
                 StartCoroutine(WaitForParentThenDestroy(objective, parent, textObj));
-            }
         }
 
         return text;
@@ -94,11 +90,9 @@ public class ObjectiveUIManager : MonoBehaviour
 
     private IEnumerator WaitForParentThenDestroy(ObjectiveDataSO child, ObjectiveDataSO parent, GameObject obj)
     {
-        // Wait until parent is completed
         while (parent.objectiveStatus != ObjectiveStatus.COMPLETED)
             yield return null;
 
-        // Wait 3 seconds after parent is completed
         yield return new WaitForSeconds(3f);
 
         if (obj != null)
@@ -107,8 +101,7 @@ public class ObjectiveUIManager : MonoBehaviour
 
     private bool IsChildObjective(ObjectiveDataSO objective)
     {
-        foreach (var parent in objectiveManager.activeObjectives
-                     .Union(objectiveManager.completedObjectives))
+        foreach (var parent in objectiveManager.activeObjectives.Union(objectiveManager.completedObjectives))
         {
             if (parent.ChildObjectives != null && parent.ChildObjectives.Contains(objective))
                 return true;

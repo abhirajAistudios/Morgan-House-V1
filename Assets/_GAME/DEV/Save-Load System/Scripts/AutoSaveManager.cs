@@ -40,14 +40,15 @@ public class AutoSaveManager : MonoBehaviour
     }
 
     [System.Serializable]
+
    
     public class DoorStateData
     {
         public string doorID;
-        public bool isUnlocked;
+        public DoorState doorState;
         public bool isOpen;
-        public bool unlockedByLockpick;
     }
+
 
 
 

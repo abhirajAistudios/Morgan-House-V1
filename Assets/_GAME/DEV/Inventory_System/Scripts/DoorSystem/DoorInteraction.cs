@@ -224,7 +224,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
         AutoSaveManager.DoorStateData state = new AutoSaveManager.DoorStateData
         {
             doorID = uniqueID,
-            isUnlocked = (currentState == DoorState.Unlocked),
+            doorState = currentState,   // Save exact DoorState
             isOpen = isOpen
         };
         data.doors.Add(state);
@@ -236,20 +236,14 @@ public class DoorInteraction : BaseInteractable, ISaveable
         {
             if (state.doorID == uniqueID)
             {
-                if (state.isUnlocked)
-                {
-                    currentState = DoorState.Unlocked;
+                currentState = state.doorState;  // Restore the exact state (Locked, Unlocked, Jammed)
 
-                    if (state.isOpen)
-                        RestoreOpenState();
-                    else
-                        RestoreClosedState();
-                }
+                if (currentState == DoorState.Unlocked && state.isOpen)
+                    RestoreOpenState();
                 else
-                {
-                    currentState = DoorState.Locked;
                     RestoreClosedState();
-                }
+
+                Debug.Log($"Door {uniqueID} restored as {currentState}, open={state.isOpen}");
                 return;
             }
         }

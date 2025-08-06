@@ -80,6 +80,18 @@ public class ObjectiveManager : MonoBehaviour
         GameManager.Instance.OnObjectiveCompleted(completedObjective);
     }
 
+    public void OnObjectiveUpdatedImmediately()
+    {
+        // Go through all active objectives and check if they can be completed now
+        foreach (var objective in activeObjectives)
+        {
+            if (objective is CollectibleObjectiveSO collectibleObjective)
+            {
+                collectibleObjective.CheckImmediateCompletion();
+            }
+        }
+    }
+
 
     public void ResetObjectives()
     {

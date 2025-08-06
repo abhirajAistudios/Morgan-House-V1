@@ -1,10 +1,11 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class ItemTracker : MonoBehaviour
 {
     public static ItemTracker Instance;
 
-    private HashSet<string> collectedItemIds = new();
+    private Dictionary<string, int> collectedItemCounts;
 
     private void Awake()
     {
@@ -14,30 +15,36 @@ public class ItemTracker : MonoBehaviour
             return;
         }
         Instance = this;
+        
+        collectedItemCounts = new Dictionary<string, int>();
     }
 
     public void RegisterItemCollection(string itemId)
     {
-        collectedItemIds.Add(itemId);
-        Debug.Log($"[ItemTracker] Collected Item: {itemId}");
+        if (!collectedItemCounts.ContainsKey(itemId))
+            collectedItemCounts[itemId] = 0;
+
+        collectedItemCounts[itemId]++;
+        Debug.Log($"[ItemTracker] Collected Item: {itemId} (Total: {collectedItemCounts[itemId]})");
     }
 
     public bool HasCollected(string itemId)
     {
-        return collectedItemIds.Contains(itemId);
+        return collectedItemCounts.ContainsKey(itemId) && collectedItemCounts[itemId] > 0;
     }
-    
+
+    public int GetItemCount(string itemId)
+    {
+        if (collectedItemCounts.ContainsKey(itemId))
+            return collectedItemCounts[itemId];
+        return 0;
+    }
+
     public void OnPlayerCollectedItem(string itemId)
     {
         RegisterItemCollection(itemId);
 
-        // Additionally, check if any active objective cares about this
-        foreach (var objective in ObjectiveManager.Instance.activeObjectives)
-        {
-            if (objective is CollectibleObjectiveSO collectibleObjective)
-            {
-                collectibleObjective.OnItemCollected(itemId);
-            }
-        }
+        // Fire global event if needed
+        GameService.Instance.EventService.OnObjectCollected.InvokeEvent(itemId);
     }
 }

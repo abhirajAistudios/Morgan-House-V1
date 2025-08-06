@@ -9,16 +9,23 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
     [Header("Unique ID")]
     [SerializeField] private string uniqueID;
 
-
-   [SerializeField] private string ItemName;
+    [SerializeField] private string ItemName;
 
     private bool isCollected = false;
 
     private void Awake()
     {
-        // Auto-generate unique ID if not set
         if (string.IsNullOrEmpty(uniqueID))
             uniqueID = Guid.NewGuid().ToString();
+    }
+
+    private void Start()
+    {
+        if (ItemTracker.Instance.HasCollected(ItemName))
+        {
+            isCollected = true;
+            gameObject.SetActive(false);
+        }
     }
 
     public override string GetTooltipText() => "Pick up";
@@ -30,14 +37,18 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         if (!IsInteractable || isCollected) return;
 
         InventoryManager.Instance.AddItem(item);
-        //GameService.Instance.EventService.OnObjectCollected.InvokeEvent(ItemName);
-        ItemTracker.Instance.OnPlayerCollectedItem(ItemName);
-        Debug.Log($"Picked up: {item.itemName}");
+        ItemTracker.Instance.OnPlayerCollectedItem(ItemName); // Track collection FIRST
 
         isCollected = true;
         gameObject.SetActive(false);
+        // Force Objective to update NOW
+        ObjectiveManager.Instance.OnObjectiveUpdatedImmediately();
+
+        Debug.Log($"Picked up: {item.itemName}");
     }
 
+
+    
     // ISaveable Implementation
     public void SaveState(ref AutoSaveManager.SaveData data)
     {

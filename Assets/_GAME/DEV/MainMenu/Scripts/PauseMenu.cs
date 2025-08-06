@@ -9,14 +9,7 @@ public class PauseMenu : MonoBehaviour
     [SerializeField] private Button ExitToMainMenu;
     [SerializeField] private Image pausePanel;
 
-
-
     private bool isPaused = false;
-   
-
-
-
- 
 
     void Start()
     {

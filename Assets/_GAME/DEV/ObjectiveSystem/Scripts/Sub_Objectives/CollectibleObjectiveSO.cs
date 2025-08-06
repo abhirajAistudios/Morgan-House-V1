@@ -11,30 +11,43 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
     {
         Debug.Log($"[CollectibleObjectiveSO] Initialized: {objectiveName}");
 
-        // Check if this item was already collected
-        if (ItemTracker.Instance.HasCollected(ItemId))
-        {
-            currentCount = RequiredCount;
-            Debug.Log($"[CollectibleObjectiveSO] Item {ItemId} was pre-collected.");
-            CompleteObjective();
-            return; // Already done
-        }
+        // Recount how many were already collected (e.g., from save file)
+        currentCount = ItemTracker.Instance.GetItemCount(ItemId);
+        Debug.Log($"[CollectibleObjectiveSO] Pre-collected count: {currentCount}/{RequiredCount}");
 
-        // Otherwise, listen for future collection events
+        // Listen for future collections
         GameService.Instance.EventService.OnObjectCollected.AddListener(OnItemCollected);
+
+        // Check if already done
+        if (currentCount >= RequiredCount && AreChildrenComplete())
+        {
+            CompleteObjective();
+            GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
+        }
     }
-
-
 
     public void OnItemCollected(string collectedItemId)
     {
         if (objectiveStatus != ObjectiveStatus.INPROGRESS) return;
         if (collectedItemId != ItemId) return;
 
-        currentCount++;
+        currentCount = ItemTracker.Instance.GetItemCount(ItemId);
         Debug.Log($"[{objectiveName}] Collected {currentCount}/{RequiredCount}");
 
         if (currentCount >= RequiredCount && AreChildrenComplete())
+        {
+            CompleteObjective();
+            GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
+        }
+    }
+
+    public void CheckImmediateCompletion()
+    {
+        if (objectiveStatus != ObjectiveStatus.INPROGRESS) return;
+
+        int collectedCount = ItemTracker.Instance.GetItemCount(ItemId);
+
+        if (collectedCount >= RequiredCount && AreChildrenComplete())
         {
             CompleteObjective();
         }

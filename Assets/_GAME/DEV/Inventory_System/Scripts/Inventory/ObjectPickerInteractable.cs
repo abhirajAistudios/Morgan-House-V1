@@ -28,7 +28,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         }
     }
 
-    public override string GetTooltipText() => "Pick up";
+    public override string GetTooltipText() => ItemName;
     public override string DisplayName => item != null ? item.itemName : "Unknown";
     public override string Description => item != null ? item.description : "No description";
 

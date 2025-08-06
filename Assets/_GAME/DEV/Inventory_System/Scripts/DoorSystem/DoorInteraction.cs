@@ -131,9 +131,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
                 PlaySound(soundUnlock);
                 OpenDoorBasedOnPlayerSide();
 
-                FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(
-                    FindAnyObjectByType<PlayerController>()?.transform
-                );
+                
                 return;
             }
         }

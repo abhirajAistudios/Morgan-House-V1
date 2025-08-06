@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: Key
   m_EditorClassIdentifier: 
   itemName: Key
-  description: Used for unlocking doors.
   icon: {fileID: 21300000, guid: d8420ac0fbca1af4d8cf054024a1fa35, type: 3}
-  itemType: 2
+  type: 2
+  description: Used for unlocking doors.

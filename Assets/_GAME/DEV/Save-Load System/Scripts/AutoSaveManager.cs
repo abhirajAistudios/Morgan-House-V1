@@ -24,6 +24,8 @@ public class AutoSaveManager : MonoBehaviour
 
         public System.Collections.Generic.List<InventorySlotData> inventorySlots = new();
 
+        public List<DoorStateData> doors = new();
+
         public static AutoSaveManager Instance { get; private set; }
     }
 
@@ -36,6 +38,19 @@ public class AutoSaveManager : MonoBehaviour
         public string puzzleID;
         public bool isSolved;
     }
+
+    [System.Serializable]
+   
+    public class DoorStateData
+    {
+        public string doorID;
+        public bool isUnlocked;
+        public bool isOpen;
+        public bool unlockedByLockpick;
+    }
+
+
+
 
     [System.Serializable]
     public class InventorySlotData

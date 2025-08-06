@@ -38,8 +38,6 @@ public class ObjectiveManager : MonoBehaviour
                 StartObjective(child);
             }
         }
-
-        objectiveUIManager?.OnObjectiveUpdated();
     }
 
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
@@ -90,13 +88,5 @@ public class ObjectiveManager : MonoBehaviour
                 collectibleObjective.CheckImmediateCompletion();
             }
         }
-    }
-
-
-    public void ResetObjectives()
-    {
-        activeObjectives.Clear();
-        completedObjectives.Clear();
-        Debug.Log("[ObjectiveManager] Reset all objectives.");
     }
 }

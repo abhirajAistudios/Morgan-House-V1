@@ -93,6 +93,8 @@ public class ObjectiveUIManager : MonoBehaviour
             Destroy(obj);
             uiRemovedObjectives.Add(objective);  // Mark as UI removed
         }
+        
+        RefreshUI();
     }
 
     private IEnumerator WaitForParentThenDestroy(ObjectiveDataSO child, ObjectiveDataSO parent, GameObject obj)

@@ -9,6 +9,8 @@ public class GameManager : MonoBehaviour
     public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
 
     private Queue<ObjectiveDataSO> objectiveQueue = new();
+    
+    public bool isNewGame = false;
 
     private void Awake()
     {
@@ -24,11 +26,25 @@ public class GameManager : MonoBehaviour
             if (obj.objectiveState == ObjectiveState.UNLOCKED)
                 objectiveQueue.Enqueue(obj);
         }
+        
     }
 
     private void Start()
     {
-        ResetAllObjectives();
+        if (MainGameManager.Instance != null && MainGameManager.Instance.isNewGame)
+        {
+            ResetAllObjectives(); // Reset only if New Game
+            MainGameManager.Instance.isNewGame = false; // Reset the flag so it doesn't happen again on resume
+        }
+        else
+        {
+            // This is a Resume, restore active objectives
+            foreach (var obj in totalObjectives)
+            {
+                RestoreActiveObjectivesRecursive(obj);
+            }
+        }
+        
         TryStartNextObjective();
     }
 
@@ -88,6 +104,22 @@ public class GameManager : MonoBehaviour
             foreach (var child in objective.ChildObjectives)
             {
                 ResetObjectiveRecursive(child);
+            }
+        }
+    }
+    
+    private void RestoreActiveObjectivesRecursive(ObjectiveDataSO objective)
+    {
+        if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS && objective.objectiveState == ObjectiveState.UNLOCKED)
+        {
+            ObjectiveManager.Instance.activeObjectives.Add(objective);
+        }
+
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                RestoreActiveObjectivesRecursive(child);
             }
         }
     }

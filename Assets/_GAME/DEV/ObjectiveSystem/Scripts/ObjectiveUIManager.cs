@@ -14,15 +14,11 @@ public class ObjectiveUIManager : MonoBehaviour
     private List<TMP_Text> spawnedTexts = new();
 
     // NEW: Track Objectives that had their UI destroyed
-    private HashSet<ObjectiveDataSO> uiRemovedObjectives = new();
-
-    private void Awake()
-    {
-        objectiveManager = FindAnyObjectByType<ObjectiveManager>();
-    }
-
+    public HashSet<ObjectiveDataSO> uiRemovedObjectives = new();
+    
     private void Start()
     {
+        objectiveManager = FindAnyObjectByType<ObjectiveManager>();
         RefreshUI();
     }
 

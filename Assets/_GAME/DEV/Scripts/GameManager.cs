@@ -31,21 +31,17 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        if (MainGameManager.Instance != null && MainGameManager.Instance.isNewGame)
+        if (MainGameManager.Instance.isNewGame)
         {
-            ResetAllObjectives(); // Reset only if New Game
-            MainGameManager.Instance.isNewGame = false; // Reset the flag so it doesn't happen again on resume
+            ResetAllObjectives(); // only on new game
+            MainGameManager.Instance.isNewGame = false;
         }
         else
         {
-            // This is a Resume, restore active objectives
-            foreach (var obj in totalObjectives)
-            {
-                RestoreActiveObjectivesRecursive(obj);
-            }
+            RestoreObjectiveProgress(); // <-- Critical
         }
-        
-        TryStartNextObjective();
+
+        TryStartNextObjective(); // if needed
     }
 
     private void TryStartNextObjective()
@@ -108,19 +104,31 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void RestoreActiveObjectivesRecursive(ObjectiveDataSO objective)
+    private void RestoreObjectiveProgress()
     {
-        if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS && objective.objectiveState == ObjectiveState.UNLOCKED)
+        foreach (var obj in totalObjectives)
         {
-            ObjectiveManager.Instance.activeObjectives.Add(objective);
+            RestoreObjectiveRecursive(obj);
+        }
+    }
+    
+    private void RestoreObjectiveRecursive(ObjectiveDataSO objective)
+    {
+        if (objective == null) return;
+
+        if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
+        {
+            ObjectiveManager.Instance.StartObjective(objective);
+        }
+        else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
+        {
+            ObjectiveManager.Instance.completedObjectives.Add(objective);
+            ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
         }
 
-        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        foreach (var child in objective.ChildObjectives)
         {
-            foreach (var child in objective.ChildObjectives)
-            {
-                RestoreActiveObjectivesRecursive(child);
-            }
+            RestoreObjectiveRecursive(child);
         }
     }
 

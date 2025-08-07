@@ -20,14 +20,10 @@ public class MainGameManager : MonoBehaviour
     public void StartNewGame()
     {
         isNewGame = true;
-        // Load your game scene
-       // UnityEngine.SceneManagement.SceneManager.LoadScene("YourGameScene");
     }
 
     public void ResumeGame()
     {
         isNewGame = false;
-        // Load your game scene
-        //UnityEngine.SceneManagement.SceneManager.LoadScene("YourGameScene");
     }
 }

@@ -57,7 +57,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
             dialPuzzleInteractable.isSolved = false;
             EnableFirstDial();
 
-            // Use the puzzle’s own view switcher
+            // Use the puzzleï¿½s own view switcher
             if (dialPuzzleViewSwitcher != null)
                 dialPuzzleViewSwitcher.EnterPuzzleView();
             else
@@ -113,6 +113,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
         dialPuzzleInteractable?.MarkSolved();
         solvedText?.SetActive(true);
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(DialPuzzleName);
+        dialPuzzleViewSwitcher.ExitPuzzleView();
         CloseButton?.gameObject.SetActive(true);
 
         GameProgressTracker.ObjectivesCompleted++;

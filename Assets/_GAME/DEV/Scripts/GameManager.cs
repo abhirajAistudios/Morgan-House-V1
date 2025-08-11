@@ -10,7 +10,7 @@ public class GameManager : MonoBehaviour
 
     public Queue<ObjectiveDataSO> objectiveQueue = new();
     
-    public bool isNewGame = false;
+    [HideInInspector] public bool isNewGame = false;
 
     private void Awake()
     {
@@ -27,7 +27,6 @@ public class GameManager : MonoBehaviour
             if (obj.objectiveState == ObjectiveState.UNLOCKED)
                 objectiveQueue.Enqueue(obj);
         }
-        
     }
 
     public void TryStartNextObjective()

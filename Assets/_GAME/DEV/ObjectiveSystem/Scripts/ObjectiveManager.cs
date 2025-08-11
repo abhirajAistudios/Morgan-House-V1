@@ -32,7 +32,7 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            gameManager.RestoreObjectiveProgress(); // <-- Critical
+            gameManager.RestoreObjectiveProgress();
             return;
         }
         

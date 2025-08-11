@@ -8,9 +8,9 @@ public class GameManager : MonoBehaviour
     [Header("Master Objective Flow")]
     public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
 
-    private Queue<ObjectiveDataSO> objectiveQueue = new();
+    public Queue<ObjectiveDataSO> objectiveQueue = new();
     
-    public bool isNewGame = false;
+    [HideInInspector] public bool isNewGame = false;
 
     private void Awake()
     {
@@ -20,31 +20,16 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         foreach (var obj in totalObjectives)
         {
             if (obj.objectiveState == ObjectiveState.UNLOCKED)
                 objectiveQueue.Enqueue(obj);
         }
-        
     }
 
-    private void Start()
-    {
-        if (MainGameManager.Instance.isNewGame)
-        {
-            ResetAllObjectives(); // only on new game
-            MainGameManager.Instance.isNewGame = false;
-        }
-        else
-        {
-            RestoreObjectiveProgress(); // <-- Critical
-        }
-
-        TryStartNextObjective(); // if needed
-    }
-
-    private void TryStartNextObjective()
+    public void TryStartNextObjective()
     {
         if (objectiveQueue.Count > 0)
         {
@@ -104,8 +89,10 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void RestoreObjectiveProgress()
+    public void RestoreObjectiveProgress()
     {
+        objectiveQueue.Clear();
+        
         foreach (var obj in totalObjectives)
         {
             RestoreObjectiveRecursive(obj);
@@ -116,6 +103,14 @@ public class GameManager : MonoBehaviour
     {
         if (objective == null) return;
 
+        QueueObjective(objective);
+        
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
+        {
+            objective.objectiveStatus = ObjectiveStatus.INPROGRESS;
+        }
+        
         if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
         {
             ObjectiveManager.Instance.StartObjective(objective);
@@ -123,6 +118,7 @@ public class GameManager : MonoBehaviour
         else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             ObjectiveManager.Instance.completedObjectives.Add(objective);
+            objectiveQueue.Dequeue();
             ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
         }
 
@@ -132,4 +128,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartNewGame()
+    {
+        isNewGame = true;
+    }
+
+    public void ResumeGame()
+    {
+        isNewGame = false;
+    }
+    
 }

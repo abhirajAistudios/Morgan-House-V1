@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +10,8 @@ public class ObjectiveManager : MonoBehaviour
     public List<ObjectiveDataSO> completedObjectives = new();
 
     public ObjectiveUIManager objectiveUIManager;
+    
+    private GameManager gameManager = GameManager.Instance;
 
     private void Awake()
     {
@@ -18,6 +21,22 @@ public class ObjectiveManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+
+    private void Start()
+    {
+        if (gameManager.isNewGame)
+        {
+            gameManager.ResetAllObjectives(); // only on new game
+            gameManager.isNewGame = false;
+        }
+        else
+        {
+            gameManager.RestoreObjectiveProgress();
+            return;
+        }
+        
+        gameManager.TryStartNextObjective();
     }
 
     public void StartObjective(ObjectiveDataSO objective)
@@ -67,7 +86,7 @@ public class ObjectiveManager : MonoBehaviour
                 if (unlock.objectiveState == ObjectiveState.LOCKED)
                 {
                     unlock.objectiveState = ObjectiveState.UNLOCKED;
-                    GameManager.Instance.QueueObjective(unlock);
+                    gameManager.QueueObjective(unlock);
                 }
             }
         }
@@ -75,7 +94,7 @@ public class ObjectiveManager : MonoBehaviour
         objectiveUIManager?.OnObjectiveUpdated();
 
         // Notify GameManager to progress
-        GameManager.Instance.OnObjectiveCompleted(completedObjective);
+        gameManager.OnObjectiveCompleted(completedObjective);
     }
 
     public void OnObjectiveUpdatedImmediately()

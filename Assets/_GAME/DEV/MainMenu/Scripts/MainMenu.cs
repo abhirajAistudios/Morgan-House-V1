@@ -49,9 +49,8 @@ public class MainMenu : MonoBehaviour
         }
 
         // Load first scene (replace "GameScene" with your actual scene name)
-        MainGameManager.Instance.StartNewGame();
+        GameManager.Instance.StartNewGame();
         SceneManager.LoadScene("Morgan_House");
-//        GameManager.Instance.ResetAllObjectives();
     }
 
     private void ResumeGame()
@@ -59,7 +58,7 @@ public class MainMenu : MonoBehaviour
         if (File.Exists(savePath))
         {
             Debug.Log("Resuming game...");
-            MainGameManager.Instance.ResumeGame();
+            GameManager.Instance.ResumeGame();
             SceneManager.LoadScene("Morgan_House");
         }
         else

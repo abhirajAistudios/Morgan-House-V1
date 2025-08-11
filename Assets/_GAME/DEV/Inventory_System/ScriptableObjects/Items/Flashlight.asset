@@ -9,9 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: abfe16f46e292a542b815b8b0ea40230, type: 3}
-  m_Name: FlashLightData
+  m_Script: {fileID: 11500000, guid: 5f89738226878fa42bc1af0b2d4e1f80, type: 3}
+  m_Name: Flashlight
   m_EditorClassIdentifier: 
-  displayName: Flash Light
-  description: No description provided.
-  isReusable: 1
+  itemName: Flashlight
+  icon: {fileID: 0}
+  type: 0
+  description: 

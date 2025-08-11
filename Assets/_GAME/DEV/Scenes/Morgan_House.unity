@@ -1046,57 +1046,6 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 254563673}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!1 &256880760
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 256880762}
-  - component: {fileID: 256880761}
-  m_Layer: 0
-  m_Name: GameManager
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!114 &256880761
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256880760}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fad17c73cc4cdb74d9990da4297284c9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  totalObjectives:
-  - {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
-  - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
-  - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
-  - {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
-  - {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
-  isNewGame: 0
---- !u!4 &256880762
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 256880760}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.76562, y: 0, z: 34.04514}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &284424063 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4381130779979836464, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
@@ -8047,6 +7996,7 @@ MonoBehaviour:
   displayName: Flashlight
   description: A flashlight that helps you see in the dark.
   flashlightPrefab: {fileID: 7823434939261334369, guid: b85e970e18ec4284ea2f23bc412e55df, type: 3}
+  uniqueID: flashlight
 --- !u!136 &1813943779
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -8132,7 +8082,7 @@ Transform:
   m_GameObject: {fileID: 1813943777}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -3.3, y: 1.7, z: 41.85}
+  m_LocalPosition: {x: -3.31, y: 1.7, z: 41.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -10751,6 +10701,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Battery (1)
       objectReference: {fileID: 0}
+    - target: {fileID: 2227174579589556220, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
+      propertyPath: uniqueID
+      value: jjjj
+      objectReference: {fileID: 0}
     - target: {fileID: 7411407666614080326, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 7.3
@@ -12439,5 +12393,4 @@ SceneRoots:
   - {fileID: 2003685863}
   - {fileID: 1516538817}
   - {fileID: 4984957857825145594}
-  - {fileID: 256880762}
   - {fileID: 7324195023647098221}

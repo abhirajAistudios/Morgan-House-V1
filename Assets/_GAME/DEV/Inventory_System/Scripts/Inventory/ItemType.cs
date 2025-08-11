@@ -7,4 +7,5 @@ public enum ItemType
     Letter,
     Map,
     puzzle,
+    Flashlight
 }

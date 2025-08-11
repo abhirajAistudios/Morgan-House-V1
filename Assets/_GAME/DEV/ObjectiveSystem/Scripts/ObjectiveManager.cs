@@ -28,7 +28,8 @@ public class ObjectiveManager : MonoBehaviour
         if (gameManager.isNewGame)
         {
             gameManager.ResetAllObjectives(); // only on new game
-            gameManager.isNewGame = false;
+            Debug.Log("Reset all objectives");
+            gameManager.ResumeGame();
         }
         else
         {

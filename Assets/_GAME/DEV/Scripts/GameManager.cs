@@ -79,6 +79,7 @@ public class GameManager : MonoBehaviour
     private void ResetObjectiveRecursive(ObjectiveDataSO objective)
     {
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        objectiveQueue.Enqueue(objective);
 
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {

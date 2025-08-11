@@ -20,7 +20,6 @@ public class SaveSystem : MonoBehaviour
 
         if (saveSystem != null)
             saveSystem.LoadGame(player);
-
     }
 
 

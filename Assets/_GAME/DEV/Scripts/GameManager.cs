@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("Master Objective Flow")]
     public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
 
-    private Queue<ObjectiveDataSO> objectiveQueue = new();
+    public Queue<ObjectiveDataSO> objectiveQueue = new();
     
     public bool isNewGame = false;
 
@@ -108,6 +108,7 @@ public class GameManager : MonoBehaviour
     {
         foreach (var obj in totalObjectives)
         {
+            QueueObjective(obj);
             RestoreObjectiveRecursive(obj);
         }
     }
@@ -116,6 +117,12 @@ public class GameManager : MonoBehaviour
     {
         if (objective == null) return;
 
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
+        {
+            objective.objectiveStatus = ObjectiveStatus.INPROGRESS;
+        }
+        
         if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
         {
             ObjectiveManager.Instance.StartObjective(objective);
@@ -123,6 +130,7 @@ public class GameManager : MonoBehaviour
         else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             ObjectiveManager.Instance.completedObjectives.Add(objective);
+            objectiveQueue.Dequeue();
             ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
         }
 

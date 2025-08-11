@@ -20,6 +20,7 @@ public class GameManager : MonoBehaviour
             return;
         }
         Instance = this;
+        DontDestroyOnLoad(gameObject);
 
         foreach (var obj in totalObjectives)
         {
@@ -29,22 +30,7 @@ public class GameManager : MonoBehaviour
         
     }
 
-    private void Start()
-    {
-        if (MainGameManager.Instance.isNewGame)
-        {
-            ResetAllObjectives(); // only on new game
-            MainGameManager.Instance.isNewGame = false;
-        }
-        else
-        {
-            RestoreObjectiveProgress(); // <-- Critical
-        }
-
-        TryStartNextObjective(); // if needed
-    }
-
-    private void TryStartNextObjective()
+    public void TryStartNextObjective()
     {
         if (objectiveQueue.Count > 0)
         {
@@ -104,11 +90,12 @@ public class GameManager : MonoBehaviour
         }
     }
     
-    private void RestoreObjectiveProgress()
+    public void RestoreObjectiveProgress()
     {
+        objectiveQueue.Clear();
+        
         foreach (var obj in totalObjectives)
         {
-            QueueObjective(obj);
             RestoreObjectiveRecursive(obj);
         }
     }
@@ -117,6 +104,8 @@ public class GameManager : MonoBehaviour
     {
         if (objective == null) return;
 
+        QueueObjective(objective);
+        
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
             objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
         {
@@ -140,4 +129,14 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartNewGame()
+    {
+        isNewGame = true;
+    }
+
+    public void ResumeGame()
+    {
+        isNewGame = false;
+    }
+    
 }

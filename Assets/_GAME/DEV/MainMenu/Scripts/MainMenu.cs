@@ -51,7 +51,7 @@ public class MainMenu : MonoBehaviour
         // Load first scene (replace "GameScene" with your actual scene name)
         MainGameManager.Instance.StartNewGame();
         SceneManager.LoadScene("Morgan_House");
-        GameManager.Instance.ResetAllObjectives();
+//        GameManager.Instance.ResetAllObjectives();
     }
 
     private void ResumeGame()

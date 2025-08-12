@@ -10799,7 +10799,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2227174579589556220, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
       propertyPath: uniqueID
-      value: jjjj
+      value: Battery
       objectReference: {fileID: 0}
     - target: {fileID: 7411407666614080326, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
       propertyPath: m_LocalPosition.x

@@ -153,5 +153,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         onInventoryChangedCallback?.Invoke();
     }
 
+
+
     #endregion
 }

@@ -63,6 +63,13 @@ public class AutoSaveManager : MonoBehaviour
         public int slotIndex;
     }
 
+    [System.Serializable]
+public class FlashlightData
+{
+    public bool hasFlashlight;
+    public bool isOn;
+    public float currentBattery;
+}
     public SaveData CurrentData { get; private set; }
 
     public void Awake()

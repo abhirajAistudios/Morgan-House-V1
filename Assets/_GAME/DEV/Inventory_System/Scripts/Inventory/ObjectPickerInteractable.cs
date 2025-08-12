@@ -11,6 +11,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
 
     [SerializeField] private string ItemName;
 
+
     private bool isCollected = false;
 
     private void Awake()

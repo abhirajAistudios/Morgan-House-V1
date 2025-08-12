@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
             objectiveQueue.Remove(childObjective);
         }
     }
-    public void QueueObjective(ObjectiveDataSO objective)
+    public void QueueObjectiveInLast(ObjectiveDataSO objective)
     {
         if (!objectiveQueue.Contains(objective))
         {
@@ -84,7 +84,7 @@ public class GameManager : MonoBehaviour
     private void ResetObjectiveRecursive(ObjectiveDataSO objective)
     {
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-        QueueObjective(objective);
+        QueueObjectiveInLast(objective);
 
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {
@@ -120,7 +120,7 @@ public class GameManager : MonoBehaviour
     {
         if (objective == null) return;
 
-        QueueObjective(objective);
+        QueueObjectiveInLast(objective);
         
         
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
@@ -128,11 +128,6 @@ public class GameManager : MonoBehaviour
         {
             objective.objectiveStatus = ObjectiveStatus.INPROGRESS;
         }
-        
-        /*if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
-        {
-            ObjectiveManager.Instance.StartObjective(objective);
-        }*/
         
         else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
@@ -147,6 +142,38 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    public void StartNewObjective(List<ObjectiveDataSO> objectiveList)
+    {
+        foreach (var objective in objectiveList)
+        {
+            ResetObjective(objective);
+        }
+        
+        ObjectiveManager.Instance.activeObjectives.Clear();
+        TryStartNextObjective();
+        ObjectiveManager.Instance.objectiveUIManager.RefreshUI();
+    }
+
+    public void ResetObjective(ObjectiveDataSO objective)
+    {
+        if(objectiveQueue.Contains(objective)) return;
+        
+        objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                ResetObjective(child);
+            }
+        }
+
+        if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE ||
+            objective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
+        {
+            objectiveQueue.AddFirst(objective);
+        }
+    }
     public void StartNewGame()
     {
         isNewGame = true;

@@ -87,7 +87,7 @@ public class ObjectiveManager : MonoBehaviour
                 if (unlock.objectiveState == ObjectiveState.LOCKED)
                 {
                     unlock.objectiveState = ObjectiveState.UNLOCKED;
-                    gameManager.QueueObjective(unlock);
+                    gameManager.QueueObjectiveInLast(unlock);
                 }
             }
         }

@@ -75,8 +75,16 @@ public class FlashlightController : MonoBehaviour
     private void Update()
     {
         if (!hasFlashlight || flashlight == null) return;
-        UpdateFlashObjectPostion();
 
+        if (isOn)
+        {
+            UpdateFlashObjectPostion();
+        }
+        else
+        {
+            DisableFlashRig();
+        }
+        
         if (Input.GetKeyDown(toggleKey))
             ToggleFlashlight();
 
@@ -117,6 +125,8 @@ public class FlashlightController : MonoBehaviour
         {
             isOn = !isOn;
             flashlight.enabled = isOn;
+            
+            UpdateFlashObjectPostion();
 
             // ✅ Flashlight prefab should follow the isOn state
             if (flashLightPrefab != null)

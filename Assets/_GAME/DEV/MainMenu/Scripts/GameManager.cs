@@ -8,7 +8,7 @@ public class GameManager : MonoBehaviour
     [Header("Master Objective Flow")]
     public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
 
-    public Queue<ObjectiveDataSO> objectiveQueue = new();
+    public LinkedList<ObjectiveDataSO> objectiveQueue = new();
     
     [HideInInspector] public bool isNewGame = false;
 
@@ -21,19 +21,13 @@ public class GameManager : MonoBehaviour
         }
         Instance = this;
         DontDestroyOnLoad(gameObject);
-
-        foreach (var obj in totalObjectives)
-        {
-            if (obj.objectiveState == ObjectiveState.UNLOCKED)
-                objectiveQueue.Enqueue(obj);
-        }
     }
 
     public void TryStartNextObjective()
     {
         if (objectiveQueue.Count > 0)
         {
-            ObjectiveDataSO nextObjective = objectiveQueue.Dequeue();
+            ObjectiveDataSO nextObjective = objectiveQueue.First.Value;
             ObjectiveManager.Instance.StartObjective(nextObjective);
         }
     }
@@ -53,17 +47,26 @@ public class GameManager : MonoBehaviour
             completedObjective.parentObjective.CheckReadyForCompletion();
             return; // Do NOT dequeue next objective here.
         }
-
+        
+        RemoveChildObjective(completedObjective);
+        objectiveQueue.Remove(completedObjective);
+        
         // If this is a parent and completed, proceed to next.
         TryStartNextObjective();
     }
-
-
+    
+    public void RemoveChildObjective(ObjectiveDataSO parentObjective)
+    {
+        foreach (ObjectiveDataSO childObjective in parentObjective.ChildObjectives)
+        {
+            objectiveQueue.Remove(childObjective);
+        }
+    }
     public void QueueObjective(ObjectiveDataSO objective)
     {
         if (!objectiveQueue.Contains(objective))
         {
-            objectiveQueue.Enqueue(objective);
+            objectiveQueue.AddLast(objective);
         }
     }
     
@@ -79,7 +82,7 @@ public class GameManager : MonoBehaviour
     private void ResetObjectiveRecursive(ObjectiveDataSO objective)
     {
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-        objectiveQueue.Enqueue(objective);
+        QueueObjective(objective);
 
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {
@@ -106,6 +109,7 @@ public class GameManager : MonoBehaviour
 
         QueueObjective(objective);
         
+        
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
             objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
         {
@@ -119,7 +123,7 @@ public class GameManager : MonoBehaviour
         else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             ObjectiveManager.Instance.completedObjectives.Add(objective);
-            objectiveQueue.Dequeue();
+            objectiveQueue.Remove(objectiveQueue.Find(objective));
             ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
         }
 

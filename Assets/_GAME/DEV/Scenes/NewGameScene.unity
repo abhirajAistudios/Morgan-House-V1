@@ -2104,10 +2104,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad17c73cc4cdb74d9990da4297284c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalObjectives:
-  - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
-  - {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
-  - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
+  totalObjectives: []
   isNewGame: 0
 --- !u!4 &1690752870
 Transform:

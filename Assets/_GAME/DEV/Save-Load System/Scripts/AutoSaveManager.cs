@@ -18,11 +18,13 @@ public class AutoSaveManager : MonoBehaviour
         public string timestamp;
 
         // Store unique IDs of collected items
-        public System.Collections.Generic.List<string> collectedItems = new();
+        public List<string> collectedItems = new();
 
-        public System.Collections.Generic.List<PuzzleState> puzzles = new();
+        public List<PuzzleState> puzzles = new();
 
-        public System.Collections.Generic.List<InventorySlotData> inventorySlots = new();
+        public List<InventorySlotData> inventorySlots = new();
+        
+        public List<ObjectiveDataSO>  objectives = new();
 
         public List<DoorStateData> doors = new();
 
@@ -91,6 +93,15 @@ public class AutoSaveManager : MonoBehaviour
                 s.SaveState(ref data);
         }
 
+        foreach (var objective in ObjectiveManager.Instance.completedObjectives)
+        {
+            if (objective is ISaveable s)
+            {
+                s.SaveState(ref data);
+                Debug.Log("Saved objective: " + objective.dialogDisplay);
+            }
+        }
+
         CurrentData = data;
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, json);
@@ -121,7 +132,28 @@ public class AutoSaveManager : MonoBehaviour
             if (saveable is ISaveable s)
                 s.LoadState(data);
         }
-
+        
         Debug.Log("Game Loaded from save.");
+    }
+
+    public void LoadObjectives()
+    {
+        foreach (var objective in GameManager.Instance.totalObjectives)
+        {
+            if (objective is ISaveable s)
+            {
+                s.LoadState(CurrentData);
+                
+                if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+                { 
+                    foreach (var child in objective.ChildObjectives) 
+                    {
+                        child.LoadState(CurrentData);
+                    }
+            
+                }
+            }
+                
+        }
     }
 }

@@ -72,6 +72,8 @@ public class GameManager : MonoBehaviour
     
     public void ResetAllObjectives()
     {
+        objectiveQueue.Clear();
+        
         foreach (var objective in totalObjectives)
         {
             ResetObjectiveRecursive(objective);
@@ -97,9 +99,20 @@ public class GameManager : MonoBehaviour
     {
         objectiveQueue.Clear();
         
+        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        
+        saveSystem.LoadObjectives();
+        
         foreach (var obj in totalObjectives)
         {
             RestoreObjectiveRecursive(obj);
+        }
+        
+        TryStartNextObjective();
+        
+        foreach (var obj in objectiveQueue)
+        {
+            Debug.Log(obj.dialogDisplay);
         }
     }
     
@@ -116,10 +129,11 @@ public class GameManager : MonoBehaviour
             objective.objectiveStatus = ObjectiveStatus.INPROGRESS;
         }
         
-        if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
+        /*if (objective.objectiveStatus == ObjectiveStatus.INPROGRESS)
         {
             ObjectiveManager.Instance.StartObjective(objective);
-        }
+        }*/
+        
         else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             ObjectiveManager.Instance.completedObjectives.Add(objective);

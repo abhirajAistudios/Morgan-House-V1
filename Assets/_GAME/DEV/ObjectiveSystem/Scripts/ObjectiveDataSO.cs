@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public abstract class ObjectiveDataSO : ScriptableObject
+public abstract class ObjectiveDataSO : ScriptableObject , ISaveable
 {
     public string objectiveName;
     public string dialogDisplay;
@@ -58,5 +58,29 @@ public abstract class ObjectiveDataSO : ScriptableObject
     public bool AreChildrenComplete()
     {
         return ChildObjectives != null && ChildObjectives.All(child => child.objectiveStatus == ObjectiveStatus.COMPLETED);
+    }
+
+    public void SaveState(ref AutoSaveManager.SaveData data)
+    {
+        if (objectiveStatus == ObjectiveStatus.COMPLETED && !data.objectives.Contains(this))
+        {
+            data.objectives.Add(this);
+            Debug.Log("Saved with ID: " + dialogDisplay);
+        }
+    }
+
+    public void LoadState(AutoSaveManager.SaveData data)
+    {
+        if (data.objectives.Contains(this))
+        {
+            objectiveStatus = ObjectiveStatus.COMPLETED;
+            Debug.Log("Restored with ID: " + dialogDisplay);
+        }
+        else if(objectiveType == ObjectiveType.PARENTOBJECTIVE)
+        {
+            objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        }
+        
+        
     }
 }

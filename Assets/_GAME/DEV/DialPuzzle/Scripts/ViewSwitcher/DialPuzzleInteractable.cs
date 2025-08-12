@@ -9,7 +9,7 @@ public class DialPuzzleInteractable : BaseInteractable
     [SerializeField] private string tooltip = "Enter Puzzle";
     [SerializeField] private string displayName = "Puzzle Base";
     [TextArea][SerializeField] private string description = "Interact to enter the puzzle view.";
-    private DialPuzzleViewSwitcher viewSwitcher;
+    private DialPuzzleController controller;
 
     public bool isSolved = false;
 
@@ -19,8 +19,8 @@ public class DialPuzzleInteractable : BaseInteractable
 
     private void Awake()
     {
-        if (viewSwitcher == null)
-            viewSwitcher = GetComponentInChildren<DialPuzzleViewSwitcher>();
+        if (controller == null)
+            controller = GetComponentInParent<DialPuzzleController>();
     }
 
     public override void OnFocus()
@@ -41,9 +41,9 @@ public class DialPuzzleInteractable : BaseInteractable
 
         Debug.Log($"[PuzzleInteractable] Interacted: {name}");
 
-        if (viewSwitcher != null)
+        if (controller != null)
         {
-            viewSwitcher.EnterPuzzleView();
+            controller.dialPuzzleViewSwitcher.EnterPuzzleView();
         }
         else
         {

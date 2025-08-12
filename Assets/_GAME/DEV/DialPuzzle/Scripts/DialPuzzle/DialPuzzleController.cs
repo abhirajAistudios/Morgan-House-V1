@@ -19,7 +19,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     private bool isSolved = false;
 
     private DialPuzzleInteractable dialPuzzleInteractable;
-    [SerializeField] private DialPuzzleViewSwitcher dialPuzzleViewSwitcher;
+    public DialPuzzleViewSwitcher dialPuzzleViewSwitcher;
 
 
     [Header("Unique Save ID")]

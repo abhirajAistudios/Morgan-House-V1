@@ -14,6 +14,10 @@ public class SolvePuzzleObjectiveSO : ObjectiveDataSO
     public void OnPuzzleSolved(string itemId)
     {
         if (itemId != ItemId || objectiveStatus != ObjectiveStatus.INPROGRESS) return;
-        CompleteObjective();
+
+        if(AreChildrenComplete()  && objectiveStatus != ObjectiveStatus.COMPLETED)
+        {
+            CompleteObjective();
+        }
     }
 }

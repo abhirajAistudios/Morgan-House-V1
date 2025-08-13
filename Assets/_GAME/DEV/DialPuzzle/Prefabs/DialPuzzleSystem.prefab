@@ -2287,7 +2287,7 @@ Transform:
   m_GameObject: {fileID: 7886388519165177427}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 3.12, z: -0.91}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2536,20 +2536,28 @@ PrefabInstance:
       value: Dial Puzzle Object
       objectReference: {fileID: 0}
     - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: tooltip
+      value: DialPuzzleObjects
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: uniqueID
       value: 1cfac8bd-7f84-4128-ab89-56718788c2cb
       objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: description
+      value: Used to Solve Dial Puzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5324124
+      value: 1.53
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.713996
+      value: 7.94
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.209457
+      value: 11.82
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2676,20 +2684,31 @@ PrefabInstance:
       value: Dial Puzzle Object
       objectReference: {fileID: 0}
     - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: tooltip
+      value: DialPuzzleObjects
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: uniqueID
       value: d522c83f-f8af-4ab8-9ef3-8c776929be6e
       objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: description
+      value: 'Used to Solve Dial Puzzle
+
+
+'
+      objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.9320055
+      value: 1.44
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.445669
+      value: 4.03
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.364615
+      value: 11.5
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2886,20 +2905,28 @@ PrefabInstance:
       value: Dial Puzzle Object
       objectReference: {fileID: 0}
     - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: tooltip
+      value: DialPuzzleObjects
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: uniqueID
       value: 13fad847-a77d-40a1-aff1-9fb1fc237971
       objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: description
+      value: Used to Solve Dial Puzzle
+      objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.3315983
+      value: 1.6
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.1938095
+      value: 5.97
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 12.510207
+      value: 11.58
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalRotation.w
@@ -2957,11 +2984,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: tooltip
-      value: D.Puzzle
+      value: DialPuzzleObjects
       objectReference: {fileID: 0}
     - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: uniqueID
       value: e47be422-3b9c-4afe-a638-74bb954d6a61
+      objectReference: {fileID: 0}
+    - target: {fileID: 2851815077426212888, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
+      propertyPath: description
+      value: Used to Solve Dial Puzzle
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2969,11 +3000,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 12.67
+      value: 2.16
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 16.47
+      value: 11.58
       objectReference: {fileID: 0}
     - target: {fileID: 6370011507392736621, guid: 08a3473ed5babfb47b3d63c94465e166, type: 3}
       propertyPath: m_LocalRotation.w

@@ -35,8 +35,9 @@ public class GameManager : MonoBehaviour
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
     {
         // If it's a child, do NOT dequeue next. Just check if parent is ready.
-        if (completedObjective.parentObjective != null)
+        if (completedObjective.parentObjective != null || completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
         {
+            Debug.Log("Objective Completed" +  completedObjective.dialogDisplay);
             if (!completedObjective.parentObjective.AreChildrenComplete())
             {
                 Debug.Log("[GameManager] Waiting for other child objectives to complete.");
@@ -44,7 +45,15 @@ public class GameManager : MonoBehaviour
             }
 
             // Parent is ready but WAIT for manual trigger to complete it.
-            completedObjective.parentObjective.CheckReadyForCompletion();
+            if (completedObjective.parentObjective.AreChildrenComplete())
+            {
+                completedObjective.parentObjective.CheckReadyForCompletion();
+            }
+            else if(completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
+            {
+                completedObjective.parentObjective.CheckReadyForCompletion();
+            }
+            
             return; // Do NOT dequeue next objective here.
         }
         
@@ -67,6 +76,14 @@ public class GameManager : MonoBehaviour
         if (!objectiveQueue.Contains(objective))
         {
             objectiveQueue.AddLast(objective);
+        }
+    }
+
+    public void QueueObjectiveInFirst(ObjectiveDataSO objective)
+    {
+        if (!objectiveQueue.Contains(objective))
+        {
+            objectiveQueue.AddFirst(objective);
         }
     }
     
@@ -109,11 +126,6 @@ public class GameManager : MonoBehaviour
         }
         
         TryStartNextObjective();
-        
-        foreach (var obj in objectiveQueue)
-        {
-            Debug.Log(obj.dialogDisplay);
-        }
     }
     
     private void RestoreObjectiveRecursive(ObjectiveDataSO objective)
@@ -156,9 +168,27 @@ public class GameManager : MonoBehaviour
 
     public void ResetObjective(ObjectiveDataSO objective)
     {
+        if(ObjectiveManager.Instance.completedObjectives.Contains(objective)) return;
+        
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED && objective.parentObjective.objectiveStatus != ObjectiveStatus.INPROGRESS)
+        {
+            objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        }
+        
         if(objectiveQueue.Contains(objective)) return;
+        //if(objectiveQueue.Contains(objective) && objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.objectiveType == ObjectiveType.CHILDOBJECTIVE) return;
         
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+
+        if (objective.hasUnlockables)
+        {
+            foreach (var objectives in objective.UnlockOnComplete)
+            {
+                objectives.objectiveState = ObjectiveState.LOCKED;
+                objectives.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+            }
+        }
         
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {

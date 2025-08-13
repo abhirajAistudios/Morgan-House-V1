@@ -36,7 +36,7 @@ public abstract class ObjectiveDataSO : ScriptableObject , ISaveable
         ObjectiveManager.Instance.OnObjectiveCompleted(this);
 
         // Notify parent that a child has completed
-        if (parentObjective != null)
+        if (parentObjective != null || objectiveType == ObjectiveType.NORMALOBJECTIVE)
         {
             parentObjective.CheckReadyForCompletion();
         }

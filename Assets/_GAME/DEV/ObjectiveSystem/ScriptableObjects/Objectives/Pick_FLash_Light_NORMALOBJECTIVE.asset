@@ -10,19 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 93ef342518ef4d24fbce05679980b1a1, type: 3}
-  m_Name: Collect Battery Objective
+  m_Name: Pick_FLash_Light_NORMALOBJECTIVE
   m_EditorClassIdentifier: 
-  objectiveName: Collect Battery
-  dialogDisplay: Collect The Batteries
+  objectiveName: Pick FLash Light
+  dialogDisplay: Pick FLash Light
   objective: 1
   objectiveType: 2
-  objectiveState: 0
+  objectiveState: 1
   objectiveStatus: 0
-  hasUnlockables: 1
-  parentObjective: {fileID: 11400000, guid: 9f0f869d133590540bc30e6c9c813b8a, type: 2}
-  unlockingObjective: {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
+  hasUnlockables: 0
+  parentObjective: {fileID: 0}
+  unlockingObjective: {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
   ChildObjectives: []
-  UnlockOnComplete:
-  - {fileID: 11400000, guid: 71ea35635bb6bf64db8cd8c28f2b8ed8, type: 2}
-  ItemId: Battery
+  UnlockOnComplete: []
+  ItemId: Flashlight
   RequiredCount: 1

@@ -17,11 +17,12 @@ MonoBehaviour:
   objective: 3
   objectiveType: 0
   objectiveState: 1
-  objectiveStatus: 0
-  hasUnlockables: 0
+  objectiveStatus: 2
+  hasUnlockables: 1
   parentObjective: {fileID: 0}
-  unlockingObjective: {fileID: 0}
+  unlockingObjective: {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
   ChildObjectives:
   - {fileID: 11400000, guid: d18c2627eeeea1b41a0ed499838bfac0, type: 2}
-  UnlockOnComplete: []
+  UnlockOnComplete:
+  - {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
   ItemId: FuseBox

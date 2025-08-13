@@ -24,6 +24,8 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
             CompleteObjective();
             GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
         }
+        
+        Debug.Log(AreChildrenComplete());
     }
 
     public void OnItemCollected(string collectedItemId)

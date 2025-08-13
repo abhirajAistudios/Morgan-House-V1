@@ -55,6 +55,7 @@ public class ObjectiveManager : MonoBehaviour
         {
             foreach (var child in objective.ChildObjectives)
             {
+                child.objectiveStatus = ObjectiveStatus.NOTSTARTED;
                 StartObjective(child);
             }
         }
@@ -74,7 +75,7 @@ public class ObjectiveManager : MonoBehaviour
         completedObjectives.Add(completedObjective);
 
         // Notify Parent Objective to check if it's ready for completion
-        if (completedObjective.parentObjective != null)
+        if (completedObjective.parentObjective != null ||   completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
         {
             completedObjective.parentObjective.CheckReadyForCompletion();
         }
@@ -84,11 +85,12 @@ public class ObjectiveManager : MonoBehaviour
         {
             foreach (var unlock in completedObjective.UnlockOnComplete)
             {
-                if (unlock.objectiveState == ObjectiveState.LOCKED)
-                {
+                //if (unlock.objectiveState == ObjectiveState.LOCKED)
+                //{
                     unlock.objectiveState = ObjectiveState.UNLOCKED;
+                    unlock.objectiveStatus = ObjectiveStatus.NOTSTARTED;
                     gameManager.QueueObjectiveInLast(unlock);
-                }
+                //}
             }
         }
 

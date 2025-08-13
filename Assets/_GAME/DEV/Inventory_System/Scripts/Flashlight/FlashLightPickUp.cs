@@ -38,10 +38,13 @@ public class FlashlightPickup : BaseInteractable, ISaveable
     public override void OnInteract()
     {
         if (isPicked) return;
-
+        base.OnInteract();
+        
         // 1. Enable flashlight system
         FlashlightController.Instance.EnableFlashlight();
-
+        
+        ItemTracker.Instance.OnPlayerCollectedItem(displayName);
+        ObjectiveManager.Instance.OnObjectiveUpdatedImmediately();
         // 2. Instantiate light under the camera
         GameObject cam = Camera.main.gameObject;
         GameObject lightObj = Instantiate(flashlightPrefab, cam.transform);

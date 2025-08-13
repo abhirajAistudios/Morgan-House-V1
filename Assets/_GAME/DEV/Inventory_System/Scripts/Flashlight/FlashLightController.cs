@@ -3,7 +3,7 @@ using UnityEngine;
 using UnityEngine.Animations.Rigging;
 using UnityEngine.UI;
 
-public class FlashlightController : MonoBehaviour
+public class FlashlightController : MonoBehaviour, ISaveable
 {
     public static FlashlightController Instance;
 
@@ -12,7 +12,7 @@ public class FlashlightController : MonoBehaviour
     public float batteryDrainPerSecond = 5f;
     public float currentBattery;
 
-    [Header("UI")] 
+    [Header("UI")]
     public string ItemID;
     public Slider batterySlider;
     public Image sliderFill;
@@ -34,11 +34,10 @@ public class FlashlightController : MonoBehaviour
     [Header("Battery Notification UI")]
     public TextMeshProUGUI batteryStatusText;
 
-    //Animation Variables
-    [SerializeField]
-    private Animator playerAnimator;
-    [SerializeField]
-    private RigBuilder FlashlightRig;
+    [Header("Animation Variables")]
+    [SerializeField] private Animator playerAnimator;
+    [SerializeField] private RigBuilder FlashlightRig;
+
     private void Awake()
     {
         Instance = this;
@@ -53,8 +52,6 @@ public class FlashlightController : MonoBehaviour
         flashlight.enabled = false;
         isOn = false;
         flashLightPrefab.SetActive(false);
-
-
     }
 
     public void EnableFlashlight()
@@ -64,9 +61,9 @@ public class FlashlightController : MonoBehaviour
         requiresBattery = false;
 
         if (flashlight != null)
-            flashlight.enabled = false; // ⚠️ Keep it off initially
-        
-        isOn = false; // Must toggle manually
+            flashlight.enabled = false;
+
+        isOn = false;
         batterySlider.value = 1f;
         batterySlider.gameObject.SetActive(true);
         flashLightPrefab.SetActive(true);
@@ -79,20 +76,19 @@ public class FlashlightController : MonoBehaviour
         if (isOn)
         {
             UpdateFlashObjectPostion();
+
         }
-        else
-        {
-            DisableFlashRig();
-        }
-        
+            
+        else DisableFlashRig();
+
         if (Input.GetKeyDown(toggleKey))
             ToggleFlashlight();
 
         if (Input.GetKeyDown(reloadKey))
             TryRechargeBattery();
+
         if (isOn)
         {
-            // 🪫 Drain battery ONLY when flashlight is ON
             currentBattery -= batteryDrainPerSecond * Time.deltaTime;
             currentBattery = Mathf.Clamp(currentBattery, 0, maxBattery);
 
@@ -104,11 +100,9 @@ public class FlashlightController : MonoBehaviour
                 flashlight.enabled = false;
                 isOn = false;
                 requiresBattery = true;
+                flashLightPrefab.SetActive(false);
                 Debug.Log("Battery depleted. Press R to recharge.");
-
-                flashLightPrefab.SetActive(false); //  Already good
             }
-
         }
         UpdateUI();
     }
@@ -117,7 +111,7 @@ public class FlashlightController : MonoBehaviour
     {
         if (requiresBattery)
         {
-            Debug.Log(" Battery empty! Press R to use a battery.");
+            Debug.Log("Battery empty! Press R to use a battery.");
             return;
         }
 
@@ -125,21 +119,17 @@ public class FlashlightController : MonoBehaviour
         {
             isOn = !isOn;
             flashlight.enabled = isOn;
-            
             UpdateFlashObjectPostion();
 
-            // ✅ Flashlight prefab should follow the isOn state
             if (flashLightPrefab != null)
                 flashLightPrefab.SetActive(isOn);
         }
     }
 
-
     void TryRechargeBattery()
     {
-        if (requiresBattery==false)
+        if (!requiresBattery)
         {
-            Debug.Log(" Battery not depleted yet!");
             ShowBatteryStatus("Battery not depleted yet!", Color.yellow);
             return;
         }
@@ -153,20 +143,17 @@ public class FlashlightController : MonoBehaviour
                 currentBattery = maxBattery;
                 isOn = false;
                 requiresBattery = false;
+
                 if (flashlight != null)
                     flashlight.enabled = false;
 
-                Debug.Log(" Flashlight recharged. Press 1 to turn on.");
                 ShowBatteryStatus("Flashlight recharged!", Color.green);
                 return;
             }
         }
 
-        Debug.Log(" No batteries in inventory.");
         ShowBatteryStatus("No batteries in inventory!", Color.red);
     }
-
-
 
     void UpdateUI()
     {
@@ -177,19 +164,16 @@ public class FlashlightController : MonoBehaviour
         sliderFill.color = currentBattery <= 20f ? lowBatteryColor : normalColor;
     }
 
-
     void ShowBatteryStatus(string message, Color color)
     {
-        Debug.Log("rECHARGE1");
         if (batteryStatusText == null) return;
-        Debug.Log("rECHARGE2");
 
         batteryStatusText.text = message;
         batteryStatusText.color = color;
         batteryStatusText.gameObject.SetActive(true);
 
-        CancelInvoke(nameof(HideBatteryStatus)); // Cancel previous hide if any
-        Invoke(nameof(HideBatteryStatus), 2f);   // Hide after 2 seconds
+        CancelInvoke(nameof(HideBatteryStatus));
+        Invoke(nameof(HideBatteryStatus), 2f);
     }
 
     void HideBatteryStatus()
@@ -200,13 +184,12 @@ public class FlashlightController : MonoBehaviour
 
     void UpdateFlashObjectPostion()
     {
-        // Set the rig weight if the player has the flashlight (regardless of whether it's ON or OFF)
         if (hasFlashlight && !isCrouching)
         {
             FlashlightRig.layers[0].active = true;
             FlashlightRig.layers[1].active = false;
         }
-        else if(hasFlashlight && isCrouching)
+        else if (hasFlashlight && isCrouching)
         {
             FlashlightRig.layers[0].active = false;
             FlashlightRig.layers[1].active = true;
@@ -221,6 +204,52 @@ public class FlashlightController : MonoBehaviour
     {
         FlashlightRig.layers[0].active = false;
         FlashlightRig.layers[1].active = false;
+    }
+
+    // ------------------ ISaveable Implementation ------------------
+    public void SaveState(ref AutoSaveManager.SaveData data)
+    {
+        data.flashlightData.hasFlashlight = hasFlashlight;
+        data.flashlightData.requiresBattery = requiresBattery;
+        data.flashlightData.currentBattery = currentBattery;
+        data.flashlightData.isOn = isOn;
+    }
+
+    public void LoadState(AutoSaveManager.SaveData data)
+    {
+        hasFlashlight = data.flashlightData.hasFlashlight;
+        requiresBattery = data.flashlightData.requiresBattery;
+        currentBattery = data.flashlightData.currentBattery;
+        isOn = data.flashlightData.isOn;
+
+        if (hasFlashlight)
+        {
+            // Re-activate UI
+            batterySlider.gameObject.SetActive(true);
+            batterySlider.value = currentBattery / maxBattery;
+
+            // Ensure prefab is active
+            if (flashLightPrefab != null)
+            {
+                flashLightPrefab.SetActive(true);
+
+                // Find the Light component inside the prefab and re-register it
+                Light lightComp = flashLightPrefab.GetComponentInChildren<Light>(true);
+                if (lightComp != null)
+                    RegisterFlashlight(lightComp);
+            }
+
+            // Apply on/off state
+            if (flashlight != null)
+                flashlight.enabled = isOn;
+
+            UpdateFlashObjectPostion();
+        }
+        else
+        {
+            batterySlider.gameObject.SetActive(false);
+            if (flashLightPrefab != null) flashLightPrefab.SetActive(false);
+        }
     }
 
 }

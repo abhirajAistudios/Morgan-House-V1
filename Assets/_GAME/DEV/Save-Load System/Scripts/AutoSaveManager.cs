@@ -27,7 +27,7 @@ public class AutoSaveManager : MonoBehaviour
         public List<ObjectiveDataSO>  objectives = new();
 
         public List<DoorStateData> doors = new();
-
+        public FlashlightSaveData flashlightData = new FlashlightSaveData();
         public static AutoSaveManager Instance { get; private set; }
     }
 
@@ -50,6 +50,16 @@ public class AutoSaveManager : MonoBehaviour
         public DoorState doorState;
         public bool isOpen;
     }
+    [System.Serializable]
+    public class FlashlightSaveData
+    {
+        public bool hasFlashlight;
+        public bool requiresBattery;
+        public float currentBattery;
+        public bool isOn;
+    }
+
+
 
 
 

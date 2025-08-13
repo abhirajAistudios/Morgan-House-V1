@@ -14,4 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   displayName: Battery
   description: No description provided.
-  isReusable: 1
+  isReusable: 0

@@ -13,5 +13,7 @@ public class SaveData
     public System.Collections.Generic.List<string> collectedItems = new();
     public System.Collections.Generic.List<PuzzleState> puzzles = new();
     public System.Collections.Generic.List<InventorySlotData> inventorySlots = new();
+    public FlashlightSaveData flashlightData = new FlashlightSaveData();
+
     public List<DoorStateData> doors = new();
 }

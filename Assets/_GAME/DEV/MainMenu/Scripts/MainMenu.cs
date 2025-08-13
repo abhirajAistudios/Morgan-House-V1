@@ -1,6 +1,5 @@
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.SceneManagement;
 using System.IO;
 
 public class MainMenu : MonoBehaviour
@@ -24,46 +23,53 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
-        // Show Resume only if a save exists
-        resumeButton.gameObject.SetActive(File.Exists(savePath));
+        if (resumeButton != null)
+            resumeButton.gameObject.SetActive(File.Exists(savePath));
 
-        // Hook up button listeners
-        newGameButton.onClick.AddListener(StartNewGame);
-        resumeButton.onClick.AddListener(ResumeGame);
-        exitButton.onClick.AddListener(ShowExitPopup);
+        if (newGameButton != null) newGameButton.onClick.AddListener(StartNewGame);
+        if (resumeButton != null) resumeButton.onClick.AddListener(ResumeGame);
+        if (exitButton != null) exitButton.onClick.AddListener(ShowExitPopup);
 
-        yesExitButton.onClick.AddListener(ExitGame);
-        noExitButton.onClick.AddListener(HideExitPopup);
+        if (yesExitButton != null) yesExitButton.onClick.AddListener(ExitGame);
+        if (noExitButton != null) noExitButton.onClick.AddListener(HideExitPopup);
 
         if (exitConfirmationPanel != null)
-            exitConfirmationPanel.SetActive(false); // hide by default
+            exitConfirmationPanel.SetActive(false);
     }
 
     private void StartNewGame()
     {
-        // Delete save file if exists
         if (File.Exists(savePath))
-        {
             File.Delete(savePath);
-            Debug.Log("Old save deleted. Starting new game.");
-        }
 
-        // Load first scene (replace "GameScene" with your actual scene name)
-        GameManager.Instance.StartNewGame();
-        SceneManager.LoadScene("Morgan_House");
+        GameManager.Instance?.StartNewGame();
+
+        if (LoadingManager.Instance != null)
+            LoadingManager.Instance.LoadSceneByName("Morgan_House");
+        else
+            Debug.LogError("LoadingManager not found!");
     }
 
     private void ResumeGame()
     {
         if (File.Exists(savePath))
         {
-            Debug.Log("Resuming game...");
+            LoadingManager.Instance.LoadSceneByName("Morgan_House");
             GameManager.Instance.ResumeGame();
-            SceneManager.LoadScene("Morgan_House");
+
+            if (LoadingManager.Instance != null)
+            {
+
+               
+            }
+               
+                 
+            else
+                Debug.LogError("LoadingManager not found!");
         }
         else
         {
-            Debug.LogWarning("No save file found, starting new game instead.");
+            Debug.LogWarning("No save file, starting new game.");
             StartNewGame();
         }
     }
@@ -79,10 +85,9 @@ public class MainMenu : MonoBehaviour
         if (exitConfirmationPanel != null)
             exitConfirmationPanel.SetActive(false);
     }
-
+     
     private void ExitGame()
     {
-        Debug.Log("Exiting game...");
 #if UNITY_EDITOR
         UnityEditor.EditorApplication.isPlaying = false;
 #else

@@ -1,5 +1,4 @@
-using System.IO;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
@@ -18,9 +17,7 @@ public class PauseMenu : MonoBehaviour
 
         // Add listeners to buttons
         Resume.onClick.AddListener(ResumeGame);
-       
-        ExitToMainMenu.onClick.AddListener(GoToMainMenu);
-      
+        ExitToMainMenu.onClick.AddListener(GoToMainMenuWithLoading);
     }
 
     void Update()
@@ -29,13 +26,9 @@ public class PauseMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             if (isPaused)
-            {
                 ResumeGame();
-            }
             else
-            {
                 PauseGame();
-            }
         }
     }
 
@@ -44,7 +37,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = true;
         Time.timeScale = 0f; // Freeze the game
         pausePanel.gameObject.SetActive(true); // Show pause menu
-        // Optional: Unlock cursor if your game normally hides it
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
     }
@@ -54,16 +46,23 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f; // Resume normal time
         pausePanel.gameObject.SetActive(false); // Hide pause menu
-        // Optional: Lock cursor again if needed
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
 
-    private void GoToMainMenu()
+    //  Uses LoadingManager instead of SceneManager directly
+    private void GoToMainMenuWithLoading()
     {
-        Time.timeScale = 1f; // Make sure to reset time scale
-        SceneManager.LoadScene("NewGameScene"); // Load the main menu scene
+        Time.timeScale = 1f; // Reset time scale
+
+        if (LoadingManager.Instance != null)
+        {
+            LoadingManager.Instance.LoadSceneByName("NewGameScene");
+        }
+        else
+        {
+            Debug.LogError("LoadingManager instance not found! Falling back to direct SceneManager.");
+            SceneManager.LoadScene("NewGameScene");
+        }
     }
-
-
 }

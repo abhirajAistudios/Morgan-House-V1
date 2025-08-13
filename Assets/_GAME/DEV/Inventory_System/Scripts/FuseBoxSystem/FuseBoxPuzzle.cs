@@ -6,11 +6,6 @@ using System;
 using UnityEditor;
 #endif
 
-/// <summary>
-/// Fuse Box Puzzle - Insert fuses into slots until complete.
-/// Supports saving progress via AutoSaveManager.
-/// Each puzzle has a unique ID so multiple fuseboxes can exist independently.
-/// </summary>
 public class FuseBoxPuzzle : BaseInteractable, ISaveable
 {
     [Header("Fuse Puzzle Setup")]
@@ -21,12 +16,11 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public string requiredItemName = "Fuse";
     public Behaviour stopInteract;
 
-
     private int fusesInserted = 0;
     public bool isSolved = false;
 
     [Header("Puzzle Identification")]
-    [SerializeField] private string puzzleID = Guid.NewGuid().ToString(); // auto generate unique ID
+    [SerializeField] private string puzzleID = Guid.NewGuid().ToString();
 
     [Header("Interactable UI")]
     [SerializeField] private string displayName = "Fuse Box";
@@ -41,9 +35,11 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     [Header("Player Reference")]
     public Transform player;
 
+    [Header("Door to Unlock on Solve")]
+    public DoorInteraction doorToUnlock; // Optional reference to a door
+
     private void Start()
     {
-        // Reset puzzle visuals if not already solved
         if (!isSolved)
         {
             foreach (var slot in fuseSlots)
@@ -55,13 +51,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     }
 
     public override void OnFocus() { }
-    public override void OnLoseFocus()
-    {
-
-        
-    }
-    
-    
+    public override void OnLoseFocus() { }
 
     public override void OnInteract()
     {
@@ -87,7 +77,6 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
                 {
                     PuzzleCompleted();
                 }
-
                 return;
             }
         }
@@ -98,7 +87,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public void TryInsertFuseAt(int slotIndex, FuseSlot fuseslot)
     {
         if (slotIndex < 0 || slotIndex >= fuseSlots.Length) return;
-        if (fuseSlots[slotIndex].activeSelf) return; // Already filled
+        if (fuseSlots[slotIndex].activeSelf) return;
 
         for (int i = 0; i < InventoryManager.Instance.itemSlots.Length; i++)
         {
@@ -109,14 +98,12 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
                 fuseSlots[slotIndex].SetActive(true);
                 fuseslot.MarkSolved();
-
                 fusesInserted++;
 
                 if (fusesInserted == fuseSlots.Length)
                 {
                     PuzzleCompleted();
                 }
-
                 return;
             }
         }
@@ -131,14 +118,16 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
         MarkSolved();
         Debug.Log($"✅ Puzzle {puzzleID} complete!");
-     
 
-        // Increase objectives and save
+        // Unlock the linked door (if assigned)
+        if (doorToUnlock != null)
+        {
+            UnlockLinkedDoor();
+        }
+
         GameProgressTracker.ObjectivesCompleted++;
         FindAnyObjectByType<AutoSaveManager>().SaveAfterObjective(player);
         OnLoseFocus();
-       //stopInteract.enabled = false;
-
     }
 
     public void MarkSolved()
@@ -146,6 +135,18 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         isSolved = true;
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(displayName);
         Debug.Log($"{name} (ID: {puzzleID}) has been marked solved and is no longer interactable.");
+    }
+
+    /// <summary>
+    /// Unlocks the linked door directly.
+    /// </summary>
+    private void UnlockLinkedDoor()
+    {
+        if (doorToUnlock.currentState == DoorState.Locked || doorToUnlock.currentState == DoorState.Jammed)
+        {
+            doorToUnlock.currentState = DoorState.Unlocked;
+            Debug.Log($"🔓 Door {doorToUnlock.name} unlocked via puzzle {puzzleID}.");
+        }
     }
 
     // ======================
@@ -168,16 +169,13 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
             if (state.puzzleID == puzzleID && state.isSolved)
             {
                 RestoreSolvedState();
-               
             }
         }
     }
 
     private void RestoreSolvedState()
     {
-        //isSolved = true;
         MarkSolved();
-      
 
         if (mainFuseRenderer != null)
             mainFuseRenderer.material.color = completeColor;
@@ -187,13 +185,14 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
         fusesInserted = fuseSlots.Length;
 
-
-     
-
+        // Ensure door stays unlocked on load
+        if (doorToUnlock != null)
+        {
+            UnlockLinkedDoor();
+        }
 
         Debug.Log($"Fusebox puzzle restored as solved (ID: {puzzleID}).");
         OnLoseFocus();
-
     }
 }
 

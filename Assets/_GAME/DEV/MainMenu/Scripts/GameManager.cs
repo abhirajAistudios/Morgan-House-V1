@@ -88,17 +88,19 @@ public class GameManager : MonoBehaviour
     {
         objectiveQueue.Clear();
         
-        /*foreach (var objective in totalObjectives)
+        foreach (var objective in completedObjectives)
         {
             ResetObjectiveRecursive(objective);
-        }*/
+        }
+        
+        completedObjectives.Clear();
         Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
     }
 
     private void ResetObjectiveRecursive(ObjectiveDataSO objective)
     {
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-        QueueObjectiveInLast(objective);
+        //QueueObjectiveInLast(objective);
 
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {
@@ -129,7 +131,7 @@ public class GameManager : MonoBehaviour
     {
         if (objective == null) return;
         
-        QueueObjectiveInLast(objective);
+        QueueObjectiveInFirst(objective);
         
         
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&

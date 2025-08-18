@@ -54,18 +54,25 @@ public class MainMenu : MonoBehaviour
     {
         if (File.Exists(savePath))
         {
-            LoadingManager.Instance.LoadSceneByName("Morgan_House");
-            GameManager.Instance.ResumeGame();
+            string json = File.ReadAllText(savePath);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
 
-            if (LoadingManager.Instance != null)
+            if (data != null && !string.IsNullOrEmpty(data.lastSceneName))
             {
+                Debug.Log("Resuming last saved scene: " + data.lastSceneName);
 
-               
+                GameManager.Instance.ResumeGame();
+
+                if (LoadingManager.Instance != null)
+                    LoadingManager.Instance.LoadSceneByName(data.lastSceneName); // ✅ load last saved scene
+                else
+                    Debug.LogError("LoadingManager not found!");
             }
-               
-                 
             else
-                Debug.LogError("LoadingManager not found!");
+            {
+                Debug.LogWarning("No scene name found in save, starting new game.");
+                StartNewGame();
+            }
         }
         else
         {

@@ -9,6 +9,7 @@ public class SaveData
     public float playerPosY;
     public float playerPosZ;
     public string timestamp;
+    public string lastSceneName;   
 
     public System.Collections.Generic.List<string> collectedItems = new();
     public System.Collections.Generic.List<PuzzleState> puzzles = new();

@@ -9,17 +9,17 @@ public class LoadingManager : MonoBehaviour
     public static LoadingManager Instance;
 
     [Header("UI refs (assign in Inspector)")]
-    public GameObject loadingPanel;
-    public Slider progressBar;
-    public TextMeshProUGUI progressText;
-    public CanvasGroup canvasGroup;
+    [SerializeField] private GameObject loadingPanel;
+    [SerializeField] private Slider progressBar;
+    [SerializeField] private TextMeshProUGUI progressText;
+    [SerializeField] private CanvasGroup canvasGroup;
 
     [Header("Settings")]
-    public float fadeDuration = 0.3f;
-    public float minShowTimeAfterReady = 0.5f;
+    [SerializeField] private float fadeDuration = 0.3f;
+    [SerializeField] private float minShowTimeAfterReady = 0.5f;
+    [SerializeField] private float fakeLoadSpeed = 0.5f;
 
-    [Tooltip("Controls how fast the fake loading progresses (higher = faster).")]
-    [SerializeField] private float fakeLoadSpeed = 0.5f; // <-- Adjustable speed in Inspector
+    public bool IsLoading { get; private set; } = false;
 
     private void Awake()
     {
@@ -38,20 +38,26 @@ public class LoadingManager : MonoBehaviour
             loadingPanel.SetActive(false);
     }
 
+    /// <summary>
+    /// Call this to load ANY scene by name (works for multiple levels).
+    /// </summary>
     public void LoadSceneByName(string sceneName)
     {
-        StartCoroutine(LoadSceneAsync(sceneName));
+        if (!IsLoading) // ✅ Prevent multiple loads
+            StartCoroutine(LoadSceneAsync(sceneName));
     }
 
     private IEnumerator LoadSceneAsync(string sceneName)
     {
-        loadingPanel.SetActive(true);
+        IsLoading = true;
+
+        if (loadingPanel != null) loadingPanel.SetActive(true);
         if (canvasGroup != null) canvasGroup.alpha = 1f;
 
         progressBar.value = 0f;
         progressText.text = "0%";
 
-        yield return null; // Ensure UI is rendered first
+        yield return null; // let UI update at least one frame
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;
@@ -59,8 +65,8 @@ public class LoadingManager : MonoBehaviour
         float fakeProgress = 0f;
         while (fakeProgress < 0.9f)
         {
-            fakeProgress += Time.unscaledDeltaTime * fakeLoadSpeed; // ✅ Uses adjustable speed
-            progressBar.value = fakeProgress;
+            fakeProgress += Time.unscaledDeltaTime * fakeLoadSpeed;
+            progressBar.value = Mathf.Clamp01(fakeProgress);
             progressText.text = Mathf.RoundToInt(progressBar.value * 100f) + "%";
             yield return null;
 
@@ -68,7 +74,6 @@ public class LoadingManager : MonoBehaviour
                 break;
         }
 
-        // Fill to 100%
         while (progressBar.value < 1f)
         {
             progressBar.value = Mathf.MoveTowards(progressBar.value, 1f, Time.unscaledDeltaTime * fakeLoadSpeed);
@@ -83,19 +88,29 @@ public class LoadingManager : MonoBehaviour
         while (!op.isDone)
             yield return null;
 
-        loadingPanel.SetActive(false);
+        // ✅ Autosave after the scene has fully loaded
+        AutoSaveAfterSceneLoad();
+
+        if (loadingPanel != null) loadingPanel.SetActive(false);
+        IsLoading = false;
     }
 
-    private IEnumerator FadeCanvasGroup(CanvasGroup cg, float from, float to, float duration)
+    /// <summary>
+    /// Automatically saves player position and progress after every scene load.
+    /// </summary>
+    private void AutoSaveAfterSceneLoad()
     {
-        float t = 0f;
-        cg.alpha = from;
-        while (t < duration)
+        AutoSaveManager saveManager = FindObjectOfType<AutoSaveManager>();
+        GameObject player = GameObject.FindWithTag("Player");
+
+        if (saveManager != null && player != null)
         {
-            t += Time.unscaledDeltaTime;
-            cg.alpha = Mathf.Lerp(from, to, t / Mathf.Max(0.0001f, duration));
-            yield return null;
+            saveManager.SaveAfterObjective(player.transform);
+            Debug.Log("✅ AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
         }
-        cg.alpha = to;
+        else
+        {
+            Debug.LogWarning("⚠ AutoSave skipped - SaveManager or Player not found in scene: " + SceneManager.GetActiveScene().name);
+        }
     }
 }

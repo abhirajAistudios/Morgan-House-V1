@@ -2703,7 +2703,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fad17c73cc4cdb74d9990da4297284c9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  totalObjectives: []
+  completedObjectives: []
   isNewGame: 0
 --- !u!4 &1690752870
 Transform:
@@ -2937,9 +2937,9 @@ MonoBehaviour:
   progressBar: {fileID: 1693103086}
   progressText: {fileID: 242320537}
   canvasGroup: {fileID: 0}
-  fadeDuration: 0.4
+  fadeDuration: 0.3
   minShowTimeAfterReady: 0.5
-  fakeLoadSpeed: 2
+  fakeLoadSpeed: 0.5
 --- !u!1 &1895418131
 GameObject:
   m_ObjectHideFlags: 0

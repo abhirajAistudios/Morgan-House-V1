@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
 using System.IO;
-using System.Collections.Generic;
+using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class AutoSaveManager : MonoBehaviour
 {
@@ -16,6 +17,7 @@ public class AutoSaveManager : MonoBehaviour
         public float playerPosY;
         public float playerPosZ;
         public string timestamp;
+        public string lastSceneName;   // <-- add this
 
         // Store unique IDs of collected items
         public List<string> collectedItems = new();
@@ -103,6 +105,9 @@ public class FlashlightData
             timestamp = System.DateTime.Now.ToString()
         };
 
+        // Save current scene
+        data.lastSceneName = SceneManager.GetActiveScene().name;
+
         // Ask every ISaveable to record its state
         foreach (var saveable in FindObjectsOfType<MonoBehaviour>(true))
         {
@@ -118,6 +123,8 @@ public class FlashlightData
                 Debug.Log("Saved objective: " + objective.dialogDisplay);
             }
         }
+
+
 
         CurrentData = data;
         string json = JsonUtility.ToJson(data, true);
@@ -137,7 +144,9 @@ public class FlashlightData
 
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
+      
         CurrentData = data;
+        data.lastSceneName = SceneManager.GetActiveScene().name;
 
         // Restore player position
         player.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);

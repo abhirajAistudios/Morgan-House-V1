@@ -142,7 +142,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     /// </summary>
     private void UnlockLinkedDoor()
     {
-        if (doorToUnlock.currentState == DoorState.Locked || doorToUnlock.currentState == DoorState.Jammed)
+        if (doorToUnlock.currentState == DoorState.FuseLockDoor)
         {
             doorToUnlock.currentState = DoorState.Unlocked;
             Debug.Log($"🔓 Door {doorToUnlock.name} unlocked via puzzle {puzzleID}.");

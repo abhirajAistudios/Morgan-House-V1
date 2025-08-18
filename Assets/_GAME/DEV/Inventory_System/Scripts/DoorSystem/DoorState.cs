@@ -2,5 +2,6 @@ public enum DoorState
 {
     Locked,
     Unlocked,
-    Jammed
+    Jammed,
+    FuseLockDoor
 }

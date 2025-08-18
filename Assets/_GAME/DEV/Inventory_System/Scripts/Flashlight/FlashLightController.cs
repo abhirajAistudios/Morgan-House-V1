@@ -1,7 +1,7 @@
-﻿using TMPro;
-using UnityEngine;
-using UnityEngine.Animations.Rigging;
+﻿using UnityEngine;
+using TMPro;
 using UnityEngine.UI;
+using UnityEngine.Animations.Rigging;
 
 public class FlashlightController : MonoBehaviour, ISaveable
 {
@@ -20,7 +20,7 @@ public class FlashlightController : MonoBehaviour, ISaveable
     public Color lowBatteryColor = Color.red;
 
     [Header("Controls")]
-    public KeyCode toggleKey = KeyCode.Alpha1;  // Toggle with key '1'
+    public KeyCode toggleKey = KeyCode.Alpha1;
     public KeyCode reloadKey = KeyCode.R;
 
     private Light flashlight;
@@ -34,7 +34,11 @@ public class FlashlightController : MonoBehaviour, ISaveable
     [Header("Battery Notification UI")]
     public TextMeshProUGUI batteryStatusText;
 
+<<<<<<< Updated upstream
     [Header("Animation Variables")]
+=======
+    // Animation
+>>>>>>> Stashed changes
     [SerializeField] private Animator playerAnimator;
     [SerializeField] private RigBuilder FlashlightRig;
 
@@ -103,26 +107,37 @@ public class FlashlightController : MonoBehaviour, ISaveable
                 isOn = false;
                 requiresBattery = true;
                 flashLightPrefab.SetActive(false);
+<<<<<<< Updated upstream
                 Debug.Log("Battery depleted. Press R to recharge.");
+=======
+>>>>>>> Stashed changes
             }
         }
+
         UpdateUI();
     }
 
     void ToggleFlashlight()
     {
+<<<<<<< Updated upstream
         if (requiresBattery)
         {
             Debug.Log("Battery empty! Press R to use a battery.");
             return;
         }
+=======
+        if (requiresBattery) return;
+>>>>>>> Stashed changes
 
         if (currentBattery > 0)
         {
             isOn = !isOn;
             flashlight.enabled = isOn;
+<<<<<<< Updated upstream
             UpdateFlashObjectPostion();
 
+=======
+>>>>>>> Stashed changes
             if (flashLightPrefab != null)
                 flashLightPrefab.SetActive(isOn);
         }
@@ -169,7 +184,10 @@ public class FlashlightController : MonoBehaviour, ISaveable
     void ShowBatteryStatus(string message, Color color)
     {
         if (batteryStatusText == null) return;
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
         batteryStatusText.text = message;
         batteryStatusText.color = color;
         batteryStatusText.gameObject.SetActive(true);
@@ -208,6 +226,7 @@ public class FlashlightController : MonoBehaviour, ISaveable
         FlashlightRig.layers[1].active = false;
     }
 
+<<<<<<< Updated upstream
     // ------------------ ISaveable Implementation ------------------
     public void SaveState(ref AutoSaveManager.SaveData data)
     {
@@ -215,11 +234,20 @@ public class FlashlightController : MonoBehaviour, ISaveable
         data.flashlightData.requiresBattery = requiresBattery;
         data.flashlightData.currentBattery = currentBattery;
         data.flashlightData.isOn = isOn;
+=======
+    // ---------------- SAVE / LOAD ----------------
+    public void SaveState(ref AutoSaveManager.SaveData data)
+    {
+        data.flashlightData.hasFlashlight = hasFlashlight;
+        data.flashlightData.isOn = isOn;
+        data.flashlightData.currentBattery = currentBattery;
+>>>>>>> Stashed changes
     }
 
     public void LoadState(AutoSaveManager.SaveData data)
     {
         hasFlashlight = data.flashlightData.hasFlashlight;
+<<<<<<< Updated upstream
         requiresBattery = data.flashlightData.requiresBattery;
         currentBattery = data.flashlightData.currentBattery;
         isOn = data.flashlightData.isOn;
@@ -254,4 +282,23 @@ public class FlashlightController : MonoBehaviour, ISaveable
         }
     }
 
+=======
+        isOn = data.flashlightData.isOn;
+        currentBattery = data.flashlightData.currentBattery;
+
+        if (hasFlashlight)
+        {
+            EnableFlashlight();
+            currentBattery = Mathf.Clamp(currentBattery, 0, maxBattery);
+            flashlight.enabled = isOn;
+            if (flashLightPrefab != null)
+                flashLightPrefab.SetActive(isOn);
+        }
+        else
+        {
+            DisableFlashRig();
+            batterySlider.gameObject.SetActive(false);
+        }
+    }
+>>>>>>> Stashed changes
 }

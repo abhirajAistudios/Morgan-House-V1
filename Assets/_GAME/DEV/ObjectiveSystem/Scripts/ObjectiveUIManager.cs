@@ -73,7 +73,7 @@ public class ObjectiveUIManager : MonoBehaviour
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             if (isParent || parent == null)
-                StartCoroutine(DestroyAfterDelay(objective, textObj, 3f));
+                StartCoroutine(DestroyAfterDelay(objective, textObj, 1.5f));
             else
                 StartCoroutine(WaitForParentThenDestroy(objective, parent, textObj));
         }
@@ -84,11 +84,9 @@ public class ObjectiveUIManager : MonoBehaviour
     private IEnumerator DestroyAfterDelay(ObjectiveDataSO objective, GameObject obj, float delay)
     {
         yield return new WaitForSeconds(delay);
-        if (obj != null)
-        {
+        
             Destroy(obj);
             uiRemovedObjectives.Add(objective);  // Mark as UI removed
-        }
         
         RefreshUI();
     }

@@ -53,6 +53,7 @@ public class GameManager : MonoBehaviour
         
         RemoveChildObjective(completedObjective);
         objectiveQueue.Remove(completedObjective);
+        //ObjectiveManager.Instance.objectiveUIManager.OnObjectiveUpdated();
         
         // If this is a parent and completed, proceed to next.
         TryStartNextObjective();
@@ -125,7 +126,7 @@ public class GameManager : MonoBehaviour
     private void RestoreObjectiveRecursive(ObjectiveDataSO objective)
     {
         if (objective == null) return;
-
+        
         QueueObjectiveInLast(objective);
         
         
@@ -157,7 +158,7 @@ public class GameManager : MonoBehaviour
         
         ObjectiveManager.Instance.activeObjectives.Clear();
         TryStartNextObjective();
-        ObjectiveManager.Instance.objectiveUIManager.RefreshUI();
+        ObjectiveManager.Instance.objectiveUIManager.OnObjectiveUpdated();
     }
 
     public void ResetObjective(ObjectiveDataSO objective)
@@ -171,7 +172,6 @@ public class GameManager : MonoBehaviour
         }
         
         if(objectiveQueue.Contains(objective)) return;
-        //if(objectiveQueue.Contains(objective) && objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.objectiveType == ObjectiveType.CHILDOBJECTIVE) return;
         
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
 
@@ -194,6 +194,56 @@ public class GameManager : MonoBehaviour
 
         if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE ||
             objective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
+        {
+            objectiveQueue.AddFirst(objective);
+        }
+    }
+    
+    public void RestoreConnectedObjectiveProgress()
+    {
+        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        
+        saveSystem.LoadObjectives();
+        
+        foreach (var obj in totalObjectives)
+        {
+            RestoreConnectedObjectives(obj);
+        }
+        
+        TryStartNextObjective();
+    }
+    public void RestoreConnectedObjectives(ObjectiveDataSO objective)
+    {
+        if(ObjectiveManager.Instance.completedObjectives.Contains(objective)) return;
+        
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED && objective.parentObjective.objectiveStatus != ObjectiveStatus.INPROGRESS)
+        {
+            objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        }
+        
+        if(objectiveQueue.Contains(objective)) return;
+        
+        objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+
+        if (objective.hasUnlockables)
+        {
+            foreach (var objectives in objective.UnlockOnComplete)
+            {
+                objectives.objectiveState = ObjectiveState.LOCKED;
+                objectives.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+            }
+        }
+        
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                ResetObjective(child);
+            }
+        }
+
+        if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE)
         {
             objectiveQueue.AddFirst(objective);
         }

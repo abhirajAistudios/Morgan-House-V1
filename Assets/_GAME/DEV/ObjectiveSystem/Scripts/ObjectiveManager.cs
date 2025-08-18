@@ -33,11 +33,12 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
-            gameManager.RestoreObjectiveProgress();
+            gameManager.RestoreConnectedObjectiveProgress();
+            //gameManager.RestoreObjectiveProgress();
             return;
         }
         
-        gameManager.TryStartNextObjective();
+        //gameManager.TryStartNextObjective();
     }
 
     public void StartObjective(ObjectiveDataSO objective)

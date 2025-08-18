@@ -38,6 +38,7 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
 
         if (currentCount >= RequiredCount && AreChildrenComplete())
         {
+            Debug.Log("this is colledted");
             CompleteObjective();
             GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
         }

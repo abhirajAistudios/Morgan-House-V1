@@ -9,20 +9,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 735fe0d79354ccb469a8036446f804cb, type: 3}
-  m_Name: Use Torch Objective
+  m_Script: {fileID: 11500000, guid: 93ef342518ef4d24fbce05679980b1a1, type: 3}
+  m_Name: Flash Light Collect Objective
   m_EditorClassIdentifier: 
-  objectiveName: Pick Flash Light
-  dialogDisplay: Pick Up the  Flash Light \
+  objectiveName: Pick FlashLight
+  dialogDisplay: Pick the FlashLight
   objective: 1
-  objectiveType: 2
-  objectiveState: 0
-  objectiveStatus: 0
-  hasUnlockables: 0
+  objectiveType: 0
+  objectiveState: 1
+  objectiveStatus: 2
+  hasUnlockables: 1
   parentObjective: {fileID: 0}
   unlockingObjective: {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
-  ChildObjectives:
-  - {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
+  ChildObjectives: []
   UnlockOnComplete:
-  - {fileID: 0}
-  ItemId: FlashLight
+  - {fileID: 11400000, guid: 94ec877785cf9bd41b2240b60be66afb, type: 2}
+  ItemId: Flashlight
+  RequiredCount: 1

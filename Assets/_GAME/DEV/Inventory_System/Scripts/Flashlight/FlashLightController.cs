@@ -76,10 +76,12 @@ public class FlashlightController : MonoBehaviour, ISaveable
         if (isOn)
         {
             UpdateFlashObjectPostion();
-
+            GameService.Instance.EventService.OnObjectUsed.InvokeEvent(ItemID);
         }
-            
-        else DisableFlashRig();
+        else
+        {
+            DisableFlashRig();
+        }
 
         if (Input.GetKeyDown(toggleKey))
             ToggleFlashlight();

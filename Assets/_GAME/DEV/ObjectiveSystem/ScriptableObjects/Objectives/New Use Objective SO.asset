@@ -9,19 +9,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 93ef342518ef4d24fbce05679980b1a1, type: 3}
-  m_Name: Pick_FLash_Light_NORMALOBJECTIVE
+  m_Script: {fileID: 11500000, guid: 735fe0d79354ccb469a8036446f804cb, type: 3}
+  m_Name: New Use Objective SO
   m_EditorClassIdentifier: 
-  objectiveName: Pick FLash Light
-  dialogDisplay: Pick FLash Light
-  objective: 1
-  objectiveType: 2
+  objectiveName: Use FLash Light
+  dialogDisplay: Use The FlashLight
+  objective: 2
+  objectiveType: 0
   objectiveState: 1
-  objectiveStatus: 0
+  objectiveStatus: 1
   hasUnlockables: 0
   parentObjective: {fileID: 0}
-  unlockingObjective: {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
+  unlockingObjective: {fileID: 11400000, guid: 86e9c2cb380883348bf90ac2e7ba4667, type: 2}
   ChildObjectives: []
   UnlockOnComplete: []
-  ItemId: Flashlight
-  RequiredCount: 1
+  ItemId: gg

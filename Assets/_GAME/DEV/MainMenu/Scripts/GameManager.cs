@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
     {
         // If it's a child, do NOT dequeue next. Just check if parent is ready.
-        if (completedObjective.parentObjective != null || completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
+        if (completedObjective.parentObjective != null )
         {
             Debug.Log("Objective Completed" +  completedObjective.dialogDisplay);
             if (!completedObjective.parentObjective.AreChildrenComplete())
@@ -49,12 +49,6 @@ public class GameManager : MonoBehaviour
             {
                 completedObjective.parentObjective.CheckReadyForCompletion();
             }
-            else if(completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
-            {
-                completedObjective.parentObjective.CheckReadyForCompletion();
-            }
-            
-            return; // Do NOT dequeue next objective here.
         }
         
         RemoveChildObjective(completedObjective);

@@ -6,7 +6,8 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
 
     [Header("Master Objective Flow")]
-    public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
+    //public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
+    public List<ObjectiveDataSO> completedObjectives = new();
 
     public LinkedList<ObjectiveDataSO> objectiveQueue = new();
     
@@ -51,6 +52,7 @@ public class GameManager : MonoBehaviour
             }
         }
         
+        completedObjectives.Add(completedObjective);
         RemoveChildObjective(completedObjective);
         objectiveQueue.Remove(completedObjective);
         //ObjectiveManager.Instance.objectiveUIManager.OnObjectiveUpdated();
@@ -86,10 +88,10 @@ public class GameManager : MonoBehaviour
     {
         objectiveQueue.Clear();
         
-        foreach (var objective in totalObjectives)
+        /*foreach (var objective in totalObjectives)
         {
             ResetObjectiveRecursive(objective);
-        }
+        }*/
         Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
     }
 
@@ -115,10 +117,10 @@ public class GameManager : MonoBehaviour
         
         saveSystem.LoadObjectives();
         
-        foreach (var obj in totalObjectives)
+        /*foreach (var obj in totalObjectives)
         {
             RestoreObjectiveRecursive(obj);
-        }
+        }*/
         
         TryStartNextObjective();
     }
@@ -205,9 +207,9 @@ public class GameManager : MonoBehaviour
         
         saveSystem.LoadObjectives();
         
-        foreach (var obj in totalObjectives)
+        foreach (var obj in completedObjectives)
         {
-            RestoreConnectedObjectives(obj);
+            RestoreObjectiveRecursive(obj);
         }
         
         TryStartNextObjective();

@@ -155,7 +155,7 @@ public class FlashlightData
 
     public void LoadObjectives()
     {
-        foreach (var objective in GameManager.Instance.totalObjectives)
+        foreach (var objective in GameManager.Instance.completedObjectives)
         {
             if (objective is ISaveable s)
             {

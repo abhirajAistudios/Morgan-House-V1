@@ -18,6 +18,6 @@ public class ReachObjectiveSO :  ObjectiveDataSO
 
     public override void Initialize()
     {
-        throw new System.NotImplementedException();
+        //throw new System.NotImplementedException();
     }
 }

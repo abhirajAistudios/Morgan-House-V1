@@ -8,6 +8,10 @@ public class ObjectiveManager : MonoBehaviour
 
     public List<ObjectiveDataSO> activeObjectives = new();
     public List<ObjectiveDataSO> completedObjectives = new();
+    
+    public List<ObjectiveDataSO> totalObjectives = new();
+    
+    public ObjectiveDataSO FinalObjective;
 
     public ObjectiveUIManager objectiveUIManager;
     
@@ -27,6 +31,7 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (gameManager.isNewGame)
         {
+            ResetAllObjectives();
             gameManager.ResetAllObjectives(); // only on new game
             Debug.Log("Reset all objectives");
             gameManager.ResumeGame();
@@ -45,6 +50,10 @@ public class ObjectiveManager : MonoBehaviour
         //gameManager.TryStartNextObjective();
     }
 
+    public void Update()
+    {
+        CheckCompletionOfAllObjectives();
+    }
     public void StartObjective(ObjectiveDataSO objective)
     {
         if (objective == null || activeObjectives.Contains(objective) || objective.objectiveStatus == ObjectiveStatus.COMPLETED)
@@ -113,6 +122,59 @@ public class ObjectiveManager : MonoBehaviour
             if (objective is CollectibleObjectiveSO collectibleObjective)
             {
                 collectibleObjective.CheckImmediateCompletion();
+            }
+        }
+    }
+
+    public void CheckCompletionOfAllObjectives()
+    {
+        if (AllObjectivesCompleted())
+        {
+            gameManager.QueueObjectiveInFirst(FinalObjective);
+            //gameManager.TryStartNextObjective();
+        }
+    }
+
+    public bool AllObjectivesCompleted()
+    {
+        int i = 0;
+        
+        foreach (var objective in totalObjectives)
+        {
+            if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
+            {
+                i++;
+            }
+        }
+
+        if (i == totalObjectives.Count)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public void ResetAllObjectives()
+    {
+        FinalObjective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+        
+        foreach (var objective in totalObjectives)
+        {
+            ResetObjectiveRecursive(objective);
+        }
+    }
+    private void ResetObjectiveRecursive(ObjectiveDataSO objective)
+    {
+        objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+
+        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
+        {
+            foreach (var child in objective.ChildObjectives)
+            {
+                ResetObjectiveRecursive(child);
             }
         }
     }

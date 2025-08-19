@@ -13,7 +13,7 @@ public class SceneTrigger : MonoBehaviour
     {
         if (hasTriggered) return;  // Prevent multiple calls
 
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && ObjectiveManager.Instance.AllObjectivesCompleted())
         {
             hasTriggered = true;
 

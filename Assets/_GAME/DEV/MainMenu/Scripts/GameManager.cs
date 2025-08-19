@@ -1,29 +1,33 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour , ISaveable
+// This class manages the game's objective system and tracks their progress.
+public class GameManager : MonoBehaviour, ISaveable
 {
+    // Singleton instance
     public static GameManager Instance;
 
     [Header("Master Objective Flow")]
-    //public List<ObjectiveDataSO> totalObjectives = new(); // Only Parents here
-    public List<ObjectiveDataSO> completedObjectives = new();
+    public List<ObjectiveDataSO> completedObjectives = new(); // Stores completed objectives
+    public LinkedList<ObjectiveDataSO> objectiveQueue = new(); // Queue of objectives to be completed
 
-    public LinkedList<ObjectiveDataSO> objectiveQueue = new();
-    
-    [HideInInspector] public bool isNewGame = false;
+    [HideInInspector] public bool isNewGame = false; // Used to differentiate between new/resumed games
 
+    // Singleton pattern setup
     private void Awake()
     {
+        // Ensures only one instance of GameManager exists
         if (Instance != null && Instance != this)
         {
             Destroy(gameObject);
             return;
         }
+
         Instance = this;
-        DontDestroyOnLoad(gameObject);
+        DontDestroyOnLoad(gameObject); // Keep GameManager across scenes
     }
 
+    // Starts the next objective in the queue if any exist
     public void TryStartNextObjective()
     {
         if (objectiveQueue.Count > 0)
@@ -33,34 +37,42 @@ public class GameManager : MonoBehaviour , ISaveable
         }
     }
 
+    // Handles logic when an objective is completed
     public void OnObjectiveCompleted(ObjectiveDataSO completedObjective)
     {
-        // If it's a child, do NOT dequeue next. Just check if parent is ready.
-        if (completedObjective.parentObjective != null )
+        // If this is a child objective
+        if (completedObjective.parentObjective != null)
         {
-            Debug.Log("Objective Completed" +  completedObjective.dialogDisplay);
+            Debug.Log("Objective Completed" + completedObjective.dialogDisplay);
+
+            // If parent is not ready, wait for other children
             if (!completedObjective.parentObjective.AreChildrenComplete())
             {
                 Debug.Log("[GameManager] Waiting for other child objectives to complete.");
-                return; // Wait for all children to finish.
+                return;
             }
 
-            // Parent is ready but WAIT for manual trigger to complete it.
+            // If parent is ready, check for manual completion condition
             if (completedObjective.parentObjective.AreChildrenComplete())
             {
                 completedObjective.parentObjective.CheckReadyForCompletion();
             }
         }
-        
+
+        // Add to completed list
         completedObjectives.Add(completedObjective);
+
+        // Remove any children from the queue
         RemoveChildObjective(completedObjective);
+
+        // Remove this completed objective from the queue
         objectiveQueue.Remove(completedObjective);
-        //ObjectiveManager.Instance.objectiveUIManager.OnObjectiveUpdated();
-        
-        // If this is a parent and completed, proceed to next.
+
+        // Start the next objective
         TryStartNextObjective();
     }
-    
+
+    // Removes all child objectives of a parent from the queue
     public void RemoveChildObjective(ObjectiveDataSO parentObjective)
     {
         foreach (ObjectiveDataSO childObjective in parentObjective.ChildObjectives)
@@ -68,6 +80,8 @@ public class GameManager : MonoBehaviour , ISaveable
             objectiveQueue.Remove(childObjective);
         }
     }
+
+    // Adds an objective to the end of the queue (lowest priority)
     public void QueueObjectiveInLast(ObjectiveDataSO objective)
     {
         if (!objectiveQueue.Contains(objective))
@@ -76,6 +90,7 @@ public class GameManager : MonoBehaviour , ISaveable
         }
     }
 
+    // Adds an objective to the start of the queue (highest priority)
     public void QueueObjectiveInFirst(ObjectiveDataSO objective)
     {
         if (!objectiveQueue.Contains(objective))
@@ -83,24 +98,26 @@ public class GameManager : MonoBehaviour , ISaveable
             objectiveQueue.AddFirst(objective);
         }
     }
-    
+
+    // Resets all objectives in the game
     public void ResetAllObjectives()
     {
         objectiveQueue.Clear();
-        
+
+        // Recursively reset each completed objective and its children
         foreach (var objective in completedObjectives)
         {
             ResetObjectiveRecursive(objective);
         }
-        
+
         completedObjectives.Clear();
         Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
     }
 
+    // Recursively resets objective status to NOTSTARTED
     private void ResetObjectiveRecursive(ObjectiveDataSO objective)
     {
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-        //QueueObjectiveInLast(objective);
 
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {
@@ -110,34 +127,21 @@ public class GameManager : MonoBehaviour , ISaveable
             }
         }
     }
-    
-    public void RestoreObjectiveProgress()
-    {
-        objectiveQueue.Clear();
-        
-        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
-        
-        saveSystem.LoadObjectives();
-        
-        /*foreach (var obj in totalObjectives)
-        {
-            RestoreObjectiveRecursive(obj);
-        }*/
-        
-        TryStartNextObjective();
-    }
-    
+
+    // Recursively restores completed objective states and unlocks any associated objectives
     private void RestoreObjectiveRecursive(ObjectiveDataSO objective)
     {
         if (objective == null) return;
 
+        // If completed and has unlockables, queue the unlockables
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.hasUnlockables)
         {
             if (objective.UnlockOnComplete != null)
             {
                 foreach (var unlockObjective in objective.UnlockOnComplete)
                 {
-                    if (unlockObjective.objectiveStatus != ObjectiveStatus.COMPLETED || !completedObjectives.Contains(unlockObjective))
+                    if (unlockObjective.objectiveStatus != ObjectiveStatus.COMPLETED || 
+                        !completedObjectives.Contains(unlockObjective))
                     {
                         unlockObjective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
                         QueueObjectiveInLast(unlockObjective);
@@ -146,65 +150,49 @@ public class GameManager : MonoBehaviour , ISaveable
             }
         }
 
+        // Add to completed list in ObjectiveManager
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
         {
             ObjectiveManager.Instance.completedObjectives.Add(objective);
-            //objectiveQueue.Remove(objectiveQueue.Find(objective));
             ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
         }
-        
-        /*QueueObjectiveInFirst(objective);
-        
-        
-        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
-            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
-        {
-            objective.objectiveStatus = ObjectiveStatus.INPROGRESS;
-        }
-        
-        else if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
-        {
-            ObjectiveManager.Instance.completedObjectives.Add(objective);
-            objectiveQueue.Remove(objectiveQueue.Find(objective));
-            ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
-        }
-
-        foreach (var child in objective.ChildObjectives)
-        {
-            RestoreObjectiveRecursive(child);
-        }*/
     }
 
+    // Starts a new set of objectives, resetting their status and updating the UI
     public void StartNewObjective(List<ObjectiveDataSO> objectiveList)
     {
-        /*var saveSystem = FindAnyObjectByType<AutoSaveManager>();
-        
-        saveSystem.LoadObjectives();*/
-        
         foreach (var objective in objectiveList)
         {
             ResetObjective(objective);
         }
-        
+
         ObjectiveManager.Instance.activeObjectives.Clear();
         TryStartNextObjective();
         ObjectiveManager.Instance.objectiveUIManager.OnObjectiveUpdated();
     }
 
+    // Resets an individual objective and its children
     public void ResetObjective(ObjectiveDataSO objective)
     {
-        if(ObjectiveManager.Instance.completedObjectives.Contains(objective)) return;
-        
-        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
-            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED && objective.parentObjective.objectiveStatus != ObjectiveStatus.INPROGRESS)
+        // If already completed, no need to reset
+        if (ObjectiveManager.Instance.completedObjectives.Contains(objective)) return;
+
+        // Reset logic only if parent is incomplete
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && 
+            objective.parentObjective != null &&
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED && 
+            objective.parentObjective.objectiveStatus != ObjectiveStatus.INPROGRESS)
         {
             objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
         }
-        
-        if(objectiveQueue.Contains(objective)) return;
-        
+
+        // Skip if already in queue
+        if (objectiveQueue.Contains(objective)) return;
+
+        // Reset the objective status
         objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
 
+        // Lock and reset unlockable objectives
         if (objective.hasUnlockables)
         {
             foreach (var objectives in objective.UnlockOnComplete)
@@ -213,7 +201,8 @@ public class GameManager : MonoBehaviour , ISaveable
                 objectives.objectiveStatus = ObjectiveStatus.NOTSTARTED;
             }
         }
-        
+
+        // Recursively reset children
         if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
         {
             foreach (var child in objective.ChildObjectives)
@@ -222,83 +211,50 @@ public class GameManager : MonoBehaviour , ISaveable
             }
         }
 
-        if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE ||
+        // Add to queue if it's a valid type
+        if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE || 
             objective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
         {
             objectiveQueue.AddFirst(objective);
         }
     }
-    
+
+    // Restores objective queue based on completed objectives
     public void RestoreConnectedObjectiveProgress()
     {
         objectiveQueue.Clear();
-        
-        /*var saveSystem = FindAnyObjectByType<AutoSaveManager>();
-        
-        saveSystem.LoadObjectives();*/
-        
+
         foreach (var obj in completedObjectives)
         {
             RestoreObjectiveRecursive(obj);
         }
-        
+
         TryStartNextObjective();
     }
-    public void RestoreConnectedObjectives(ObjectiveDataSO objective)
-    {
-        if(ObjectiveManager.Instance.completedObjectives.Contains(objective)) return;
-        
-        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
-            objective.parentObjective.objectiveStatus != ObjectiveStatus.COMPLETED && objective.parentObjective.objectiveStatus != ObjectiveStatus.INPROGRESS)
-        {
-            objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-        }
-        
-        if(objectiveQueue.Contains(objective)) return;
-        
-        objective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
 
-        if (objective.hasUnlockables)
-        {
-            foreach (var objectives in objective.UnlockOnComplete)
-            {
-                objectives.objectiveState = ObjectiveState.LOCKED;
-                objectives.objectiveStatus = ObjectiveStatus.NOTSTARTED;
-            }
-        }
-        
-        if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
-        {
-            foreach (var child in objective.ChildObjectives)
-            {
-                ResetObjective(child);
-            }
-        }
-
-        if (objective.objectiveType == ObjectiveType.PARENTOBJECTIVE)
-        {
-            objectiveQueue.AddFirst(objective);
-        }
-    }
+    // Marks game as a new game
     public void StartNewGame()
     {
         isNewGame = true;
     }
 
+    // Resumes game (not a new game)
     public void ResumeGame()
     {
         isNewGame = false;
     }
 
+    // Interface method to save the game state (currently not implemented)
     public void SaveState(ref AutoSaveManager.SaveData data)
     {
-        
+        // Implementation can be added to store completedObjectives, queue state, etc.
     }
 
+    // Loads saved objectives from previous state
     public void LoadState(AutoSaveManager.SaveData data)
     {
         completedObjectives.Clear();
-        
+
         foreach (var objectiveDataSo in data.objectives)
         {
             completedObjectives.Add(objectiveDataSo);

@@ -13,6 +13,9 @@ public class ObjectiveTrigger : MonoBehaviour
     }
     private void OnTriggerEnter(Collider hit)
     {
-        GameManager.Instance.StartNewObjective(objectiveToTrigger);
+        if (hit.CompareTag("Player"))
+        {
+            GameManager.Instance.StartNewObjective(objectiveToTrigger);
+        }
     }
 }

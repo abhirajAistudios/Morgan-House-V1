@@ -130,8 +130,30 @@ public class GameManager : MonoBehaviour
     private void RestoreObjectiveRecursive(ObjectiveDataSO objective)
     {
         if (objective == null) return;
+
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.hasUnlockables)
+        {
+            if (objective.UnlockOnComplete != null)
+            {
+                foreach (var unlockObjective in objective.UnlockOnComplete)
+                {
+                    if (unlockObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
+                    {
+                        unlockObjective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
+                        QueueObjectiveInLast(unlockObjective);
+                    }
+                }
+            }
+        }
+
+        if (objective.objectiveStatus == ObjectiveStatus.COMPLETED)
+        {
+            ObjectiveManager.Instance.completedObjectives.Add(objective);
+            //objectiveQueue.Remove(objectiveQueue.Find(objective));
+            ObjectiveManager.Instance.objectiveUIManager.uiRemovedObjectives.Add(objective);
+        }
         
-        QueueObjectiveInFirst(objective);
+        /*QueueObjectiveInFirst(objective);
         
         
         if (objective.objectiveStatus == ObjectiveStatus.COMPLETED && objective.parentObjective != null &&
@@ -150,7 +172,7 @@ public class GameManager : MonoBehaviour
         foreach (var child in objective.ChildObjectives)
         {
             RestoreObjectiveRecursive(child);
-        }
+        }*/
     }
 
     public void StartNewObjective(List<ObjectiveDataSO> objectiveList)
@@ -205,6 +227,8 @@ public class GameManager : MonoBehaviour
     
     public void RestoreConnectedObjectiveProgress()
     {
+        objectiveQueue.Clear();
+        
         var saveSystem = FindAnyObjectByType<AutoSaveManager>();
         
         saveSystem.LoadObjectives();

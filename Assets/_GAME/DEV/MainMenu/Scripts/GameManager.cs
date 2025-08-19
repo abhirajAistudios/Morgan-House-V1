@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviour , ISaveable
 {
     public static GameManager Instance;
 
@@ -177,6 +177,10 @@ public class GameManager : MonoBehaviour
 
     public void StartNewObjective(List<ObjectiveDataSO> objectiveList)
     {
+        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        
+        saveSystem.LoadObjectives();
+        
         foreach (var objective in objectiveList)
         {
             ResetObjective(objective);
@@ -285,5 +289,17 @@ public class GameManager : MonoBehaviour
     {
         isNewGame = false;
     }
-    
+
+    public void SaveState(ref AutoSaveManager.SaveData data)
+    {
+        
+    }
+
+    public void LoadState(AutoSaveManager.SaveData data)
+    {
+        foreach (var objectiveDataSo in data.objectives)
+        {
+            completedObjectives.Add(objectiveDataSo);
+        }
+    }
 }

@@ -33,6 +33,10 @@ public class ObjectiveManager : MonoBehaviour
         }
         else
         {
+            var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        
+            saveSystem.LoadObjectives();
+            
             gameManager.RestoreConnectedObjectiveProgress();
             //gameManager.RestoreObjectiveProgress();
             return;

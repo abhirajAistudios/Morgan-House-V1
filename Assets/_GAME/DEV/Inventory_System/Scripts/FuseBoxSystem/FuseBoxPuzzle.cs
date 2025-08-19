@@ -32,9 +32,6 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public override string Description => description;
     public override string GetTooltipText() => tooltip;
 
-    [Header("Player Reference")]
-    public Transform player;
-
     [Header("Door to Unlock on Solve")]
     public DoorInteraction doorToUnlock; // Optional reference to a door
 
@@ -126,7 +123,8 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         }
 
         GameProgressTracker.ObjectivesCompleted++;
-        FindAnyObjectByType<AutoSaveManager>().SaveAfterObjective(player);
+        Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
+        FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(playerpos);
         OnLoseFocus();
     }
 

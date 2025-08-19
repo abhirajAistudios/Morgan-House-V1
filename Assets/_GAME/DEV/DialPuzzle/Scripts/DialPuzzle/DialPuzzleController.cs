@@ -25,8 +25,6 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     [Header("Unique Save ID")]
     [SerializeField] private string uniqueID;
 
-    public Transform player;
-
     private void OnValidate()
     {
         if (string.IsNullOrEmpty(uniqueID))
@@ -117,7 +115,9 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
         CloseButton?.gameObject.SetActive(true);
 
         GameProgressTracker.ObjectivesCompleted++;
-        FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(player);
+        
+        Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
+        FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(playerpos);
     }
 
     // -----------------------

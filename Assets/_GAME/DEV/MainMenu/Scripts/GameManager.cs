@@ -177,9 +177,9 @@ public class GameManager : MonoBehaviour , ISaveable
 
     public void StartNewObjective(List<ObjectiveDataSO> objectiveList)
     {
-        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        /*var saveSystem = FindAnyObjectByType<AutoSaveManager>();
         
-        saveSystem.LoadObjectives();
+        saveSystem.LoadObjectives();*/
         
         foreach (var objective in objectiveList)
         {
@@ -297,6 +297,8 @@ public class GameManager : MonoBehaviour , ISaveable
 
     public void LoadState(AutoSaveManager.SaveData data)
     {
+        completedObjectives.Clear();
+        
         foreach (var objectiveDataSo in data.objectives)
         {
             completedObjectives.Add(objectiveDataSo);

@@ -8425,14 +8425,6 @@ PrefabInstance:
       value: Dial Puzzle Objective Trig
       objectReference: {fileID: 0}
     - target: {fileID: 4204183700408322194, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
-      propertyPath: m_LocalScale.x
-      value: 2.6637545
-      objectReference: {fileID: 0}
-    - target: {fileID: 4204183700408322194, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
-      propertyPath: m_LocalScale.z
-      value: 1.3566313
-      objectReference: {fileID: 0}
-    - target: {fileID: 4204183700408322194, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.7
       objectReference: {fileID: 0}
@@ -8472,10 +8464,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5219916516379330606, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
-      propertyPath: 'objectiveToTrigger.Array.data[0]'
-      value: 
-      objectReference: {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -12751,6 +12739,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5219916516379330606, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
+      propertyPath: 'objectiveToTrigger.Array.data[0]'
+      value: 
+      objectReference: {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

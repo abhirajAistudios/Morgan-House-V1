@@ -137,7 +137,7 @@ public class GameManager : MonoBehaviour , ISaveable
             {
                 foreach (var unlockObjective in objective.UnlockOnComplete)
                 {
-                    if (unlockObjective.objectiveStatus != ObjectiveStatus.COMPLETED)
+                    if (unlockObjective.objectiveStatus != ObjectiveStatus.COMPLETED || !completedObjectives.Contains(unlockObjective))
                     {
                         unlockObjective.objectiveStatus = ObjectiveStatus.NOTSTARTED;
                         QueueObjectiveInLast(unlockObjective);
@@ -233,9 +233,9 @@ public class GameManager : MonoBehaviour , ISaveable
     {
         objectiveQueue.Clear();
         
-        var saveSystem = FindAnyObjectByType<AutoSaveManager>();
+        /*var saveSystem = FindAnyObjectByType<AutoSaveManager>();
         
-        saveSystem.LoadObjectives();
+        saveSystem.LoadObjectives();*/
         
         foreach (var obj in completedObjectives)
         {

@@ -51,8 +51,7 @@ public abstract class ObjectiveDataSO : ScriptableObject , ISaveable
             ObjectiveManager.Instance.objectiveUIManager.ShowParentCompletionPrompt(this);
         }
     }
-
-
+    
     public abstract void Initialize();
 
     public bool AreChildrenComplete()
@@ -80,7 +79,5 @@ public abstract class ObjectiveDataSO : ScriptableObject , ISaveable
         {
             objectiveStatus = ObjectiveStatus.NOTSTARTED;
         }
-        
-        
     }
 }

@@ -33,9 +33,6 @@ public class AutoSaveManager : MonoBehaviour
         public static AutoSaveManager Instance { get; private set; }
     }
 
-
-    
-
     [System.Serializable]
     public class PuzzleState
     {
@@ -60,12 +57,6 @@ public class AutoSaveManager : MonoBehaviour
         public float currentBattery;
         public bool isOn;
     }
-
-
-
-
-
-
 
     [System.Serializable]
     public class InventorySlotData

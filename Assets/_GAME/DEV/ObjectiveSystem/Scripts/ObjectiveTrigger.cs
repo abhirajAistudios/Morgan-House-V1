@@ -1,16 +1,9 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ObjectiveTrigger : MonoBehaviour
 {
-    public List<ObjectiveDataSO> objectiveToTrigger;
-    private BoxCollider boxCollider;
-
-    private void Start()
-    {
-        boxCollider = GetComponent<BoxCollider>();
-    }
+    [SerializeField] private List<ObjectiveDataSO> objectiveToTrigger;
     private void OnTriggerEnter(Collider hit)
     {
         if (hit.CompareTag("Player"))

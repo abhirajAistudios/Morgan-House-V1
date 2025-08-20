@@ -131,7 +131,8 @@ public class ObjectiveManager : MonoBehaviour
         if (AllObjectivesCompleted())
         {
             gameManager.QueueObjectiveInFirst(FinalObjective);
-            //gameManager.TryStartNextObjective();
+            gameManager.TryStartNextObjective();
+            objectiveUIManager.OnObjectiveUpdated();
         }
     }
 

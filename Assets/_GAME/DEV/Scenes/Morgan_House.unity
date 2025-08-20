@@ -11723,6 +11723,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1132430306123765786, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
+      propertyPath: disableInSceneName
+      value: Morgan_HouseTestScene
+      objectReference: {fileID: 0}
     - target: {fileID: 3847894129247716065, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 25.6

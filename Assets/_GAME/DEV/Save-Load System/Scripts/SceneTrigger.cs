@@ -1,50 +1,63 @@
 ﻿using UnityEngine;
 using UnityEngine.SceneManagement;
 
+/// <summary>
+/// Handles scene transition when player completes objectives and enters trigger.
+/// Also manages auto-saving after scene load.
+/// </summary>
 public class SceneTrigger : MonoBehaviour
 {
-    [SerializeField] private string nextSceneName = "Morgan_HouseTestScene"; // Next scene name
-    [SerializeField] private GameObject loadingScreenPrefab;  // Assign your loading screen prefab
+    // ---------------- INSPECTOR VARIABLES ----------------
+    [SerializeField] private string nextSceneName; // The name of the next scene to load
 
-    private bool hasTriggered = false;
-    private GameObject loadingScreenInstance;
+    // ---------------- PRIVATE VARIABLES ------------------
+    private bool hasTriggered = false; // Prevents multiple triggers
+
+    // ---------------- UNITY METHODS ----------------------
 
     private void Awake()
     {
-        // Make this trigger persistent across all scenes
+        // Keep this trigger object persistent across scene loads
         DontDestroyOnLoad(gameObject);
 
-        // Subscribe to sceneLoaded so we can reset in specific scenes
+        // Subscribe to sceneLoaded event (needed to reset triggers in specific scenes)
         SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
-    public void Start()
+    private void Start()
     {
-        
+        // Currently unused but kept for possible future initialization
     }
 
     private void OnDestroy()
     {
-        // Unsubscribe to avoid memory leaks
+        // Unsubscribe from sceneLoaded event to avoid memory leaks
         SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        if (hasTriggered) return;  // Prevent multiple calls
+        // Prevent triggering more than once
+        if (hasTriggered) return;
 
+        // Only trigger if the player collides and all objectives are completed
         if (other.CompareTag("Player") && ObjectiveManager.Instance.AllObjectivesCompleted())
         {
             hasTriggered = true;
 
-            // Start loading the next scene
+            // Load the next scene using LoadingManager
             LoadingManager.Instance.LoadSceneByName(nextSceneName);
 
-            // ✅ Autosave after the scene has fully loaded
+            // Attempt to autosave after the new scene loads
             AutoSaveAfterSceneLoad();
         }
     }
 
+    // ---------------- CUSTOM METHODS ----------------------
+
+    /// <summary>
+    /// Handles auto-saving player progress after a scene load.
+    /// </summary>
     private void AutoSaveAfterSceneLoad()
     {
         AutoSaveManager saveManager = FindObjectOfType<AutoSaveManager>();
@@ -55,18 +68,21 @@ public class SceneTrigger : MonoBehaviour
             Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
 
             saveManager.SaveAfterObjective(playerpos);
-            Debug.Log("✅ AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
+            Debug.Log(" AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
         }
         else
         {
-            Debug.LogWarning("⚠ AutoSave skipped - SaveManager or Player not found in scene: " + SceneManager.GetActiveScene().name);
+            Debug.LogWarning(" AutoSave skipped - SaveManager or Player not found in scene: "
+                             + SceneManager.GetActiveScene().name);
         }
     }
 
+    /// <summary>
+    /// Resets trigger state when a specific scene is loaded.
+    /// </summary>
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        // Reset the trigger flag when we enter Morgan_HouseTestScene
-        if (scene.name == "Morgan_HouseTestScene")
+        if (scene.name == nextSceneName)
         {
             hasTriggered = false;
             Debug.Log(" SceneTrigger reset in " + scene.name);

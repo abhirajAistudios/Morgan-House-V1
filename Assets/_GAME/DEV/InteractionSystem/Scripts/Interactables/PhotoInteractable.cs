@@ -3,7 +3,7 @@ using UnityEngine;
 /// <summary>
 /// Represents an interactable photograph that can be viewed in detail and plays audio when used.
 /// </summary>
-public class Photointeractable : BaseInteractable
+public class PhotoInteractable : BaseInteractable
 {
     [Header("Tooltip & Info")]
     [Tooltip("Tooltip shown when hovering over the object.")]
@@ -19,11 +19,8 @@ public class Photointeractable : BaseInteractable
     // Public read-only properties for UI
     public override string DisplayName => displayName;
     public override string Description => description;
-
-    /// <summary>
+    
     /// Called when the object is being looked at.
-    /// Highlights the object visually.
-    /// </summary>
     public override void OnFocus()
     {
         if (TryGetComponent<Renderer>(out var renderer))
@@ -31,11 +28,8 @@ public class Photointeractable : BaseInteractable
             renderer.material.color = Color.yellow;
         }
     }
-
-    /// <summary>
+    
     /// Called when the object loses focus.
-    /// Removes the highlight.
-    /// </summary>
     public override void OnLoseFocus()
     {
         if (TryGetComponent<Renderer>(out var renderer))
@@ -43,15 +37,10 @@ public class Photointeractable : BaseInteractable
             renderer.material.color = Color.cyan;
         }
     }
-
-    /// <summary>
+    
     /// Called when the player presses the interact key.
-    /// Plays sound, opens viewer, and optionally updates visuals.
-    /// </summary>
     public override void OnInteract()
     {
-        Debug.Log($"[Photointeractable] Interacted with {name}");
-
         ObjectViewSwitcher switcher = FindObjectOfType<ObjectViewSwitcher>();
         if (switcher != null)
         {
@@ -66,10 +55,8 @@ public class Photointeractable : BaseInteractable
             renderer.material.color = Color.green;
         }
     }
-
-    /// <summary>
+    
     /// Returns the tooltip string to show in the UI.
-    /// </summary>
     public override string GetTooltipText()
     {
         return string.IsNullOrEmpty(tooltip) ? displayName : tooltip;

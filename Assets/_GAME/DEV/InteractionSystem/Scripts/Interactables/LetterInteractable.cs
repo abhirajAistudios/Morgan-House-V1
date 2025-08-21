@@ -54,7 +54,6 @@ public class LetterInteractable : BaseInteractable
 
         if (!IsInteractable)
         {
-            Debug.Log($"[{name}] already used and is not reusable.");
             return;
         }
 

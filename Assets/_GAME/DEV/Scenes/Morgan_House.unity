@@ -3472,8 +3472,6 @@ MonoBehaviour:
   incompleteColor: {r: 1, g: 0, b: 0, a: 1}
   completeColor: {r: 0, g: 1, b: 0, a: 1}
   requiredItemName: Fuse
-  stopInteract: {fileID: 1571540734}
-  isSolved: 0
   puzzleID: dd9f8306-d6dc-424f-a26c-5a5636d95d10
   displayName: FuseBox
   description: Insert fuses to power the system.
@@ -8502,6 +8500,10 @@ PrefabInstance:
       propertyPath: ItemID
       value: gg
       objectReference: {fileID: 0}
+    - target: {fileID: 2560106954283839283, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
+      propertyPath: flashlightRig
+      value: 
+      objectReference: {fileID: 675935235368134445}
     - target: {fileID: 3412589135081195661, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -8698,6 +8700,17 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1738363053}
   m_SourcePrefab: {fileID: 100100000, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
+--- !u!114 &675935235368134445 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 7347272665670181648, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
+  m_PrefabInstance: {fileID: 675935235368134444}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fff0960ef4ea6e04eac66b4a7fd2189d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!33 &683267632714830182
 MeshFilter:
   m_ObjectHideFlags: 0

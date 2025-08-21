@@ -1,8 +1,6 @@
 using ExpressElevator.Utilities;
-using HorrorGame.GameInput;
 using Inventory.Sound;
 using UnityEngine;
-
 
 public class GameService : GenericMonoSingleton<GameService>
 {

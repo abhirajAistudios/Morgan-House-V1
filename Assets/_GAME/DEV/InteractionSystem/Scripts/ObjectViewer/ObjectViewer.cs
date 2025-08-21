@@ -3,26 +3,26 @@ using UnityEngine;
 
 /// <summary>
 /// Displays a 3D object viewer with smooth zoom, rotation clamping,
-/// and idle auto-rotation when not interacting.
+/// and idle autorotation when not interacting.
 /// </summary>
 public class ObjectViewer : MonoBehaviour
 {
     [Header("References")]
-    public Transform pivot;
-    public Camera viewerCamera;
-    public TMP_Text titleText;
-    public TMP_Text descriptionText;
+    [SerializeField] private Transform pivot;
+    [SerializeField] private Camera viewerCamera;
+    [SerializeField] private TMP_Text titleText;
+    [SerializeField] private TMP_Text descriptionText;
 
     [Header("Interaction Settings")]
-    public float rotationSpeed = 5f;
-    public float zoomSpeed = 3f;
-    public float minZoom = 2f;
-    public float maxZoom = 8f;
-    public LayerMask objectLayer = 0;
+    [SerializeField] private float rotationSpeed = 5f;
+    [SerializeField] private float zoomSpeed = 3f;
+    [SerializeField] private float minZoom = 2f;
+    [SerializeField] private float maxZoom = 8f;
+    [SerializeField] private LayerMask objectLayer = 0;
 
     [Header("Auto-Rotate")]
-    public float idleRotateSpeed = 20f;
-    public float idleDelay = 3f; // seconds after last interaction
+    [SerializeField] private float idleRotateSpeed = 20f;
+    [SerializeField] private float idleDelay = 3f; // seconds after last interaction
 
     private GameObject currentObject;
     private IInteractables _currentInteractor;
@@ -38,7 +38,6 @@ public class ObjectViewer : MonoBehaviour
         if (currentObject) Destroy(currentObject);
 
         currentObject = Instantiate(prefab, pivot);
-        Debug.Log("Instantiated: " + currentObject.name);
 
         _currentInteractor = interactables;
 
@@ -131,7 +130,7 @@ public class ObjectViewer : MonoBehaviour
             Close();
     }
 
-    Bounds CalculateBounds(GameObject go)
+    private Bounds CalculateBounds(GameObject go)
     {
         Renderer[] renderers = go.GetComponentsInChildren<Renderer>();
         if (renderers.Length == 0)

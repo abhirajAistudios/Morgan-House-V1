@@ -36,10 +36,8 @@ public class Interactor : MonoBehaviour
     {
         HandleRaycast();
     }
-
-    /// <summary>
+    
     /// Performs a raycast and handles focus/interact logic.
-    /// </summary>
     void HandleRaycast()
     {
         Ray ray = cam.ViewportPointToRay(new Vector3(0.5f, 0.5f));
@@ -94,11 +92,8 @@ public class Interactor : MonoBehaviour
             ClearCurrent();
         }
     }
-
-
-    /// <summary>
+    
     /// Clears current focus and resets tooltip.
-    /// </summary>
     void ClearCurrent()
     {
         if (currentInteractable != null)

@@ -65,8 +65,5 @@ public class SwitchInteractable : BaseInteractable
         {
             renderer.material.color = usedColor;
         }
-
-        // Optional: trigger events, animations, logic here
-        Debug.Log($"Switch [{name}] was used.");
     }
 }

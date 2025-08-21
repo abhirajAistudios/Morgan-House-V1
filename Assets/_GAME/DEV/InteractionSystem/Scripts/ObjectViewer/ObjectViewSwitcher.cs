@@ -6,7 +6,6 @@ using UnityEngine;
 /// </summary>
 public class ObjectViewSwitcher : MonoBehaviour
 {
-   // public Camera mainCamera;              // The main gameplay camera
     public Camera objectCamera;            // The camera used to focus on the Object
     public GameObject viewerUI;
     public GameObject playerController;    // Player movement/interaction script or container
@@ -23,9 +22,7 @@ public class ObjectViewSwitcher : MonoBehaviour
     public void EnterPuzzleView()
     {
         inObjectView = true;
-
-        // Switch to Object camera
-       // mainCamera.enabled = false;
+        
         objectCamera.enabled = true;
 
         // Unlock and show the cursor for UI interaction
@@ -48,9 +45,7 @@ public class ObjectViewSwitcher : MonoBehaviour
     {
         viewerUI.SetActive(false);
         inObjectView = false;
-
-        // Switch back to main camera
-        //mainCamera.enabled = true;
+        
         objectCamera.enabled = false;
 
         // Disable Object UI and re-enable player controls
@@ -60,10 +55,8 @@ public class ObjectViewSwitcher : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;
     }
-
-    /// <summary>
+    
     /// Checks for Escape key press while in Object view to exit back to the game.
-    /// </summary>
     void Update()
     {
         if (inObjectView && Input.GetKeyDown(KeyCode.Escape))

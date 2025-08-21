@@ -10,6 +10,7 @@ public class AutoSaveManager : MonoBehaviour
 {
     #region Singleton
     private string savePath;
+    [HideInInspector]
     public AutoSaveManager instance;
     #endregion
 

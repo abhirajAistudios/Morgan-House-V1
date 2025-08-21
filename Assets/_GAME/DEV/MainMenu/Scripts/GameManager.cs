@@ -43,12 +43,9 @@ public class GameManager : MonoBehaviour, ISaveable
         // If this is a child objective
         if (completedObjective.parentObjective != null)
         {
-            Debug.Log("Objective Completed" + completedObjective.dialogDisplay);
-
             // If parent is not ready, wait for other children
             if (!completedObjective.parentObjective.AreChildrenComplete())
             {
-                Debug.Log("[GameManager] Waiting for other child objectives to complete.");
                 return;
             }
 
@@ -111,7 +108,6 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         completedObjectives.Clear();
-        Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
     }
 
     // Recursively resets objective status to NOTSTARTED

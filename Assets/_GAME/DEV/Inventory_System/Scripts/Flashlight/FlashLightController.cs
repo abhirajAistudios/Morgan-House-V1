@@ -52,6 +52,7 @@ public class FlashlightController : MonoBehaviour, ISaveable
         currentBattery = maxBattery;
         DisableFlashRig();
         batterySlider.gameObject.SetActive(false);
+        flashlightRig = FindObjectOfType<RigBuilder>();
     }
 
     private void Update()

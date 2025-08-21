@@ -54,7 +54,6 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
         if (objectiveStatus == ObjectiveStatus.COMPLETED || objectiveState == ObjectiveState.LOCKED) return;
 
         objectiveStatus = ObjectiveStatus.COMPLETED;
-        Debug.Log("Objective Complete " + objectiveName);
 
         // Notify the objective manager
         ObjectiveManager.Instance.OnObjectiveCompleted(this);
@@ -71,8 +70,6 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
     {
         if (AreChildrenComplete() && objectiveStatus != ObjectiveStatus.COMPLETED)
         {
-            Debug.Log($"[ObjectiveDataSO] {objectiveName} is now ready for manual completion.");
-
             // Show a prompt in the UI to let the player manually complete this objective
             ObjectiveManager.Instance.objectiveUIManager.ShowParentCompletionPrompt(this);
         }
@@ -93,7 +90,6 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
         if (objectiveStatus == ObjectiveStatus.COMPLETED && !data.objectives.Contains(this))
         {
             data.objectives.Add(this);
-            Debug.Log("Saved with ID: " + dialogDisplay);
         }
     }
 
@@ -103,7 +99,6 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
         if (data.objectives.Contains(this))
         {
             objectiveStatus = ObjectiveStatus.COMPLETED;
-            Debug.Log("Restored with ID: " + dialogDisplay);
         }
         // If it's a parent objective but not in saved data, reset it
         else if (objectiveType == ObjectiveType.PARENTOBJECTIVE)

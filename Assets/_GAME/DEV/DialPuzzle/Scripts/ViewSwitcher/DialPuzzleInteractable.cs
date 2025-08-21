@@ -75,6 +75,5 @@ public class DialPuzzleInteractable : BaseInteractable
     public void MarkSolved()
     {
         isSolved = true;
-        Debug.Log($"{name} has been marked solved and is no longer interactable.");
     }
 }

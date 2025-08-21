@@ -9,11 +9,8 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
 
     public override void Initialize()
     {
-        Debug.Log($"[CollectibleObjectiveSO] Initialized: {objectiveName}");
-
         // Recount how many were already collected (e.g., from save file)
         currentCount = ItemTracker.Instance.GetItemCount(ItemId);
-        Debug.Log($"[CollectibleObjectiveSO] Pre-collected count: {currentCount}/{RequiredCount}");
 
         // Listen for future collections
         GameService.Instance.EventService.OnObjectCollected.AddListener(OnItemCollected);
@@ -24,8 +21,6 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
             CompleteObjective();
             GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
         }
-        
-        Debug.Log(AreChildrenComplete());
     }
 
     public void OnItemCollected(string collectedItemId)
@@ -34,11 +29,9 @@ public class CollectibleObjectiveSO : ObjectiveDataSO
         if (collectedItemId != ItemId) return;
 
         currentCount = ItemTracker.Instance.GetItemCount(ItemId);
-        Debug.Log($"[{objectiveName}] Collected {currentCount}/{RequiredCount}");
 
         if (currentCount >= RequiredCount && AreChildrenComplete())
         {
-            Debug.Log("this is colledted");
             CompleteObjective();
             GameService.Instance.EventService.OnObjectiveCompleted.InvokeEvent(this);
         }

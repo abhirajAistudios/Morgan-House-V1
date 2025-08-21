@@ -120,7 +120,6 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     /// Called when the puzzle is solved.
     void PuzzleSolved()
     {
-        Debug.Log("Dial Puzzle Solved!");
         isSolved = true;
         
         dialPuzzleInteractable?.MarkSolved();                                                               // Mark the puzzle as solved in the puzzle interactable

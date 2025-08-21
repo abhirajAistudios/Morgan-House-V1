@@ -5,7 +5,6 @@ public class SolvePuzzleObjectiveSO : ObjectiveDataSO
 {
     public string ItemId;
     
-    
     public override void Initialize()
     {
         GameService.Instance.EventService.OnPuzzleSolved.AddListener(OnPuzzleSolved);

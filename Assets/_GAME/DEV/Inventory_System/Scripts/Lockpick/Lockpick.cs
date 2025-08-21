@@ -1,24 +1,22 @@
 using UnityEngine;
-using UnityEngine.SceneManagement;
-// using static DoorInteraction;
 
 public class Lockpick : MonoBehaviour
 {
     [Header("References")]
-    public Camera cam;
-    public Transform innerLock;
-    public Transform pickPosition;
-     public LockPickCameraManager exit;
-     public DoorInteraction open;
-    public AudioSource openAudio;
+    [SerializeField] private Camera cam;
+    [SerializeField] private Transform innerLock;
+    [SerializeField] private Transform pickPosition;
+    [SerializeField] private LockPickCameraManager exit;
+    [SerializeField] private DoorInteraction open;
+    [SerializeField] private AudioSource openAudio;
 
     [Header("Lockpick Settings")]
-    public float lockSpeed = 10f;
-    public float unlockThreshold = 15f;
-    public float maxUnlockRotation = 90f;
+    [SerializeField] private float lockSpeed = 10f;
+    [SerializeField] private float unlockThreshold = 15f;
+    [SerializeField] private float maxUnlockRotation = 90f;
 
     [Tooltip("Adjust to match your lockpick's default sprite/model orientation.")]
-    public float rotationOffset = 0f;
+    [SerializeField] private float rotationOffset = 0f;
 
     [SerializeField]
     private float[] unlockAngles = new float[4];
@@ -28,7 +26,7 @@ public class Lockpick : MonoBehaviour
     private bool isUnlocking = false;
     private float currentTargetUnlockAngle = 0f;
 
-    void Start()
+    private void Start()
     {
         // Enable cursor for lockpicking UI
         Cursor.lockState = CursorLockMode.None;
@@ -41,7 +39,7 @@ public class Lockpick : MonoBehaviour
             transform.position = pickPosition.position;
     }
 
-    void Update()
+    private void Update()
     {
         HandleMouseInput();
 
@@ -50,11 +48,9 @@ public class Lockpick : MonoBehaviour
         else
             ResetInnerLockRotation();
     }
-
-    /// <summary>
+    
     /// Handles mouse click and release detection.
-    /// </summary>
-    void HandleMouseInput()
+    private void HandleMouseInput()
     {
         // Begin dragging when mouse is pressed on this object
         if (Input.GetMouseButtonDown(0))
@@ -72,11 +68,9 @@ public class Lockpick : MonoBehaviour
             isMouseHeld = false;
         }
     }
-
-    /// <summary>
+    
     /// Handles pick rotation, sweet spot detection, and unlocking animation.
-    /// </summary>
-    void RotatePickAndAttemptUnlock()
+    private void RotatePickAndAttemptUnlock()
     {
         // Get angle based on mouse position and apply rotation
         Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
@@ -120,45 +114,34 @@ public class Lockpick : MonoBehaviour
             innerLock.eulerAngles = new Vector3(0, 0, newZ);
         }
     }
-
-    /// <summary>
+    
     /// Gradually resets the inner lock if not interacting.
-    /// </summary>
-    void ResetInnerLockRotation()
+    private void ResetInnerLockRotation()
     {
         float newZ = Mathf.LerpAngle(innerLock.eulerAngles.z, 0, Time.deltaTime * lockSpeed);
         innerLock.eulerAngles = new Vector3(0, 0, newZ);
     }
-
-    /// <summary>
+    
     /// Generates random sweet spot angles for unlocking.
-    /// </summary>
-    void GenerateRandomUnlockAngles()
+    private void GenerateRandomUnlockAngles()
     {
         for (int i = 0; i < unlockAngles.Length; i++)
         {
             unlockAngles[i] = Random.Range(0f, 360f);
         }
     }
-
-    /// <summary>
+    
     /// Ensures angles stay between 0 and 360.
-    /// </summary>
-    float NormalizeAngle(float angle)
+    private float NormalizeAngle(float angle)
     {
         angle %= 360f;
         if (angle < 0) angle += 360f;
         return angle;
     }
-
-    /// <summary>
+    
     /// Called when lockpicking is successful.
-    /// </summary>
-    public void OnSuccessfulLockpick()
+    private void OnSuccessfulLockpick()
     {
-        // Mark door to open after returning to main scene
-         //DoorUnlockTracker.wasUnlockedViaLockpick = true;
-
         // Lock and hide cursor again
         Cursor.lockState = CursorLockMode.Locked;
         Cursor.visible = false;

@@ -3,13 +3,12 @@ using UnityEngine;
 public class LockPickCameraManager : MonoBehaviour
 {
     [Header("Cameras")]
-    public Camera mainCamera;
-    public Camera lockpickCamera;
-   // public Camera DialPuzzleCamera;
-    public GameObject player;
+    [SerializeField] private Camera mainCamera;
+    [SerializeField] private Camera lockpickCamera;
+    [SerializeField] private GameObject player;
 
     [Header("Lockpick Objects")]
-    public GameObject[] lockpickObjects;
+    [SerializeField] private GameObject[] lockpickObjects;
 
     private bool isLockpicking = false;
 
@@ -22,9 +21,7 @@ public class LockPickCameraManager : MonoBehaviour
         lockpickCamera.enabled = true;
         mainCamera.enabled = false;
         
-//        DialPuzzleCamera.enabled = false;
         player.SetActive(false);
-        
 
         foreach (GameObject obj in lockpickObjects)
             obj.SetActive(true);
@@ -38,7 +35,6 @@ public class LockPickCameraManager : MonoBehaviour
         lockpickCamera.gameObject.SetActive(false);
         lockpickCamera.enabled = false;
         mainCamera.enabled = true;
-    //    DialPuzzleCamera.enabled = true;
         player.SetActive(true);
 
         foreach (GameObject obj in lockpickObjects)

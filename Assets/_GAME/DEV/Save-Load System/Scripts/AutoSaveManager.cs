@@ -4,14 +4,15 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 
 /// <summary>
-/// Manages auto-saving and loading of game data (player position, objectives, inventory, puzzles, etc.)
+/// Handles auto-saving and loading of game state (player, inventory, puzzles, doors, flashlight, etc.)
+/// Uses JSON persistence at Application.persistentDataPath.
 /// </summary>
 public class AutoSaveManager : MonoBehaviour
 {
     #region Singleton
-    private string savePath;
+    private string savePath;                   // File path for save file
     [HideInInspector]
-    public AutoSaveManager instance;
+    public AutoSaveManager instance;           // Singleton instance (not static for inspector visibility)
     #endregion
 
     #region Save Data Classes
@@ -19,71 +20,66 @@ public class AutoSaveManager : MonoBehaviour
     public class SaveData
     {
         public int objectivesCompleted;              // Number of objectives completed
-        public float playerPosX, playerPosY, playerPosZ; // Player's position in world
-        public string timestamp;                     // Save timestamp
+        public float playerPosX, playerPosY, playerPosZ; // Player world position
+        public string timestamp;                     // When the save was created
         public string lastSceneName;                 // Scene where save occurred
 
-        // Store different gameplay states
-        public List<string> collectedItems = new();          // Unique IDs of collected items
-        public List<PuzzleState> puzzles = new();            // Puzzle states
-        public List<InventorySlotData> inventorySlots = new(); // Player inventory
-        public List<ObjectiveDataSO> objectives = new();     // Objective states
-        public List<DoorStateData> doors = new();            // Door states
-        public FlashlightSaveData flashlightData = new();    // Flashlight state
+        // Game state collections
+        public List<string> collectedItems = new();              // IDs of collected items
+        public List<PuzzleState> puzzles = new();                // Puzzle states
+        public List<InventorySlotData> inventorySlots = new();   // Player inventory
+        public List<ObjectiveDataSO> objectives = new();         // Completed objective data
+        public List<DoorStateData> doors = new();                // Door states
+        public FlashlightSaveData flashlightData = new();        // Flashlight state
     }
 
     [System.Serializable]
     public class PuzzleState
     {
         public string puzzleID;   // Unique puzzle identifier
-        public bool isSolved;     // Whether the puzzle is solved
+        public bool isSolved;     // True if solved
     }
 
     [System.Serializable]
     public class DoorStateData
     {
         public string doorID;     // Unique door identifier
-        public DoorState doorState;
-        public bool isOpen;       // Open/Closed state
+        public DoorState doorState; // Current door state enum
+        public bool isOpen;       // True if door is currently open
     }
 
     [System.Serializable]
     public class FlashlightSaveData
     {
-        public bool hasFlashlight;
-        public bool requiresBattery;
-        public float currentBattery;
-        public bool isOn;
+        public bool hasFlashlight;   // If player owns flashlight
+        public bool requiresBattery; // Whether flashlight requires battery
+        public float currentBattery; // Remaining battery %
+        public bool isOn;            // If flashlight is active
     }
 
     [System.Serializable]
     public class InventorySlotData
     {
-        public string itemName;
-        public int quantity;
-        public int slotIndex; // Slot index in the inventory UI
+        public string itemName;  // Item name from ItemDatabase
+        public int quantity;     // Amount stored
+        public int slotIndex;    // Slot index in inventory UI
     }
 
-    [System.Serializable]
-    public class FlashlightData
-    {
-        public bool hasFlashlight;
-        public bool isOn;
-        public float currentBattery;
-    }
+
+   
     #endregion
 
     #region Properties
-    public SaveData CurrentData { get; private set; }
+    public SaveData CurrentData { get; private set; }  // Holds last loaded or saved data
     #endregion
 
     #region Unity Methods
     private void Awake()
     {
-        // Define path for save file
+        // Build save path once
         savePath = Path.Combine(Application.persistentDataPath, "savegame.json");
 
-        // Singleton setup
+        // Ensure only one AutoSaveManager exists
         if (instance == null)
             instance = this;
         else
@@ -93,11 +89,12 @@ public class AutoSaveManager : MonoBehaviour
 
     #region Save Methods
     /// <summary>
-    /// Saves progress after completing an objective.
+    /// Creates a save file after completing an objective.
+    /// Stores player state, puzzles, inventory, etc.
     /// </summary>
     public void SaveAfterObjective(Transform player)
     {
-        // Create save data
+        // Build save data snapshot
         SaveData data = new SaveData
         {
             objectivesCompleted = GameProgressTracker.ObjectivesCompleted,
@@ -105,71 +102,69 @@ public class AutoSaveManager : MonoBehaviour
             playerPosY = player.position.y,
             playerPosZ = player.position.z,
             timestamp = System.DateTime.Now.ToString(),
-            lastSceneName = SceneManager.GetActiveScene().name // Save current scene
+            lastSceneName = SceneManager.GetActiveScene().name
         };
 
-        // Save all ISaveable states
+        // Save states of all objects implementing ISaveable
         foreach (var saveable in FindObjectsOfType<MonoBehaviour>(true))
         {
             if (saveable is ISaveable s)
                 s.SaveState(ref data);
         }
 
-        // Save objectives
+        // Save objective states
         foreach (var objective in ObjectiveManager.Instance.completedObjectives)
         {
             if (objective is ISaveable s)
             {
                 s.SaveState(ref data);
-                Debug.Log("✅ Saved objective: " + objective.dialogDisplay);
+               
             }
         }
 
-        // Write to JSON
+        // Convert to JSON and write to disk
         CurrentData = data;
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(savePath, json);
 
-        Debug.Log("💾 Game Autosaved!");
+        Debug.Log(" Game Autosaved!");
         GameService.Instance.UIService.ShowMessage("Game Autosaved!", 1.5f);
     }
     #endregion
 
     #region Load Methods
     /// <summary>
-    /// Loads saved game data (player position, objectives, states).
+    /// Loads player and world state from save file.
     /// </summary>
     public void LoadGame(Transform player)
     {
         if (!File.Exists(savePath))
-        {
-            Debug.LogWarning("⚠ No save file found.");
-            return;
-        }
+            return; // Nothing to load yet
 
-        // Read save data from file
+        // Read and deserialize save
         string json = File.ReadAllText(savePath);
         SaveData data = JsonUtility.FromJson<SaveData>(json);
-
         CurrentData = data;
+
+        // Ensure scene name matches
         data.lastSceneName = SceneManager.GetActiveScene().name;
 
-        // Restore player position & progress
+        // Restore player state
         player.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
         GameProgressTracker.ObjectivesCompleted = data.objectivesCompleted;
 
-        // Restore ISaveable states
+        // Restore states of ISaveable objects
         foreach (var saveable in FindObjectsOfType<MonoBehaviour>(true))
         {
             if (saveable is ISaveable s)
                 s.LoadState(data);
         }
 
-        Debug.Log("✅ Game Loaded from save.");
     }
+    
 
     /// <summary>
-    /// Reloads saved objectives and their child objectives.
+    /// Reloads saved objectives and child objectives from CurrentData.
     /// </summary>
     public void LoadObjectives()
     {
@@ -179,13 +174,11 @@ public class AutoSaveManager : MonoBehaviour
             {
                 s.LoadState(CurrentData);
 
-                // Restore child objectives
+                // Restore child objectives too
                 if (objective.ChildObjectives != null && objective.ChildObjectives.Count > 0)
                 {
                     foreach (var child in objective.ChildObjectives)
-                    {
                         child.LoadState(CurrentData);
-                    }
                 }
             }
         }

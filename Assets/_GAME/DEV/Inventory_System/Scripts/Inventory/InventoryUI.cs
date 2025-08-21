@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
@@ -12,9 +11,14 @@ public class UIInventory : MonoBehaviour
     #region Inspector Fields
 
     [Header("Inventory UI References")]
-    public GameObject inventoryPanel;      // Main panel containing the entire inventory UI
-    public Transform itemListParent;       // Parent object holding item slots (VerticalLayoutGroup)
-    public GameObject itemSlotPrefab;      // Prefab representing an inventory slot (Text + Icon)
+    [Tooltip("Main panel containing the entire inventory UI.")]
+    public GameObject inventoryPanel;
+
+    [Tooltip("Parent object holding item slots (Grid/VerticalLayoutGroup).")]
+    public Transform itemListParent;
+
+    [Tooltip("Prefab representing an inventory slot (Text + Icon).")]
+    public GameObject itemSlotPrefab;
 
     #endregion
 
@@ -30,26 +34,53 @@ public class UIInventory : MonoBehaviour
     {
         // Subscribe to inventory change callback
         if (InventoryManager.Instance != null)
+        {
             InventoryManager.Instance.onInventoryChangedCallback += RefreshUI;
+        }
         else
-            Debug.LogError("InventoryManager instance not found!");
+        {
+            Debug.LogError("[UIInventory] InventoryManager instance not found!");
+        }
 
-        // Start with inventory hidden
+        // Start hidden
         inventoryPanel.SetActive(false);
+
+        // Ensure UI has slots equal to inventory size
+        InitializeSlots();
     }
 
     private void Update()
     {
         // Toggle inventory UI on 'I' key press
         if (Input.GetKeyDown(KeyCode.I))
-        {
             ToggleInventory();
-        }
     }
 
     #endregion
 
     #region UI Logic
+
+    /// <summary>
+    /// Ensures UI has the correct number of slots based on InventoryManager.
+    /// </summary>
+    private void InitializeSlots()
+    {
+        if (InventoryManager.Instance == null) return;
+
+        int requiredSlots = InventoryManager.Instance.slotCount;
+
+        // If slots are fewer than required, instantiate new ones
+        while (itemListParent.childCount < requiredSlots)
+        {
+            Instantiate(itemSlotPrefab, itemListParent);
+        }
+
+        // If extra slots exist (unlikely), disable them
+        for (int i = 0; i < itemListParent.childCount; i++)
+        {
+            itemListParent.GetChild(i).gameObject.SetActive(i < requiredSlots);
+        }
+    }
 
     /// <summary>
     /// Opens or closes the inventory with animation.
@@ -58,21 +89,20 @@ public class UIInventory : MonoBehaviour
     {
         if (isInventoryOpen)
         {
-            // Close: Animate shrinking and deactivate after
+            // Close with shrink animation
             LeanTween.scale(inventoryPanel, Vector3.zero, 0.3f)
                      .setEaseInBack()
                      .setOnComplete(() => inventoryPanel.SetActive(false));
         }
         else
         {
-            // Open: Activate and scale in
+            // Open with expand animation
             inventoryPanel.SetActive(true);
             inventoryPanel.transform.localScale = Vector3.zero;
 
             LeanTween.scale(inventoryPanel, Vector3.one, 0.3f)
                      .setEaseOutBack();
 
-            // Show current inventory content
             RefreshUI();
         }
 
@@ -84,30 +114,37 @@ public class UIInventory : MonoBehaviour
     /// </summary>
     public void RefreshUI()
     {
+        if (InventoryManager.Instance == null) return;
+
         for (int i = 0; i < itemListParent.childCount; i++)
         {
             Transform slot = itemListParent.GetChild(i);
 
-            // Get UI elements
+            // Get UI components safely
             var textComponent = slot.GetComponentInChildren<TextMeshProUGUI>();
             var imageComponent = slot.GetComponentInChildren<Image>();
 
-            // Get item from InventoryManager
-            InventoryItem item = InventoryManager.Instance.itemSlots[i];
+            // Prevent null issues in case prefab is missing parts
+            if (textComponent == null || imageComponent == null) continue;
+
+            // Get corresponding inventory item
+            InventoryItem item = (i < InventoryManager.Instance.itemSlots.Length)
+                                 ? InventoryManager.Instance.itemSlots[i]
+                                 : null;
 
             if (item != null)
             {
-                // Show item name and quantity
-                textComponent.text = $"{item.itemData.itemName} *{item.quantity}";
+                // Show item data
+                textComponent.text = $"{item.itemData.itemName} x{item.quantity}";
                 imageComponent.sprite = item.itemData.icon;
                 imageComponent.color = Color.white;
             }
             else
             {
-                // Empty slot visuals
+                // Show empty slot
                 textComponent.text = "Empty";
                 imageComponent.sprite = null;
-                imageComponent.color = new Color(1, 1, 1, 0); // Make image invisible
+                imageComponent.color = new Color(1, 1, 1, 0); // Fully transparent
             }
         }
     }

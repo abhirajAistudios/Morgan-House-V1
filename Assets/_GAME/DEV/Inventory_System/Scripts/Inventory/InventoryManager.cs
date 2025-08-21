@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
+/// <summary>
+/// Manages the player's inventory: adding, stacking, using, saving, and loading items.
+/// </summary>
 public class InventoryManager : MonoBehaviour, ISaveable
 {
     #region Singleton
@@ -8,64 +10,66 @@ public class InventoryManager : MonoBehaviour, ISaveable
 
     private void Awake()
     {
-        if (Instance == null) Instance = this;
+        // Ensure only one InventoryManager exists
+        if (Instance == null)
+        {
+            Instance = this;
+            itemSlots = new InventoryItem[slotCount]; // initialize slots
+        }
         else
         {
-            Destroy(gameObject);
-            return;
+            Destroy(gameObject); // prevent duplicates
         }
-
-        itemSlots = new InventoryItem[slotCount];
     }
     #endregion
 
-    [Tooltip("Number of inventory slots you want.")]
+    [Tooltip("Number of inventory slots available.")]
     public int slotCount = 5;
 
     [HideInInspector]
     public InventoryItem[] itemSlots;
 
+    // Callback invoked whenever the inventory changes (UI can subscribe)
     public delegate void OnInventoryChanged();
     public OnInventoryChanged onInventoryChangedCallback;
 
-    private void Update()
-    {
-        // Debug test: use item in first slot
-        if (Input.GetKeyDown(KeyCode.U))
-            UseItemByIndex(0);
-    }
+    #region Inventory Management
 
-    #region Public Inventory Methods
-
+    /// <summary>
+    /// Adds an item to the inventory. 
+    /// Stacks if it already exists, otherwise places it in an empty slot.
+    /// </summary>
     public void AddItem(ItemObject itemObject)
     {
-        // Stack if already in inventory
+        // Try to stack if the item already exists
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (itemSlots[i] != null && itemSlots[i].itemData == itemObject)
             {
                 itemSlots[i].AddQuantity(1);
                 onInventoryChangedCallback?.Invoke();
-                Debug.Log($"Stacked {itemObject.itemName} in slot {i}");
                 return;
             }
         }
 
-        // Otherwise place in empty slot
+        // Try to put item in an empty slot
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (itemSlots[i] == null)
             {
                 itemSlots[i] = new InventoryItem(itemObject);
                 onInventoryChangedCallback?.Invoke();
-                Debug.Log($"Added {itemObject.itemName} to slot {i}");
                 return;
             }
         }
 
-        Debug.LogWarning("Inventory Full!");
+        // Inventory is full
+        Debug.LogWarning("⚠ Inventory Full!");
     }
 
+    /// <summary>
+    /// Uses the given item (if present in inventory).
+    /// </summary>
     public void UseItem(ItemObject itemObject)
     {
         for (int i = 0; i < itemSlots.Length; i++)
@@ -74,11 +78,9 @@ public class InventoryManager : MonoBehaviour, ISaveable
             {
                 itemSlots[i].Use();
 
+                // Remove if quantity reaches 0
                 if (itemSlots[i].quantity <= 0)
-                {
                     itemSlots[i] = null;
-                    Debug.Log($"{itemObject.itemName} removed.");
-                }
 
                 onInventoryChangedCallback?.Invoke();
                 return;
@@ -86,30 +88,44 @@ public class InventoryManager : MonoBehaviour, ISaveable
         }
     }
 
+    /// <summary>
+    /// Uses the item at a specific slot index.
+    /// </summary>
     public void UseItemByIndex(int index)
     {
         if (index < 0 || index >= itemSlots.Length) return;
+
         var item = itemSlots[index];
         if (item == null) return;
 
         item.Use();
+
         if (item.quantity <= 0)
             itemSlots[index] = null;
 
         onInventoryChangedCallback?.Invoke();
     }
 
+    /// <summary>
+    /// Checks if the inventory contains a given item.
+    /// </summary>
     public bool HasItem(ItemObject item)
     {
         foreach (var slot in itemSlots)
+        {
             if (slot != null && slot.itemData == item && slot.quantity > 0)
                 return true;
+        }
         return false;
     }
+
     #endregion
 
     #region Save & Load
 
+    /// <summary>
+    /// Saves the current inventory state to the AutoSaveManager's save data.
+    /// </summary>
     public void SaveState(ref AutoSaveManager.SaveData data)
     {
         data.inventorySlots.Clear();
@@ -118,21 +134,25 @@ public class InventoryManager : MonoBehaviour, ISaveable
         {
             if (itemSlots[i] != null)
             {
-                AutoSaveManager.InventorySlotData slotData = new AutoSaveManager.InventorySlotData
+                data.inventorySlots.Add(new AutoSaveManager.InventorySlotData
                 {
                     itemName = itemSlots[i].itemData.itemName,
                     quantity = itemSlots[i].quantity,
                     slotIndex = i
-                };
-                data.inventorySlots.Add(slotData);
+                });
             }
         }
     }
 
+    /// <summary>
+    /// Restores the inventory from saved data.
+    /// Also disables collectible items already picked up in the scene.
+    /// </summary>
     public void LoadState(AutoSaveManager.SaveData data)
     {
         itemSlots = new InventoryItem[slotCount];
 
+        // Restore items in their saved slots
         foreach (var slotData in data.inventorySlots)
         {
             ItemObject itemObj = ItemDatabase.Instance.GetItemByName(slotData.itemName);
@@ -142,7 +162,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
             }
         }
 
-        // After restoring inventory, hide already collected items in the scene
+        // Disable collectibles that have already been collected
         var collectibles = FindObjectsOfType<CollectibleItem>(true);
         foreach (var collectible in collectibles)
         {
@@ -152,8 +172,6 @@ public class InventoryManager : MonoBehaviour, ISaveable
 
         onInventoryChangedCallback?.Invoke();
     }
-
-
 
     #endregion
 }

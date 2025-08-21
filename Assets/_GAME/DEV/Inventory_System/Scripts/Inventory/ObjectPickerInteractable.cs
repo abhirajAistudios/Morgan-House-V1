@@ -45,7 +45,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         // Force Objective to update NOW
         ObjectiveManager.Instance.OnObjectiveUpdatedImmediately();
 
-        Debug.Log($"Picked up: {item.itemName}");
+        
     }
 
 
@@ -56,7 +56,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         if (isCollected && !data.collectedItems.Contains(uniqueID))
         {
             data.collectedItems.Add(uniqueID);
-            Debug.Log(" Saved collected item with ID: " + uniqueID);
+         
         }
     }
 
@@ -66,7 +66,7 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         {
             isCollected = true;
             gameObject.SetActive(false);
-            Debug.Log(" Restored collected item with ID: " + uniqueID);
+           
         }
     }
 }

@@ -6,38 +6,42 @@ using UnityEngine.UI;
 /// </summary>
 public class Dial : MonoBehaviour
 {
+    #region Required Variables
+    
     [Header("Dial Settings")]
-    public int totalPositions = 3;        // Total number of positions the dial can rotate through (e.g., 3 positions = 0, 1, 2)
-    public float rotationStep = 90f;      // Degrees to rotate per step (e.g., 90° for 4 directions)
-    public float rotationSpeed = 10f;     // Speed at which the dial smoothly rotates
+    [SerializeField] private int totalPositions = 3;        // Total number of positions the dial can rotate through (e.g., 3 positions = 0, 1, 2)
+    [SerializeField] private float rotationStep = 90f;      // Degrees to rotate per step (e.g., 90° for 4 directions)
+    [SerializeField] private float rotationSpeed = 10f;     // Speed at which the dial smoothly rotates
 
     [Header("UI Control")]
-    public Button RotateButton;           // Optional UI button to rotate this dial
+    [SerializeField] private Button rotateButton;           // Optional UI button to rotate this dial
 
-    private int currentIndex = 0;         // Current dial index (position player has rotated to)
-    private bool isInteractable = false;  // Whether the dial can be interacted with
-    private Quaternion targetRotation;    // Target rotation the dial should smoothly rotate to
+    private int currentIndex;                  // Current dial index (position player has rotated to)
+    private bool isInteractable;               // Whether the dial can be interacted with
+    private Quaternion targetRotation;         // Target rotation the dial should smoothly rotate to
 
     public int CurrentIndex => currentIndex; // Public read-only access to the current index
 
-    public DialPuzzleController puzzleController; // Reference to the central puzzle controller
+    [SerializeField] private DialPuzzleController puzzleController; // Reference to the central puzzle controller
+    
+    #endregion
 
     private void Start()
     {
         // Store the current rotation as the initial target
         targetRotation = transform.rotation;
 
-        // Find the puzzle controller in the scene (assumes only one exists)..
+        // Find the puzzle controller in the scene (assumes only one exists).
         if (puzzleController == null)
         {
             Debug.LogError("DialPuzzleController not found in scene!");
         }
 
         // Set up the UI button to trigger the Rotate method
-        if (RotateButton != null)
+        if (rotateButton != null)
         {
-            RotateButton.onClick.AddListener(Rotate);
-            RotateButton.interactable = false; // Initially disabled until activated by the controller
+            rotateButton.onClick.AddListener(Rotate);
+            rotateButton.interactable = false; // Initially disabled until activated by the controller
         }
     }
 
@@ -51,7 +55,7 @@ public class Dial : MonoBehaviour
     /// Called when the dial is rotated by the player.
     /// Updates the index, rotates the object, and notifies the puzzle controller.
     /// </summary>
-    public void Rotate()
+    private void Rotate()
     {
         if (!isInteractable) return;
 
@@ -73,8 +77,8 @@ public class Dial : MonoBehaviour
     {
         isInteractable = interact;
 
-        if (RotateButton != null)
-            RotateButton.interactable = interact;
+        if (rotateButton != null)
+            rotateButton.interactable = interact;
     }
 
     /// <summary>

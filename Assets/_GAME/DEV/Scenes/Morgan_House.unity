@@ -8739,7 +8739,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
-  RotateButton: {fileID: 8338680978082342667}
+  rotateButton: {fileID: 8338680978082342667}
   puzzleController: {fileID: 7696296915131732385}
 --- !u!1 &741562585152075352
 GameObject:
@@ -10632,8 +10632,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d14f3e7b6db316a45b105236ce3887a1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  alignRotation: 1
-  freezeAfterSnap: 1
 --- !u!65 &2234641444433055116
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -11904,7 +11902,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
-  RotateButton: {fileID: 2542384736059169032}
+  rotateButton: {fileID: 2542384736059169032}
   puzzleController: {fileID: 7696296915131732385}
 --- !u!4 &3516070029664089612
 Transform:
@@ -13264,7 +13262,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
-  RotateButton: {fileID: 8354557010597441962}
+  rotateButton: {fileID: 8354557010597441962}
   puzzleController: {fileID: 7696296915131732385}
 --- !u!23 &4955135503802354946
 MeshRenderer:
@@ -15433,7 +15431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fba93478cdfa0544b9121792bbc64586, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DialPuzzleName: Dial Puzzle 2
+  dialPuzzleName: Dial Puzzle 2
   dials:
   - {fileID: 3495562230653851910}
   - {fileID: 4888028592877146411}
@@ -15441,7 +15439,7 @@ MonoBehaviour:
   correctCombination: 030000000600000004000000
   requiredPlacements: 4
   solvedText: {fileID: 75046167906636355}
-  CloseButton: {fileID: 4184474080515127375}
+  closeButton: {fileID: 4184474080515127375}
   dialPuzzleViewSwitcher: {fileID: 6156180153962063686}
   uniqueID: 603ec4fc-2f47-47a3-930e-873b204936b6
 --- !u!222 &7697370004747610038

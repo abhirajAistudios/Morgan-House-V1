@@ -1,25 +1,30 @@
 using System;
 using UnityEngine;
 
+/// Represents an interactable object that can be placed in the world when the player has the required item.
 public class PlacingObjectInteractable : BaseInteractable, ISaveable
 {
-    private bool isInteracted = false;
-    private DialPuzzleController controller;
+    private bool isInteracted = false;           // Tracks if this object has been interacted with
+    private DialPuzzleController controller;     // Reference to the parent dial puzzle controller
 
     [Header("UI Feedback")]
+    [Tooltip("UI element to show when player doesn't have the required item")]
     public GameObject noObjectText;
-
     public override bool IsInteractable => !isInteracted;
 
     [Header("Required Item")]
+    [Tooltip("Name of the item required from inventory to place this object")]
     public string requiredItemName = "Dial Puzzle Object";
+    
+    [Tooltip("The object to be placed when interacting with this item")]
     public GameObject placedObject;
 
     [Header("Info Text Delay")]
+    [Tooltip("How long to display the info text before hiding it (in seconds)")]
     public float delay = 1.5f;
 
-    private float timer = 0f;
-    private bool started = false;
+    private float timer = 0f;        // Tracks time for the info text display
+    private bool started = false;    // Flag to start the countdown for hiding the info text
 
     [Header("Unique ID for Saving")]
     [SerializeField] private string uniqueID;
@@ -39,15 +44,17 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
     {
         DisableInfoText();
     }
-
+    
+    /// Called when the player looks at this interactable object
     public override void OnFocus()
     {
-        Debug.Log($"[{name}] OnFocus");
+        //Place your code to run when the player looks at this object
     }
-
+    
+    /// Called when the player looks away from this interactable object
     public override void OnLoseFocus()
     {
-        Debug.Log($"[{name}] OnLoseFocus");
+        //Place your code to run when the player looks away from this object
     }
 
     public override void OnInteract()
@@ -83,18 +90,19 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
         InventoryManager.Instance.UseItem(matchingSlot.itemData);
 
         // Place the object
-            GameService.Instance.ObjectPlacer.AddThisObjectInHolder(gameObject,controller);
-            Debug.LogWarning("GameService or ObjectPlacer assigned.");
-            placedObject.SetActive(true);
-            enabled = false;
+        GameService.Instance.ObjectPlacer.AddThisObjectInHolder(gameObject,controller);
+        Debug.LogWarning("GameService or ObjectPlacer assigned.");
+        placedObject.SetActive(true);
+        enabled = false;
 
-            if (TryGetComponent<Renderer>(out var renderer))
-                renderer.material.color = Color.green;
+        if (TryGetComponent<Renderer>(out var renderer))
+            renderer.material.color = Color.green;
 
-            isInteracted = true;
+        isInteracted = true;
     }
-
-    public void DisableInfoText()
+    
+    /// Handles the countdown to disable the info text after a delay
+    private void DisableInfoText()
     {
         if (!started || noObjectText == null) return;
 
@@ -105,16 +113,16 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
             started = false;
         }
     }
-
-    public void StartDisableCountdown()
+    
+    /// Starts the countdown to hide the info text
+    private void StartDisableCountdown()
     {
         timer = 0f;
         started = true;
     }
+    
 
-    // =========================
-    // Save / Load Functionality
-    // =========================
+    /// Saves the current state of this interactable object
     public void SaveState(ref AutoSaveManager.SaveData data)
     {
         // If already placed, save its unique ID
@@ -123,7 +131,8 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
             data.collectedItems.Add(uniqueID);
         }
     }
-
+    
+    /// Loads the saved state of this interactable object
     public void LoadState(AutoSaveManager.SaveData data)
     {
         if (data.collectedItems.Contains(uniqueID))
@@ -135,8 +144,6 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
 
             if (TryGetComponent<Renderer>(out var renderer))
                 renderer.material.color = Color.green;
-
-            Debug.Log($"Restored placed object: {name} (ID: {uniqueID})");
         }
     }
 }

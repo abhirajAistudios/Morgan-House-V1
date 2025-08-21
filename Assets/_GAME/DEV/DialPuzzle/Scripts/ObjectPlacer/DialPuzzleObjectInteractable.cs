@@ -51,10 +51,7 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
         if (TryGetComponent<Renderer>(out var renderer))
             renderer.material.color = unfocusColor;
     }
-     /// <summary>
-     /// umnbu dsaghfdasuihdfasd asdasdas da
-     /// 
-     /// </summary>
+
     public override void OnInteract()
     {
         base.OnInteract(); // Handles isReusable and hasBeenUsed

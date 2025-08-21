@@ -7,9 +7,8 @@ using UnityEngine;
 /// </summary>
 public class ObjectPlacer : MonoBehaviour
 {
-    
-    public bool alignRotation = true;             // If true, objects will match the slot's rotation when snapped
-    public bool freezeAfterSnap = true;           // If true, rigidbody is frozen after snap to prevent movement
+    private bool alignRotation = true;             // If true, objects will match the slot's rotation when snapped
+    private bool freezeAfterSnap = true;           // If true, rigidbody is frozen after snap to prevent movement
 
     private List<GameObject> placedObjects = new List<GameObject>(); // Track all placed objects
     private bool placementLocked = false;         // Prevents more placements after all slots are filled
@@ -29,10 +28,6 @@ public class ObjectPlacer : MonoBehaviour
             Debug.Log("⚠️ Object already placed.");
             return;
         }
-        
-
-        // Determine which slot to snap to
-        int slotIndex = placedObjects.Count;
 
         // Optional: Disable physics so the object stays in place
         if (freezeAfterSnap && puzzleObject.TryGetComponent<Rigidbody>(out var rb))
@@ -43,30 +38,7 @@ public class ObjectPlacer : MonoBehaviour
 
         placedObjects.Add(puzzleObject);
 
-        Debug.Log($"✅ Snapped object to Slot {slotIndex + 1}");
-
         // Notify the puzzle that a placement has been made
         dialPuzzleController?.RegisterPlacement();
-        
-    }
-
-    /// <summary>
-    /// Resets all placements, re-enables physics, and clears the list.
-    /// Useful for retrying the puzzle.
-    /// </summary>
-    public void ResetPlacements()
-    {
-        foreach (var obj in placedObjects)
-        {
-            if (obj != null && obj.TryGetComponent<Rigidbody>(out var rb))
-            {
-                rb.isKinematic = false;
-                rb.useGravity = true;
-            }
-        }
-
-        placedObjects.Clear();
-        placementLocked = false;
-        Debug.Log("🔄 Placements reset.");
     }
 }

@@ -20,7 +20,7 @@ public class CheckpointTrigger : MonoBehaviour
             {
                 Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
                 saveSystem.SaveAfterObjective(playerpos);
-                Debug.Log("Checkpoint reached and game autosaved!");
+               
             }
             else
             {

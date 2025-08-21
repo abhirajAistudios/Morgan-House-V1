@@ -64,7 +64,10 @@ public class MainMenu : MonoBehaviour
                 GameManager.Instance.ResumeGame();
 
                 if (LoadingManager.Instance != null)
-                    LoadingManager.Instance.LoadSceneByName(data.lastSceneName); // ✅ load last saved scene
+                {
+                    LoadingManager.ResumeRequested = true; // ✅ set flag in LoadingManager
+                    LoadingManager.Instance.LoadSceneByName(data.lastSceneName);
+                }
                 else
                     Debug.LogError("LoadingManager not found!");
             }
@@ -92,7 +95,7 @@ public class MainMenu : MonoBehaviour
         if (exitConfirmationPanel != null)
             exitConfirmationPanel.SetActive(false);
     }
-     
+
     private void ExitGame()
     {
 #if UNITY_EDITOR

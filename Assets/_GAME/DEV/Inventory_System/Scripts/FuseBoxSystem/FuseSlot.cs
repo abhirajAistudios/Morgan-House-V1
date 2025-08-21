@@ -32,20 +32,19 @@ public class FuseSlot : BaseInteractable, ISaveable
     // Highlight when player looks at the slot
     public override void OnFocus()
     {
-        // Example highlight effect (currently disabled)
-        // GetComponent<Renderer>().material.color = Color.yellow;
+        //Place your code to run when the player looks at this object
     }
 
     // Reset highlight when player looks away
     public override void OnLoseFocus()
     {
-        GetComponent<Renderer>().material.color = Color.white;
+        //Place your code to run when the player looks at this object
     }
 
     // Called when player interacts with this slot
     public override void OnInteract()
     {
-        if (IsInteractable == false) return;               // Ignore if slot already has fuse
+        if (IsInteractable == false) return;                      // Ignore if slot already has fuse
         parentPuzzle.TryInsertFuseAt(slotIndex, this);     // Ask the parent puzzle to insert a fuse here
     }
 
@@ -54,10 +53,6 @@ public class FuseSlot : BaseInteractable, ISaveable
     {
         isPlaced = true;
     }
-
-    // ----------------
-    // Save / Load System
-    // ----------------
 
     // Save current state into SaveData
     public void SaveState(ref AutoSaveManager.SaveData data)

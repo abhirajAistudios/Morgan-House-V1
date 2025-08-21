@@ -1,9 +1,6 @@
 ﻿using UnityEngine;
 using System;
-
-#if UNITY_EDITOR
 using UnityEditor;
-#endif
 
 /// <summary>
 /// A fuse box puzzle where the player must insert a required number of fuses
@@ -13,16 +10,16 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 {
     [Header("Fuse Puzzle Setup")]
     [Tooltip("Fuse slot objects that will be activated as fuses are inserted.")]
-    public GameObject[] fuseSlots; // Array of fuse slot objects (turned on when fuses are inserted)
+    [SerializeField] private GameObject[] fuseSlots; // Array of fuse slot objects (turned on when fuses are inserted)
 
     [Tooltip("Renderer for the main fuse indicator light.")]
-    public Renderer mainFuseRenderer; // The light/indicator for overall fuse box status
+    [SerializeField] private Renderer mainFuseRenderer; // The light/indicator for overall fuse box status
 
-    public Color incompleteColor = Color.red;   // Light color before puzzle is solved
-    public Color completeColor = Color.green;   // Light color when puzzle is solved
+    [SerializeField] private Color incompleteColor = Color.red;   // Light color before puzzle is solved
+    [SerializeField] private Color completeColor = Color.green;   // Light color when puzzle is solved
 
     [Tooltip("The name of the required item to solve the puzzle.")]
-    public string requiredItemName = "Fuse"; // What item is needed to insert into the slots
+    [SerializeField] private string requiredItemName = "Fuse"; // What item is needed to insert into the slots
 
     [Header("Puzzle Identification")]
     [SerializeField] private string puzzleID = Guid.NewGuid().ToString(); // Unique ID for saving/loading
@@ -42,7 +39,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public override string GetTooltipText() => tooltip;
 
     [Header("Door to Unlock on Solve (Optional)")]
-    public DoorInteraction doorToUnlock; // Optional linked door that unlocks when puzzle is solved
+    [SerializeField] private DoorInteraction doorToUnlock; // Optional linked door that unlocks when puzzle is solved
 
     private void Start()
     {
@@ -231,8 +228,9 @@ public class FuseBoxPuzzleEditor : Editor
 
             // Uses reflection to set private field puzzleID
             puzzle.GetType()
-                  .GetField("puzzleID", System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                  .SetValue(puzzle, Guid.NewGuid().ToString());
+                .GetField("puzzleID",
+                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
+                .SetValue(puzzle, Guid.NewGuid().ToString());
 
             EditorUtility.SetDirty(puzzle); // Mark object as modified
         }

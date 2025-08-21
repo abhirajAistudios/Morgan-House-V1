@@ -3945,8 +3945,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1368648164}
-  - component: {fileID: 1368648165}
   - component: {fileID: 1368648166}
+  - component: {fileID: 1368648165}
   m_Layer: 0
   m_Name: Save_System
   m_TagString: Untagged
@@ -8504,13 +8504,6 @@ PrefabInstance:
       propertyPath: flashlightRig
       value: 
       objectReference: {fileID: 675935235368134445}
-<<<<<<< Updated upstream
-=======
-    - target: {fileID: 3269251908063047627, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
-      propertyPath: m_Name
-      value: FlashLightManager
-      objectReference: {fileID: 0}
->>>>>>> Stashed changes
     - target: {fileID: 3412589135081195661, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -16739,7 +16732,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047656351725338771}
   m_HandleRect: {fileID: 4806095384771888098}
   m_Direction: 2
-  m_Value: 0.9999992
+  m_Value: 0.99999976
   m_Size: 0.76217335
   m_NumberOfSteps: 0
   m_OnValueChanged:

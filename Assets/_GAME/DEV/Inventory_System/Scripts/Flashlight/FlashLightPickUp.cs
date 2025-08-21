@@ -45,6 +45,7 @@ public class FlashlightPickup : BaseInteractable, ISaveable
         
         ItemTracker.Instance.OnPlayerCollectedItem(displayName);
         ObjectiveManager.Instance.OnObjectiveUpdatedImmediately();
+
         // 2. Instantiate light under the camera
         GameObject cam = Camera.main.gameObject;
         GameObject lightObj = Instantiate(flashlightPrefab, cam.transform);

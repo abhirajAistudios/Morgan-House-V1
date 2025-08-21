@@ -241,7 +241,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
                 else
                     RestoreClosedState();
 
-                Debug.Log($"Door {uniqueID} restored as {currentState}, open={state.isOpen}");
+               
                 return;
             }
         }
@@ -251,13 +251,13 @@ public class DoorInteraction : BaseInteractable, ISaveable
     {
         isOpen = true;
         LeanTween.rotateY(doorHinge.gameObject, hingeStartY + (lastOpenDirection * openAngle), 0f);
-        Debug.Log($"Door {uniqueID} restored as OPEN and unlocked.");
+        
     }
 
     private void RestoreClosedState()
     {
         isOpen = false;
         LeanTween.rotateY(doorHinge.gameObject, hingeStartY, 0f);
-        Debug.Log($"Door {uniqueID} restored as CLOSED.");
+        
     }
 }

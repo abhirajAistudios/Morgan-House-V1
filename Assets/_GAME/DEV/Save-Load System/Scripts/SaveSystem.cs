@@ -47,12 +47,9 @@ public class SaveSystem : MonoBehaviour
         if (File.Exists(savePath))
         {
             File.Delete(savePath);
-            Debug.Log("? Save data reset. Starting fresh next time!");
+            
         }
-        else
-        {
-            Debug.Log("?? No save file found to delete.");
-        }
+       
     }
 
     public void RestartGame()

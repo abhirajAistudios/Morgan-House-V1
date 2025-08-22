@@ -798,7 +798,8 @@ PrefabInstance:
       propertyPath: uniqueID
       value: LL
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 825264488549642236, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1700,19 +1701,6 @@ Transform:
   - {fileID: 696466644}
   m_Father: {fileID: 1208638006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &703149760
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3106099038067164379}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22beb0c4126566945abd5fcbc9ce74e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 6581b666e4447ef4bb57b0e1a58f5b95, type: 2}
 --- !u!1 &714387626
 GameObject:
   m_ObjectHideFlags: 0
@@ -2287,7 +2275,8 @@ PrefabInstance:
       propertyPath: uniqueID
       value: pp
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 825264488549642236, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6284,7 +6273,8 @@ PrefabInstance:
       propertyPath: ItemName
       value: Fuse
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 825264488549642236, guid: 246dd7fbb25e9f94885009fec75e3fb9, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -6483,10 +6473,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 586382634}
     m_Modifications:
-    - target: {fileID: 2955956078353598520, guid: 629bd5062f3203c4db3f594f90353a90, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4604964063203924006, guid: 629bd5062f3203c4db3f594f90353a90, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.28
@@ -9813,7 +9799,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7066753280151771037, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -11593,7 +11580,6 @@ GameObject:
   - component: {fileID: 3317704726824271841}
   - component: {fileID: 4573013072002742469}
   - component: {fileID: 1682050306469302383}
-  - component: {fileID: 703149760}
   m_Layer: 6
   m_Name: Lockpick_PickupObject
   m_TagString: Lockpick

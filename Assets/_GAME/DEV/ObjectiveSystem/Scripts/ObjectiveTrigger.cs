@@ -10,13 +10,6 @@ public class ObjectiveTrigger : MonoBehaviour , ISaveable
 {
     [Tooltip("List of objectives to trigger when the player enters this trigger")]
     [SerializeField] private List<ObjectiveDataSO> objectiveToTrigger;
-    //private BoxCollider triggerCollider;
-    
-    /*private void Start()
-    {
-        triggerCollider = GetComponent<BoxCollider>();
-        triggerCollider.isTrigger = true;
-    }*/
     
     /// Called when another collider enters the trigger zone
     private void OnTriggerEnter(Collider hit)

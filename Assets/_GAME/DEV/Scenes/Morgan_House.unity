@@ -3945,8 +3945,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1368648164}
-  - component: {fileID: 1368648166}
   - component: {fileID: 1368648165}
+  - component: {fileID: 1368648166}
   m_Layer: 0
   m_Name: Save_System
   m_TagString: Untagged
@@ -6483,6 +6483,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 586382634}
     m_Modifications:
+    - target: {fileID: 2955956078353598520, guid: 629bd5062f3203c4db3f594f90353a90, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4604964063203924006, guid: 629bd5062f3203c4db3f594f90353a90, type: 3}
       propertyPath: m_LocalPosition.x
       value: -12.28
@@ -7482,7 +7486,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59b2cebfea1f2a47a7ac16cc61f9963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotCount: 5
+  slotCount: 4
   itemSlots: []
 --- !u!4 &2135013894
 Transform:
@@ -9763,7 +9767,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2227174579589556220, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
       propertyPath: uniqueID
-      value: ml
+      value: Battery
+      objectReference: {fileID: 0}
+    - target: {fileID: 7066753280151771037, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
+      propertyPath: m_Enabled
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7411407666614080326, guid: fac30052808c83349ba7a1beea2cc54d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -13726,6 +13734,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1388874718}
     m_Modifications:
     - target: {fileID: 1132430306123765786, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
+      propertyPath: nextSceneName
+      value: Morgan_House1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1132430306123765786, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
       propertyPath: disableInSceneName
       value: Morgan_HouseTestScene
       objectReference: {fileID: 0}
@@ -15462,7 +15474,7 @@ MonoBehaviour:
   solvedText: {fileID: 75046167906636355}
   closeButton: {fileID: 4184474080515127375}
   dialPuzzleViewSwitcher: {fileID: 6156180153962063686}
-  uniqueID: 603ec4fc-2f47-47a3-930e-873b204936b6
+  uniqueID: ddb58fa2-9043-42c1-80f1-f91a2c68f75a
 --- !u!222 &7697370004747610038
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -16740,7 +16752,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047656351725338771}
   m_HandleRect: {fileID: 4806095384771888098}
   m_Direction: 2
-  m_Value: 0.99999976
+  m_Value: 0.999998
   m_Size: 0.76217335
   m_NumberOfSteps: 0
   m_OnValueChanged:

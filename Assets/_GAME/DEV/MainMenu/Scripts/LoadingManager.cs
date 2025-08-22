@@ -7,7 +7,7 @@ using System.Collections;
 public class LoadingManager : MonoBehaviour
 {
     public static LoadingManager Instance;
-    public static bool ResumeRequested = false; // ✅ new flag
+    public static bool ResumeRequested = false; 
 
     [Header("UI refs (assign in Inspector)")]
     [SerializeField] private GameObject loadingPanel;
@@ -28,7 +28,7 @@ public class LoadingManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; // ✅ hook scene load
+            SceneManager.sceneLoaded += OnSceneLoaded; 
         }
         else
         {
@@ -59,11 +59,11 @@ public class LoadingManager : MonoBehaviour
         }
 
         var player = playerObj.transform;
-        var asm = FindObjectOfType<AutoSaveManager>();
-        if (asm != null)
+        var autosavemanager = FindObjectOfType<AutoSaveManager>();
+        if (autosavemanager != null)
         {
 
-            asm.LoadGame(player);
+            autosavemanager.LoadGame(player);
         }
         else
         {

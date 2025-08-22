@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Lockpick
   icon: {fileID: 21300000, guid: a71e1898e9f20624a98d5fb12633da1e, type: 3}
   type: 6
-  description: 
+  description: Used for Unlocking Lockpick Door

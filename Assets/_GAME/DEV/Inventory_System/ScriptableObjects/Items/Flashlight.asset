@@ -15,4 +15,4 @@ MonoBehaviour:
   itemName: Flashlight
   icon: {fileID: 0}
   type: 0
-  description: 
+  description: Used for collecting flahs

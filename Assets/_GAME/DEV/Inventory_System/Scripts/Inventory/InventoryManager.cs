@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 /// <summary>
 /// Manages the player's inventory: adding, stacking, using, saving, and loading items.
@@ -64,7 +65,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         }
 
         // Inventory is full
-        Debug.LogWarning("⚠ Inventory Full!");
+        Debug.LogWarning(" Inventory Full!");
     }
 
     /// <summary>
@@ -128,7 +129,10 @@ public class InventoryManager : MonoBehaviour, ISaveable
     /// </summary>
     public void SaveState(ref SaveData data)
     {
-        // data.inventorySlots.Clear();
+        if (data.inventorySlots == null)
+            data.inventorySlots = new List<InventorySlotData>();
+        else
+            data.inventorySlots.Clear();
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
@@ -163,15 +167,8 @@ public class InventoryManager : MonoBehaviour, ISaveable
             }
         }
 
-        // Disable collectibles that have already been collected
-        var collectibles = FindObjectsOfType<CollectibleItem>(true);
-        foreach (var collectible in collectibles)
-        {
-            if (data.collectedItems.Contains(collectible.ItemName))
-                collectible.gameObject.SetActive(false);
-        }
-
-        onInventoryChangedCallback?.Invoke();
+        
+        
     }
     #endregion
 }

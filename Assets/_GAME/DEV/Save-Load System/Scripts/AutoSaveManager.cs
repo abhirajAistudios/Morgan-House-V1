@@ -29,6 +29,7 @@ public class AutoSaveManager : MonoBehaviour
         public List<PuzzleState> puzzles = new();                // Puzzle states
         public List<InventorySlotData> inventorySlots = new();   // Player inventory
         public List<ObjectiveDataSO> objectives = new();         // Completed objective data
+        public List<ObjectiveTrigger> objectiveTriggers = new();      // Triggered objectives
         public List<DoorStateData> doors = new();                // Door states
         public FlashlightSaveData flashlightData = new();        // Flashlight state
     }
@@ -97,7 +98,6 @@ public class AutoSaveManager : MonoBehaviour
         // Build save data snapshot
         SaveData data = new SaveData
         {
-            objectivesCompleted = GameProgressTracker.ObjectivesCompleted,
             playerPosX = player.position.x,
             playerPosY = player.position.y,
             playerPosZ = player.position.z,
@@ -151,7 +151,6 @@ public class AutoSaveManager : MonoBehaviour
 
         // Restore player state
         player.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);
-        GameProgressTracker.ObjectivesCompleted = data.objectivesCompleted;
 
         // Restore states of ISaveable objects
         foreach (var saveable in FindObjectsOfType<MonoBehaviour>(true))

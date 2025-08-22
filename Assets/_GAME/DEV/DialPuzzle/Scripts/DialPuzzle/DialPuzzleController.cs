@@ -126,7 +126,6 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(dialPuzzleName);                       // Notify the game service and event service that the puzzle is solved
         dialPuzzleViewSwitcher.ExitPuzzleView();                                                            // Exit the puzzle view
         closeButton?.gameObject.SetActive(true);                                                            // Enable the close button
-        GameProgressTracker.ObjectivesCompleted++;                                                          // Increment the number of objectives completed
 
         // Save the game after the objective is completed
         Transform playerPos = FindAnyObjectByType<PlayerController>().transform;

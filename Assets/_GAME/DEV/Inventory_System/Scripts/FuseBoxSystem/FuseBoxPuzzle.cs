@@ -139,8 +139,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         if (doorToUnlock != null)
             UnlockLinkedDoor();
 
-        // Update game progress + autosave
-        GameProgressTracker.ObjectivesCompleted++;
+        // autosave
         var playerPos = FindAnyObjectByType<PlayerController>()?.transform;
         FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(playerPos);
 

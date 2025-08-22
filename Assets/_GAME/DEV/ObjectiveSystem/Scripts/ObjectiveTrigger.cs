@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -5,10 +6,17 @@ using UnityEngine;
 /// Triggers a set of objectives when the player enters the trigger zone.
 /// Attach this component to a GameObject with a Collider set to "Is Trigger".
 /// </summary>
-public class ObjectiveTrigger : MonoBehaviour
+public class ObjectiveTrigger : MonoBehaviour , ISaveable
 {
     [Tooltip("List of objectives to trigger when the player enters this trigger")]
     [SerializeField] private List<ObjectiveDataSO> objectiveToTrigger;
+    //private BoxCollider triggerCollider;
+    
+    /*private void Start()
+    {
+        triggerCollider = GetComponent<BoxCollider>();
+        triggerCollider.isTrigger = true;
+    }*/
     
     /// Called when another collider enters the trigger zone
     private void OnTriggerEnter(Collider hit)
@@ -18,6 +26,23 @@ public class ObjectiveTrigger : MonoBehaviour
         {
             // Start the specified objectives using the GameManager
             GameManager.Instance.StartNewObjective(objectiveToTrigger);
+        }
+    }
+
+    public void SaveState(ref AutoSaveManager.SaveData data)
+    {
+        data.objectiveTriggers.Add(this);
+    }
+
+    public void LoadState(AutoSaveManager.SaveData data)
+    {
+        if (data.objectiveTriggers.Contains(this))
+        {
+            gameObject.SetActive(false);
+        }
+        else
+        {
+            gameObject.SetActive(true);
         }
     }
 }

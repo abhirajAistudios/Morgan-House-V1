@@ -5922,6 +5922,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: Dial_Puzzle_Objective_Trigger
       objectReference: {fileID: 0}
+    - target: {fileID: 573045509356011182, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789996611486006421, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4204183700408322194, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
       propertyPath: m_LocalPosition.x
       value: 32.7
@@ -15779,6 +15787,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeObjectives: []
   completedObjectives: []
+  objectiveUIManager: {fileID: 4853407643220609662}
   totalObjectives:
   - {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
   - {fileID: 11400000, guid: ec911ad5a7eb5364f9081541a7b4f88b, type: 2}
@@ -15790,7 +15799,6 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 94ec877785cf9bd41b2240b60be66afb, type: 2}
   - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
   FinalObjective: {fileID: 11400000, guid: bcc72bf47ace8374f8acc314d64cdd37, type: 2}
-  objectiveUIManager: {fileID: 4853407643220609662}
 --- !u!114 &8338680978082342667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -17082,6 +17090,14 @@ PrefabInstance:
     - target: {fileID: 573045509356011182, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
       propertyPath: m_Name
       value: Door_Objective_Trigger
+      objectReference: {fileID: 0}
+    - target: {fileID: 573045509356011182, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1789996611486006421, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
+      propertyPath: m_IsTrigger
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4204183700408322194, guid: 250fadb9cae23ef4b873fc198747ec13, type: 3}
       propertyPath: m_LocalPosition.x

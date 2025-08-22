@@ -5,9 +5,9 @@ using UnityEngine;
 public class ObjectiveManager : MonoBehaviour
 {
     public static ObjectiveManager Instance;
-
-    public List<ObjectiveDataSO> activeObjectives = new();
-    public List<ObjectiveDataSO> completedObjectives = new();
+    
+    [HideInInspector] public List<ObjectiveDataSO> activeObjectives = new();
+    [HideInInspector] public List<ObjectiveDataSO> completedObjectives = new();
     public ObjectiveUIManager objectiveUIManager;
     
     [SerializeField] private List<ObjectiveDataSO> totalObjectives = new();

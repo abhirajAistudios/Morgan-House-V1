@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+/*using System.Collections.Generic;
 using static AutoSaveManager;
 
 [System.Serializable]
@@ -17,4 +17,4 @@ public class SaveData
     public FlashlightSaveData flashlightData = new FlashlightSaveData();
 
     public List<DoorStateData> doors = new();
-}
+}*/

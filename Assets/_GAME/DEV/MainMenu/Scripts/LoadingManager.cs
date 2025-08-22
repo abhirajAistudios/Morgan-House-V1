@@ -1,12 +1,13 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class LoadingManager : MonoBehaviour
 {
     public static LoadingManager Instance;
+    public static bool ResumeRequested = false; // ✅ new flag
 
     [Header("UI refs (assign in Inspector)")]
     [SerializeField] private GameObject loadingPanel;
@@ -27,6 +28,7 @@ public class LoadingManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded; // ✅ hook scene load
         }
         else
         {
@@ -38,12 +40,39 @@ public class LoadingManager : MonoBehaviour
             loadingPanel.SetActive(false);
     }
 
-    /// <summary>
-    /// Call this to load ANY scene by name (works for multiple levels).
-    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!ResumeRequested) return;
+
+        ResumeRequested = false;
+        StartCoroutine(WaitAndRestore());
+    }
+
+    private IEnumerator WaitAndRestore()
+    {
+        // wait until Player is spawned in the new scene
+        GameObject playerObj = null;
+        while (playerObj == null)
+        {
+            playerObj = GameObject.FindWithTag("Player");
+            yield return null; // wait a frame
+        }
+
+        var player = playerObj.transform;
+        var asm = FindObjectOfType<AutoSaveManager>();
+        if (asm != null)
+        {
+
+            asm.LoadGame(player);
+        }
+        else
+        {
+            Debug.LogWarning(" No AutoSaveManager found in scene!");
+        }
+    }
     public void LoadSceneByName(string sceneName)
     {
-        if (!IsLoading) // ✅ Prevent multiple loads
+        if (!IsLoading)
             StartCoroutine(LoadSceneAsync(sceneName));
     }
 
@@ -57,7 +86,7 @@ public class LoadingManager : MonoBehaviour
         progressBar.value = 0f;
         progressText.text = "0%";
 
-        yield return null; // let UI update at least one frame
+        yield return null;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;

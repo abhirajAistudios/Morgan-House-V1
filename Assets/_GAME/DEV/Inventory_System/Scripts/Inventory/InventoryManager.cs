@@ -128,7 +128,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     /// </summary>
     public void SaveState(ref AutoSaveManager.SaveData data)
     {
-        data.inventorySlots.Clear();
+        // data.inventorySlots.Clear();
 
         for (int i = 0; i < itemSlots.Length; i++)
         {
@@ -159,6 +159,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
             if (itemObj != null && slotData.slotIndex < itemSlots.Length)
             {
                 itemSlots[slotData.slotIndex] = new InventoryItem(itemObj, slotData.quantity);
+
             }
         }
 
@@ -172,6 +173,5 @@ public class InventoryManager : MonoBehaviour, ISaveable
 
         onInventoryChangedCallback?.Invoke();
     }
-
     #endregion
 }

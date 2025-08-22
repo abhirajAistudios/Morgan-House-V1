@@ -69,7 +69,7 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
     }
 
     // Saves the state of the objective if it is completed
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         if (objectiveStatus == ObjectiveStatus.COMPLETED && !data.objectives.Contains(this))
         {
@@ -78,7 +78,7 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
     }
 
     // Loads the state of the objective from save data
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         if (data.objectives.Contains(this))
         {

@@ -34,7 +34,7 @@ public class SaveSystem : MonoBehaviour
     /// <summary>
     /// Saves game data into a JSON file.
     /// </summary>
-    public void SaveGame(ref AutoSaveManager.SaveData data)
+    public void SaveGame(ref SaveData data)
     {
         string json = JsonUtility.ToJson(data, true);
         File.WriteAllText(saveFilePath, json);

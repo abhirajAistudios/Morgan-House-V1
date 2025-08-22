@@ -21,7 +21,7 @@ public class CollectibleItem : MonoBehaviour, ISaveable
         Debug.Log("Collected: " + ItemName);
     }
 
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
 
         if (isCollected && !data.collectedItems.Contains(ItemName))
@@ -32,7 +32,7 @@ public class CollectibleItem : MonoBehaviour, ISaveable
 
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
        
         // Check if this item was collected before

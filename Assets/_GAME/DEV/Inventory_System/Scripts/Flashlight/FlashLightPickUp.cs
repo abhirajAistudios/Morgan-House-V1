@@ -64,7 +64,7 @@ public class FlashlightPickup : BaseInteractable, ISaveable
     }
 
     // --- ISaveable Implementation ---
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         if (isPicked && !data.collectedItems.Contains(uniqueID))
         {
@@ -72,7 +72,7 @@ public class FlashlightPickup : BaseInteractable, ISaveable
         }
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         if (data.collectedItems.Contains(uniqueID))
         {

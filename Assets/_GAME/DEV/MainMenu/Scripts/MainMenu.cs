@@ -55,7 +55,7 @@ public class MainMenu : MonoBehaviour
         if (File.Exists(savePath))
         {
             string json = File.ReadAllText(savePath);
-            AutoSaveManager.SaveData data = JsonUtility.FromJson<AutoSaveManager.SaveData>(json);
+            SaveData data = JsonUtility.FromJson<SaveData>(json);
 
             if (data != null && !string.IsNullOrEmpty(data.lastSceneName))
             {

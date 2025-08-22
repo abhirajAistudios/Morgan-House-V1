@@ -83,7 +83,7 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
     // Save/Load Integration
     // ----------------------
 
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         if (isCollected && !data.collectedItems.Contains(uniqueID))
         {
@@ -91,7 +91,7 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
         }
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         if (data.collectedItems.Contains(uniqueID))
         {

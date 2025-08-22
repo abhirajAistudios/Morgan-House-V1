@@ -123,7 +123,7 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
     
 
     /// Saves the current state of this interactable object
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // If already placed, save its unique ID
         if (isInteracted && !data.collectedItems.Contains(uniqueID))
@@ -133,7 +133,7 @@ public class PlacingObjectInteractable : BaseInteractable, ISaveable
     }
     
     /// Loads the saved state of this interactable object
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         if (data.collectedItems.Contains(uniqueID))
         {

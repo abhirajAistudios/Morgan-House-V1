@@ -224,10 +224,10 @@ public class DoorInteraction : BaseInteractable, ISaveable
     // -------------------------
     // Save / Load
     // -------------------------
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // Store door state inside save data list
-        data.doors.Add(new AutoSaveManager.DoorStateData
+        data.doors.Add(new DoorStateData
         {
             doorID = uniqueID,
             doorState = currentState,
@@ -235,7 +235,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
         });
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         // Restore saved state if ID matches
         foreach (var state in data.doors)

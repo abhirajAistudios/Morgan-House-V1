@@ -55,7 +55,7 @@ public class FuseSlot : BaseInteractable, ISaveable
     }
 
     // Save current state into SaveData
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // If fuse is placed and not already saved, add uniqueID to collected items
         if (isPlaced && !data.collectedItems.Contains(uniqueID))
@@ -63,7 +63,7 @@ public class FuseSlot : BaseInteractable, ISaveable
     }
 
     // Load saved state from SaveData
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         // If this slot's ID exists in saved data, mark it as solved
         if (data.collectedItems.Contains(uniqueID))

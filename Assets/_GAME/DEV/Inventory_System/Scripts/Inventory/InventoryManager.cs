@@ -126,7 +126,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     /// <summary>
     /// Saves the current inventory state to the AutoSaveManager's save data.
     /// </summary>
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // data.inventorySlots.Clear();
 
@@ -134,7 +134,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
         {
             if (itemSlots[i] != null)
             {
-                data.inventorySlots.Add(new AutoSaveManager.InventorySlotData
+                data.inventorySlots.Add(new InventorySlotData
                 {
                     itemName = itemSlots[i].itemData.itemName,
                     quantity = itemSlots[i].quantity,
@@ -148,7 +148,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     /// Restores the inventory from saved data.
     /// Also disables collectible items already picked up in the scene.
     /// </summary>
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         itemSlots = new InventoryItem[slotCount];
 

@@ -235,13 +235,13 @@ public class GameManager : MonoBehaviour, ISaveable
     }
 
     // Interface method to save the game state (currently not implemented)
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // Implementation can be added to store completedObjectives, queue state, etc.
     }
 
     // Loads saved objectives from previous state
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         completedObjectives.Clear();
 

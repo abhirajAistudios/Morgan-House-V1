@@ -165,16 +165,16 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     }
 
     #region Save/Load
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
-        data.puzzles.Add(new AutoSaveManager.PuzzleState
+        data.puzzles.Add(new PuzzleState
         {
             puzzleID = puzzleID,
             isSolved = isSolved
         });
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         foreach (var state in data.puzzles)
         {

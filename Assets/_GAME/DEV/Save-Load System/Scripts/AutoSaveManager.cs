@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+using System.Collections.Generic;
 using System.IO;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using System.Linq;
 
 /// <summary>
 /// Handles auto-saving and loading of game state (player, inventory, puzzles, doors, flashlight, etc.)
@@ -15,63 +16,12 @@ public class AutoSaveManager : MonoBehaviour
     public AutoSaveManager instance;           // Singleton instance (not static for inspector visibility)
     #endregion
 
-    #region Save Data Classes
-    [System.Serializable]
-    public class SaveData
-    {
-        public int objectivesCompleted;              // Number of objectives completed
-        public float playerPosX, playerPosY, playerPosZ; // Player world position
-        public string timestamp;                     // When the save was created
-        public string lastSceneName;                 // Scene where save occurred
-
-        // Game state collections
-        public List<string> collectedItems = new();              // IDs of collected items
-        public List<PuzzleState> puzzles = new();                // Puzzle states
-        public List<InventorySlotData> inventorySlots = new();   // Player inventory
-        public List<ObjectiveDataSO> objectives = new();         // Completed objective data
-        public List<ObjectiveTrigger> objectiveTriggers = new();      // Triggered objectives
-        public List<DoorStateData> doors = new();                // Door states
-        public FlashlightSaveData flashlightData = new();        // Flashlight state
-    }
-
-    [System.Serializable]
-    public class PuzzleState
-    {
-        public string puzzleID;   // Unique puzzle identifier
-        public bool isSolved;     // True if solved
-    }
-
-    [System.Serializable]
-    public class DoorStateData
-    {
-        public string doorID;     // Unique door identifier
-        public DoorState doorState; // Current door state enum
-        public bool isOpen;       // True if door is currently open
-    }
-
-    [System.Serializable]
-    public class FlashlightSaveData
-    {
-        public bool hasFlashlight;   // If player owns flashlight
-        public bool requiresBattery; // Whether flashlight requires battery
-        public float currentBattery; // Remaining battery %
-        public bool isOn;            // If flashlight is active
-    }
-
-    [System.Serializable]
-    public class InventorySlotData
-    {
-        public string itemName;  // Item name from ItemDatabase
-        public int quantity;     // Amount stored
-        public int slotIndex;    // Slot index in inventory UI
-    }
-
-
-   
-    #endregion
+    // Reference to the current save data
+    public SaveData CurrentData { get; private set; } = new SaveData();
+    
 
     #region Properties
-    public SaveData CurrentData { get; private set; }  // Holds last loaded or saved data
+    // CurrentData is now defined above for better organization
     #endregion
 
     #region Unity Methods

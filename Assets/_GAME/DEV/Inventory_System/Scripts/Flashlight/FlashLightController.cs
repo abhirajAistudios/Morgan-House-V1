@@ -253,7 +253,7 @@ public class FlashlightController : MonoBehaviour, ISaveable
     /// <summary>
     /// Saves flashlight state.
     /// </summary>
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         data.flashlightData.hasFlashlight = hasFlashlight;
         data.flashlightData.requiresBattery = requiresBattery;
@@ -264,7 +264,7 @@ public class FlashlightController : MonoBehaviour, ISaveable
     /// <summary>
     /// Loads flashlight state.
     /// </summary>
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         hasFlashlight = data.flashlightData.hasFlashlight;
         requiresBattery = data.flashlightData.requiresBattery;

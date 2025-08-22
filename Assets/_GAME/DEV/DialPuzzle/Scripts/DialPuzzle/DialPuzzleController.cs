@@ -133,9 +133,9 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     }
     
     // Saveable Implementation
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
-        AutoSaveManager.PuzzleState state = new AutoSaveManager.PuzzleState
+        PuzzleState state = new PuzzleState
         {
             puzzleID = uniqueID,
             isSolved = isSolved
@@ -144,7 +144,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
         data.puzzles.Add(state);
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         foreach (var state in data.puzzles)
         {

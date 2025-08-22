@@ -22,12 +22,12 @@ public class ObjectiveTrigger : MonoBehaviour , ISaveable
         }
     }
 
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         data.objectiveTriggers.Add(this);
     }
 
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         if (data.objectiveTriggers.Contains(this))
         {

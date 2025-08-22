@@ -115,15 +115,6 @@ public class ObjectiveUIManager : MonoBehaviour
         }
         return false;
     }
-    
-    public void ShowParentCompletionPrompt(ObjectiveDataSO parentObjective)
-    {
-        Debug.Log($"[ObjectiveUI] Prompting completion for Parent Objective: {parentObjective.objectiveName}");
-
-        // Here, you can display a button or popup to the player
-        // Example: Show "Complete Objective" button, when clicked:
-        // parentObjective.CompleteObjective();
-    }
 
     public void OnObjectiveUpdated()
     {

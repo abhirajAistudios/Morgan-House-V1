@@ -30,7 +30,6 @@ public class ItemTracker : MonoBehaviour
         collectedItemCounts[itemId]++;
     }
 
-
     /// Returns true if the player has collected at least one of the given item.
     public bool HasCollected(string itemId)
     {

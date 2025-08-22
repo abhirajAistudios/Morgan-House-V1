@@ -44,8 +44,6 @@ public class ObjectPickerInteractable : BaseInteractable, ISaveable
         gameObject.SetActive(false);
         // Force Objective to update NOW
         ObjectiveManager.Instance.OnObjectiveUpdatedImmediately();
-
-        
     }
 
 

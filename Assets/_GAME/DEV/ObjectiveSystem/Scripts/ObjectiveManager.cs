@@ -8,12 +8,10 @@ public class ObjectiveManager : MonoBehaviour
 
     public List<ObjectiveDataSO> activeObjectives = new();
     public List<ObjectiveDataSO> completedObjectives = new();
-    
-    public List<ObjectiveDataSO> totalObjectives = new();
-    
-    public ObjectiveDataSO FinalObjective;
-
     public ObjectiveUIManager objectiveUIManager;
+    
+    [SerializeField] private List<ObjectiveDataSO> totalObjectives = new();
+    [SerializeField] private ObjectiveDataSO FinalObjective;
     
     private GameManager gameManager = GameManager.Instance;
 

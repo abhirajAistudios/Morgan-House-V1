@@ -69,7 +69,6 @@ public class FlashlightPickup : BaseInteractable, ISaveable
         if (isPicked && !data.collectedItems.Contains(uniqueID))
         {
             data.collectedItems.Add(uniqueID);
-            Debug.Log("Saved flashlight pickup with ID: " + uniqueID);
         }
     }
 
@@ -79,7 +78,6 @@ public class FlashlightPickup : BaseInteractable, ISaveable
         {
             isPicked = true;
             gameObject.SetActive(false);
-            Debug.Log("Restored flashlight pickup with ID: " + uniqueID);
         }
     }
 }

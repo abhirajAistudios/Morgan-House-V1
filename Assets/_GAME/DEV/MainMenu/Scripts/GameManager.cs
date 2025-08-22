@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour, ISaveable
 
     [Header("Master Objective Flow")]
     public List<ObjectiveDataSO> completedObjectives = new(); // Stores completed objectives
-    public LinkedList<ObjectiveDataSO> objectiveQueue = new(); // Queue of objectives to be completed
+    private LinkedList<ObjectiveDataSO> objectiveQueue = new(); // Queue of objectives to be completed
 
     [HideInInspector] public bool isNewGame = false; // Used to differentiate between new/resumed games
 

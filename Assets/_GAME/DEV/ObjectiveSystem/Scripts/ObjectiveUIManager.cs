@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class ObjectiveUIManager : MonoBehaviour
 {
-    public GameObject TextViewContent;
-    public GameObject ParentTextPrefab;
-    public GameObject ChildTextPrefab;
+    [SerializeField] private GameObject TextViewContent;
+    [SerializeField] private GameObject ParentTextPrefab;
+    [SerializeField] private GameObject ChildTextPrefab;
 
     private ObjectiveManager objectiveManager;
     private List<TMP_Text> spawnedTexts = new();

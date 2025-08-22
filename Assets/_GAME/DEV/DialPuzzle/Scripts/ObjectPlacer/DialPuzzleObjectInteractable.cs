@@ -88,7 +88,6 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
         if (isCollected && !data.collectedItems.Contains(uniqueID))
         {
             data.collectedItems.Add(uniqueID);
-            Debug.Log($"[SAVE] DialPuzzle {uniqueID} marked as collected.");
         }
     }
 
@@ -98,7 +97,6 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
         {
             isCollected = true;
             gameObject.SetActive(false);
-            Debug.Log($"[LOAD] DialPuzzle {uniqueID} restored as already collected.");
         }
     }
 }

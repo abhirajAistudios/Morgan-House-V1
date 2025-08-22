@@ -110,7 +110,6 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
             else
             {
                 // If the dial is incorrect, print an error message and stop checking
-                Debug.Log($"Dial {i + 1} incorrect. Got {dials[i].CurrentIndex}, expected {correctCombination[i]}");
                 return;
             }
         }

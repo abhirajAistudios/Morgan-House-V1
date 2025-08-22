@@ -4,7 +4,7 @@ using UnityEngine;
 /// ScriptableObject that defines an objective for using a specific item.
 /// Completes when the specified item is used and all child objectives are complete.
 /// </summary>
-[CreateAssetMenu(menuName = "Scriptable Object/Objective System/Use Objective")]
+[CreateAssetMenu(menuName = "Objective System/Use Objective")]
 public class UseObjectiveSO : ObjectiveDataSO
 {
     [Tooltip("The unique identifier of the item that needs to be used")]

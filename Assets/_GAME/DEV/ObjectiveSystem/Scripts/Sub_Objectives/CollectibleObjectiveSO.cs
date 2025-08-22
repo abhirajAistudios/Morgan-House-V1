@@ -1,6 +1,6 @@
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Scriptable Object/Objective System/Collectible Objective")]
+[CreateAssetMenu(menuName = "Objective System/Collectible Objective")]
 public class CollectibleObjectiveSO : ObjectiveDataSO
 {
     public string ItemId;

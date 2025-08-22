@@ -1,7 +1,7 @@
 using UnityEngine;
 
 /// ScriptableObject that defines a reach objective where the player needs to reach a specific position.
-[CreateAssetMenu(menuName = "Scriptable Object/Objective System/Reach Objective")]
+[CreateAssetMenu(menuName = "Objective System/Reach Objective")]
 public class ReachObjectiveSO : ObjectiveDataSO
 {
     [Tooltip("The target position the player needs to reach")]

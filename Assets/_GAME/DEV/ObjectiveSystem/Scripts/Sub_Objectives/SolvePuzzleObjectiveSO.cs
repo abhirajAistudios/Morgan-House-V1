@@ -4,7 +4,7 @@ using UnityEngine;
 /// ScriptableObject that defines a puzzle-solving objective.
 /// Completes when the specified puzzle is solved and all child objectives are complete.
 /// </summary>
-[CreateAssetMenu(menuName = "Scriptable Object/Objective System/Solve Puzzle Objective")]
+[CreateAssetMenu(menuName = "Objective System/Solve Puzzle Objective")]
 public class SolvePuzzleObjectiveSO : ObjectiveDataSO
 {
     [Tooltip("The unique identifier of the puzzle that needs to be solved")]

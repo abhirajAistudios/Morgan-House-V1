@@ -48,12 +48,6 @@ public class GameManager : MonoBehaviour, ISaveable
             {
                 return;
             }
-
-            // If parent is ready, check for manual completion condition
-            if (completedObjective.parentObjective.AreChildrenComplete())
-            {
-                completedObjective.parentObjective.CheckReadyForCompletion();
-            }
         }
 
         // Add to completed list

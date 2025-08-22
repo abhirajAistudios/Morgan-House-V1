@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public class EventService
 {
     public EventController ShowPressButton { get; private set; }
@@ -8,6 +10,8 @@ public class EventService
     public EventController<string> OnObjectUsed { get; private set; }
     
     public EventController<ObjectiveDataSO>  OnObjectiveCompleted { get; private set; }
+    
+    public EventController<Transform> OnPlayerMoved { get; private set; }
     public EventService()
     {
         ShowPressButton = new EventController();
@@ -16,5 +20,6 @@ public class EventService
         OnPuzzleSolved = new EventController<string>();
         OnObjectUsed = new EventController<string>();
         OnObjectiveCompleted = new EventController<ObjectiveDataSO>();
+        OnPlayerMoved = new EventController<Transform>();
     }
 }

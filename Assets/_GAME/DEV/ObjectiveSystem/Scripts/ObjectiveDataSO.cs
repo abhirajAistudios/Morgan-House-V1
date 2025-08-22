@@ -57,22 +57,6 @@ public abstract class ObjectiveDataSO : ScriptableObject, ISaveable
 
         // Notify the objective manager
         ObjectiveManager.Instance.OnObjectiveCompleted(this);
-
-        // Notify parent objective to check if it's ready to complete
-        if (parentObjective != null || objectiveType == ObjectiveType.NORMALOBJECTIVE)
-        {
-            parentObjective.CheckReadyForCompletion();
-        }
-    }
-
-    // Checks if this objective is ready for manual completion based on children
-    public virtual void CheckReadyForCompletion()
-    {
-        if (AreChildrenComplete() && objectiveStatus != ObjectiveStatus.COMPLETED)
-        {
-            // Show a prompt in the UI to let the player manually complete this objective
-            ObjectiveManager.Instance.objectiveUIManager.ShowParentCompletionPrompt(this);
-        }
     }
 
     // Abstract method to initialize the objective; must be implemented in subclasses

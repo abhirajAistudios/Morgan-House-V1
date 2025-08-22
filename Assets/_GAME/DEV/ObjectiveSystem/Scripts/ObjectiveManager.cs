@@ -88,12 +88,6 @@ public class ObjectiveManager : MonoBehaviour
 
         completedObjectives.Add(completedObjective);
 
-        // Notify Parent Objective to check if it's ready for completion
-        if (completedObjective.parentObjective != null ||   completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
-        {
-            completedObjective.parentObjective.CheckReadyForCompletion();
-        }
-
         // Handle Unlockables
         if (completedObjective.hasUnlockables)
         {

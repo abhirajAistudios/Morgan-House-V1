@@ -5,15 +5,13 @@ using UnityEngine;
 public class ObjectiveManager : MonoBehaviour
 {
     public static ObjectiveManager Instance;
-
-    public List<ObjectiveDataSO> activeObjectives = new();
-    public List<ObjectiveDataSO> completedObjectives = new();
     
-    public List<ObjectiveDataSO> totalObjectives = new();
-    
-    public ObjectiveDataSO FinalObjective;
-
+    [HideInInspector] public List<ObjectiveDataSO> activeObjectives = new();
+    [HideInInspector] public List<ObjectiveDataSO> completedObjectives = new();
     public ObjectiveUIManager objectiveUIManager;
+    
+    [SerializeField] private List<ObjectiveDataSO> totalObjectives = new();
+    [SerializeField] private ObjectiveDataSO FinalObjective;
     
     private GameManager gameManager = GameManager.Instance;
 
@@ -33,7 +31,6 @@ public class ObjectiveManager : MonoBehaviour
         {
             ResetAllObjectives();
             gameManager.ResetAllObjectives(); // only on new game
-            Debug.Log("Reset all objectives");
             gameManager.ResumeGame();
         }
         else
@@ -43,11 +40,7 @@ public class ObjectiveManager : MonoBehaviour
             saveSystem.LoadObjectives();
             
             gameManager.RestoreConnectedObjectiveProgress();
-            //gameManager.RestoreObjectiveProgress();
-            return;
         }
-        
-        //gameManager.TryStartNextObjective();
     }
 
     public void Update()
@@ -58,8 +51,6 @@ public class ObjectiveManager : MonoBehaviour
     {
         if (objective == null || activeObjectives.Contains(objective) || objective.objectiveStatus == ObjectiveStatus.COMPLETED)
             return;
-
-        Debug.Log($"[ObjectiveManager] Starting Objective: {objective.objectiveName}");
 
         activeObjectives.Add(objective);
         objective.StartObjective();
@@ -80,31 +71,20 @@ public class ObjectiveManager : MonoBehaviour
         if (completedObjective == null || completedObjectives.Contains(completedObjective))
             return;
 
-        Debug.Log($"[ObjectiveManager] Completed: {completedObjective.objectiveName}");
-
         // REMOVE from Active Objectives List
         if (activeObjectives.Contains(completedObjective))
             activeObjectives.Remove(completedObjective);
 
         completedObjectives.Add(completedObjective);
 
-        // Notify Parent Objective to check if it's ready for completion
-        if (completedObjective.parentObjective != null ||   completedObjective.objectiveType == ObjectiveType.NORMALOBJECTIVE)
-        {
-            completedObjective.parentObjective.CheckReadyForCompletion();
-        }
-
         // Handle Unlockables
         if (completedObjective.hasUnlockables)
         {
             foreach (var unlock in completedObjective.UnlockOnComplete)
             {
-                //if (unlock.objectiveState == ObjectiveState.LOCKED)
-                //{
                     unlock.objectiveState = ObjectiveState.UNLOCKED;
                     unlock.objectiveStatus = ObjectiveStatus.NOTSTARTED;
                     gameManager.QueueObjectiveInLast(unlock);
-                //}
             }
         }
 

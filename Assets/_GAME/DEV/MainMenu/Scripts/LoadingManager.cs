@@ -1,18 +1,19 @@
-﻿using System.Collections;
-using TMPro;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.SceneManagement;
+using TMPro;
 using UnityEngine.UI;
+using System.Collections;
 
 public class LoadingManager : MonoBehaviour
 {
     public static LoadingManager Instance;
+    public static bool ResumeRequested = false; 
 
     [Header("UI refs (assign in Inspector)")]
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private CanvasGroup canvasGroup;
+    
 
     [Header("Settings")]
     [SerializeField] private float fadeDuration = 0.3f;
@@ -27,6 +28,7 @@ public class LoadingManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            SceneManager.sceneLoaded += OnSceneLoaded; 
         }
         else
         {
@@ -38,12 +40,39 @@ public class LoadingManager : MonoBehaviour
             loadingPanel.SetActive(false);
     }
 
-    /// <summary>
-    /// Call this to load ANY scene by name (works for multiple levels).
-    /// </summary>
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        if (!ResumeRequested) return;
+
+        ResumeRequested = false;
+        StartCoroutine(WaitAndRestore());
+    }
+
+    private IEnumerator WaitAndRestore()
+    {
+        // wait until Player is spawned in the new scene
+        GameObject playerObj = null;
+        while (playerObj == null)
+        {
+            playerObj = GameObject.FindWithTag("Player");
+            yield return null; // wait a frame
+        }
+
+        var player = playerObj.transform;
+        var autosavemanager = FindObjectOfType<AutoSaveManager>();
+        if (autosavemanager != null)
+        {
+
+            autosavemanager.LoadGame(player);
+        }
+        else
+        {
+            Debug.LogWarning(" No AutoSaveManager found in scene!");
+        }
+    }
     public void LoadSceneByName(string sceneName)
     {
-        if (!IsLoading) // ✅ Prevent multiple loads
+        if (!IsLoading)
             StartCoroutine(LoadSceneAsync(sceneName));
     }
 
@@ -52,12 +81,12 @@ public class LoadingManager : MonoBehaviour
         IsLoading = true;
 
         if (loadingPanel != null) loadingPanel.SetActive(true);
-        if (canvasGroup != null) canvasGroup.alpha = 1f;
+       
 
         progressBar.value = 0f;
         progressText.text = "0%";
 
-        yield return null; // let UI update at least one frame
+        yield return null;
 
         AsyncOperation op = SceneManager.LoadSceneAsync(sceneName);
         op.allowSceneActivation = false;

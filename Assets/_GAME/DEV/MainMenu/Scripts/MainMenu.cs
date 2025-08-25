@@ -44,10 +44,8 @@ public class MainMenu : MonoBehaviour
 
         GameManager.Instance?.StartNewGame();
 
-        if (LoadingManager.Instance != null)
-            LoadingManager.Instance.LoadSceneByName("Morgan_House");
-        else
-            Debug.LogError("LoadingManager not found!");
+        SceneLoader.Instance.LoadSceneByIndex(1);
+        
     }
 
     private void ResumeGame()
@@ -64,7 +62,10 @@ public class MainMenu : MonoBehaviour
                 GameManager.Instance.ResumeGame();
 
                 if (LoadingManager.Instance != null)
-                    LoadingManager.Instance.LoadSceneByName(data.lastSceneName); // ✅ load last saved scene
+                {
+                    LoadingManager.ResumeRequested = true; 
+                    SceneLoader.Instance.LoadSceneByIndex(data.sceneIndex);
+                }
                 else
                     Debug.LogError("LoadingManager not found!");
             }
@@ -81,6 +82,7 @@ public class MainMenu : MonoBehaviour
         }
     }
 
+
     private void ShowExitPopup()
     {
         if (exitConfirmationPanel != null)
@@ -92,7 +94,7 @@ public class MainMenu : MonoBehaviour
         if (exitConfirmationPanel != null)
             exitConfirmationPanel.SetActive(false);
     }
-     
+
     private void ExitGame()
     {
 #if UNITY_EDITOR

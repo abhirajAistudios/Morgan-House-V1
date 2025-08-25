@@ -57,12 +57,12 @@ public class PauseMenu : MonoBehaviour
 
         if (LoadingManager.Instance != null)
         {
-            LoadingManager.Instance.LoadSceneByName("NewGameScene");
+            SceneLoader.Instance.LoadSceneByIndex(0);
         }
         else
         {
             Debug.LogError("LoadingManager instance not found! Falling back to direct SceneManager.");
-            SceneManager.LoadScene("NewGameScene");
+            SceneManager.LoadScene(0);
         }
     }
 }

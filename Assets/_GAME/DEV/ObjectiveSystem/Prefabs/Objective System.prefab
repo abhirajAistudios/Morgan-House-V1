@@ -192,6 +192,77 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!1 &1404640038760127262
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 52183169622198612}
+  - component: {fileID: 1823893815399211934}
+  - component: {fileID: 3870426024021799805}
+  m_Layer: 0
+  m_Name: Objective Manager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &52183169622198612
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404640038760127262}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 6274185777165469874}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1823893815399211934
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404640038760127262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 048fc86b69b40444a9123eed3f6502f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeObjectives: []
+  completedObjectives: []
+  totalObjectives:
+  - {fileID: 11400000, guid: a7d7722cd48a2b748bca03088b32b212, type: 2}
+  - {fileID: 11400000, guid: ec911ad5a7eb5364f9081541a7b4f88b, type: 2}
+  - {fileID: 11400000, guid: 37bb4f39cfe635342a96cf4b50b987d0, type: 2}
+  - {fileID: 11400000, guid: 86e9c2cb380883348bf90ac2e7ba4667, type: 2}
+  - {fileID: 11400000, guid: d18c2627eeeea1b41a0ed499838bfac0, type: 2}
+  - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
+  - {fileID: 11400000, guid: 1992388ef9aa72e4b89ba2133599ea13, type: 2}
+  - {fileID: 11400000, guid: 94ec877785cf9bd41b2240b60be66afb, type: 2}
+  - {fileID: 11400000, guid: 8bd7370be2e0c434199afc5d1cfb1a01, type: 2}
+  FinalObjective: {fileID: 11400000, guid: bcc72bf47ace8374f8acc314d64cdd37, type: 2}
+  objectiveUIManager: {fileID: 465247676118681732}
+--- !u!114 &3870426024021799805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1404640038760127262}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4707292d73a10d148a162ed00d9df20a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1476747515707839649
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,6 +455,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 5005702487841789920}
+  - {fileID: 52183169622198612}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &5139256855096036214

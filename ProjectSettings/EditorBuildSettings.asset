@@ -6,14 +6,14 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/_GAME/DEV/Scenes/NewGameScene.unity
+    path: Assets/_GAME/DEV/Scenes/Main_Menu_Scene.unity
     guid: 3db6e1cd9b5269347a2479a1ecf9247d
   - enabled: 1
     path: Assets/_GAME/DEV/Scenes/Morgan_House.unity
     guid: af19f8c103d985a45bae961fa75ca9f2
   - enabled: 1
-    path: Assets/_GAME/DEV/Scenes/Morgan_HouseTestScene.unity
-    guid: d3a7c94c1c3031b449ad4ee913477639
+    path: Assets/_GAME/DEV/Scenes/Morgan_House _Test_Scene.unity
+    guid: 38c6aa0f950452e4588cd05965487f7a
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_UseUCBPForAssetBundles: 0

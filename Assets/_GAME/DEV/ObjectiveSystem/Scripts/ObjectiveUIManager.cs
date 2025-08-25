@@ -6,9 +6,9 @@ using UnityEngine;
 
 public class ObjectiveUIManager : MonoBehaviour
 {
-    public GameObject TextViewContent;
-    public GameObject ParentTextPrefab;
-    public GameObject ChildTextPrefab;
+    [SerializeField] private GameObject TextViewContent;
+    [SerializeField] private GameObject ParentTextPrefab;
+    [SerializeField] private GameObject ChildTextPrefab;
 
     private ObjectiveManager objectiveManager;
     private List<TMP_Text> spawnedTexts = new();
@@ -114,15 +114,6 @@ public class ObjectiveUIManager : MonoBehaviour
                 return true;
         }
         return false;
-    }
-    
-    public void ShowParentCompletionPrompt(ObjectiveDataSO parentObjective)
-    {
-        Debug.Log($"[ObjectiveUI] Prompting completion for Parent Objective: {parentObjective.objectiveName}");
-
-        // Here, you can display a button or popup to the player
-        // Example: Show "Complete Objective" button, when clicked:
-        // parentObjective.CompleteObjective();
     }
 
     public void OnObjectiveUpdated()

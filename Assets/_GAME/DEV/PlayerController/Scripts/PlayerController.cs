@@ -260,6 +260,7 @@ public class PlayerController : MonoBehaviour
         HandleCameraSway();
         HandleSlideTilt();
         HandleSliding();
+        UpdatePlayerPositionForObjective();
     }
 
     void LateUpdate()
@@ -892,5 +893,10 @@ public class PlayerController : MonoBehaviour
             Vector3 moveDir = inputHandler.GetMovementDirection(transform);
             Gizmos.DrawRay(transform.position + Vector3.up * 0.1f, moveDir * 1.5f);
         }
+    }
+
+    private void UpdatePlayerPositionForObjective()
+    {
+        GameService.Instance.EventService.OnPlayerMoved.InvokeEvent(transform);
     }
 }

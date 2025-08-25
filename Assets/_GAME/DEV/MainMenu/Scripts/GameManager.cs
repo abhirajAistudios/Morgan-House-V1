@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour, ISaveable
 
     [Header("Master Objective Flow")]
     public List<ObjectiveDataSO> completedObjectives = new(); // Stores completed objectives
-    public LinkedList<ObjectiveDataSO> objectiveQueue = new(); // Queue of objectives to be completed
+    private LinkedList<ObjectiveDataSO> objectiveQueue = new(); // Queue of objectives to be completed
 
     [HideInInspector] public bool isNewGame = false; // Used to differentiate between new/resumed games
 
@@ -43,19 +43,10 @@ public class GameManager : MonoBehaviour, ISaveable
         // If this is a child objective
         if (completedObjective.parentObjective != null)
         {
-            Debug.Log("Objective Completed" + completedObjective.dialogDisplay);
-
             // If parent is not ready, wait for other children
             if (!completedObjective.parentObjective.AreChildrenComplete())
             {
-                Debug.Log("[GameManager] Waiting for other child objectives to complete.");
                 return;
-            }
-
-            // If parent is ready, check for manual completion condition
-            if (completedObjective.parentObjective.AreChildrenComplete())
-            {
-                completedObjective.parentObjective.CheckReadyForCompletion();
             }
         }
 
@@ -111,7 +102,6 @@ public class GameManager : MonoBehaviour, ISaveable
         }
 
         completedObjectives.Clear();
-        Debug.Log("[GameManager] All objectives have been reset to NOTSTARTED.");
     }
 
     // Recursively resets objective status to NOTSTARTED
@@ -245,13 +235,13 @@ public class GameManager : MonoBehaviour, ISaveable
     }
 
     // Interface method to save the game state (currently not implemented)
-    public void SaveState(ref AutoSaveManager.SaveData data)
+    public void SaveState(ref SaveData data)
     {
         // Implementation can be added to store completedObjectives, queue state, etc.
     }
 
     // Loads saved objectives from previous state
-    public void LoadState(AutoSaveManager.SaveData data)
+    public void LoadState(SaveData data)
     {
         completedObjectives.Clear();
 

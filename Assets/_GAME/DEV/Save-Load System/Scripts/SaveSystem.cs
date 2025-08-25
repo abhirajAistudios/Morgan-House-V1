@@ -27,44 +27,4 @@ public class SaveSystem : MonoBehaviour
             saveSystem.LoadGame(player);
         }
     }
-
-    private void Update()
-    {
-        // Press 'P' to restart the game (for debugging/testing)
-        if (Input.GetKeyDown(KeyCode.P))
-        {
-            RestartGame();
-        }
-    }
-
-    /// <summary>
-    /// Saves game data into a JSON file.
-    /// </summary>
-    public void SaveGameText(ref SaveData data)
-    {
-       
-        // Optional: Show confirmation message on UI (uncomment if GameService is implemented)
-        // GameService.Instance.UIService.ShowMessage("Game Autosaved!", 2f);
-
-    }
-
-    /// <summary>
-    /// Deletes the save file (used when restarting or resetting progress).
-    /// </summary>
-    public void ResetSave()
-    {
-        if (File.Exists(saveFilePath))
-        {
-            File.Delete(saveFilePath);
-        }
-    }
-
-    /// <summary>
-    /// Restarts the game by deleting save and reloading current scene.
-    /// </summary>
-    public void RestartGame()
-    {
-        ResetSave();
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
-    }
 }

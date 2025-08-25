@@ -44,10 +44,8 @@ public class MainMenu : MonoBehaviour
 
         GameManager.Instance?.StartNewGame();
 
-        if (LoadingManager.Instance != null)
-            LoadingManager.Instance.LoadSceneByName("Morgan_House");
-        else
-            Debug.LogError("LoadingManager not found!");
+        SceneLoader.Instance.LoadSceneByIndex(1);
+        
     }
 
     private void ResumeGame()
@@ -66,7 +64,7 @@ public class MainMenu : MonoBehaviour
                 if (LoadingManager.Instance != null)
                 {
                     LoadingManager.ResumeRequested = true; 
-                    LoadingManager.Instance.LoadSceneByName(data.lastSceneName);
+                    SceneLoader.Instance.LoadSceneByIndex(data.sceneIndex);
                 }
                 else
                     Debug.LogError("LoadingManager not found!");

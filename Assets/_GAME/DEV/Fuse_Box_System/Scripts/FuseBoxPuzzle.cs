@@ -141,7 +141,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
         // autosave
         var playerPos = FindAnyObjectByType<PlayerController>()?.transform;
-        FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(playerPos);
+        FindAnyObjectByType<AutoSaveManager>()?.SaveGame(playerPos);
 
         OnLoseFocus(); // Clear interaction highlight
     }

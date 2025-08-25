@@ -129,7 +129,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
 
         // Save the game after the objective is completed
         Transform playerPos = FindAnyObjectByType<PlayerController>().transform;
-        FindAnyObjectByType<AutoSaveManager>()?.SaveAfterObjective(playerPos);
+        FindAnyObjectByType<AutoSaveManager>()?.SaveGame(playerPos);
     }
     
     // Saveable Implementation

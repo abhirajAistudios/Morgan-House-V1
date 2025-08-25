@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 1499675750052679267}
   - component: {fileID: 6380468682332180193}
   - component: {fileID: 8473312424272220998}
-  - component: {fileID: 825264488549642236}
   m_Layer: 6
   m_Name: Fuse
   m_TagString: Untagged
@@ -127,16 +126,4 @@ MonoBehaviour:
   data: {fileID: 11400000, guid: e44f74b7c4703d1448785831b37dcbd7, type: 2}
   item: {fileID: 11400000, guid: d7fccb5e172ea3048b095f1d10dc98cb, type: 2}
   uniqueID: ss
---- !u!114 &825264488549642236
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8343465268297892269}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22beb0c4126566945abd5fcbc9ce74e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: d7fccb5e172ea3048b095f1d10dc98cb, type: 2}
+  ItemName: 

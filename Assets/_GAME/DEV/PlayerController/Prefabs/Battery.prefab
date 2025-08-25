@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 8357933045226820424}
   - component: {fileID: 7611749113938450329}
   - component: {fileID: 2227174579589556220}
-  - component: {fileID: 7066753280151771037}
   m_Layer: 6
   m_Name: Battery
   m_TagString: Untagged
@@ -126,16 +125,3 @@ MonoBehaviour:
   item: {fileID: 11400000, guid: 4a934c13797066f42bd2469756138aa1, type: 2}
   uniqueID: 
   ItemName: Battery
---- !u!114 &7066753280151771037
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1834118688180356401}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 22beb0c4126566945abd5fcbc9ce74e5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  itemData: {fileID: 11400000, guid: 4a934c13797066f42bd2469756138aa1, type: 2}

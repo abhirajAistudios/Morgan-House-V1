@@ -11,15 +11,14 @@ public class InventoryManager : MonoBehaviour, ISaveable
 
     private void Awake()
     {
-        // Ensure only one InventoryManager exists
         if (Instance == null)
         {
             Instance = this;
-            itemSlots = new InventoryItem[slotCount]; // initialize slots
+            itemSlots = new InventoryItem[slotCount];
         }
         else
         {
-            Destroy(gameObject); // prevent duplicates
+            Destroy(gameObject); // Prevent duplicate instances
         }
     }
     #endregion
@@ -30,19 +29,18 @@ public class InventoryManager : MonoBehaviour, ISaveable
     [HideInInspector]
     public InventoryItem[] itemSlots;
 
-    // Callback invoked whenever the inventory changes (UI can subscribe)
+    // Event for when inventory changes (UI can subscribe)
     public delegate void OnInventoryChanged();
     public OnInventoryChanged onInventoryChangedCallback;
 
     #region Inventory Management
 
     /// <summary>
-    /// Adds an item to the inventory. 
-    /// Stacks if it already exists, otherwise places it in an empty slot.
+    /// Adds an item to inventory (stacks if already exists).
     /// </summary>
     public void AddItem(ItemObject itemObject)
     {
-        // Try to stack if the item already exists
+        // Try stacking
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (itemSlots[i] != null && itemSlots[i].itemData == itemObject)
@@ -53,7 +51,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
             }
         }
 
-        // Try to put item in an empty slot
+        // Place in empty slot
         for (int i = 0; i < itemSlots.Length; i++)
         {
             if (itemSlots[i] == null)
@@ -64,12 +62,11 @@ public class InventoryManager : MonoBehaviour, ISaveable
             }
         }
 
-        // Inventory is full
-        Debug.LogWarning(" Inventory Full!");
+        Debug.LogWarning("Inventory Full!");
     }
 
     /// <summary>
-    /// Uses the given item (if present in inventory).
+    /// Uses an item from inventory (removes if quantity is zero).
     /// </summary>
     public void UseItem(ItemObject itemObject)
     {
@@ -79,7 +76,6 @@ public class InventoryManager : MonoBehaviour, ISaveable
             {
                 itemSlots[i].Use();
 
-                // Remove if quantity reaches 0
                 if (itemSlots[i].quantity <= 0)
                     itemSlots[i] = null;
 
@@ -125,7 +121,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     #region Save & Load
 
     /// <summary>
-    /// Saves the current inventory state to the AutoSaveManager's save data.
+    /// Saves current inventory state to SaveData.
     /// </summary>
     public void SaveState(ref SaveData data)
     {
@@ -149,26 +145,64 @@ public class InventoryManager : MonoBehaviour, ISaveable
     }
 
     /// <summary>
-    /// Restores the inventory from saved data.
-    /// Also disables collectible items already picked up in the scene.
+    /// Restores inventory from SaveData.
     /// </summary>
     public void LoadState(SaveData data)
     {
-        itemSlots = new InventoryItem[slotCount];
+        itemSlots = new InventoryItem[slotCount]; // Reset slots
 
-        // Restore items in their saved slots
-        foreach (var slotData in data.inventorySlots)
+        if (data == null || data.inventorySlots == null)
         {
-            ItemObject itemObj = ItemDatabase.Instance.GetItemByName(slotData.itemName);
-            if (itemObj != null && slotData.slotIndex < itemSlots.Length)
-            {
-                itemSlots[slotData.slotIndex] = new InventoryItem(itemObj, slotData.quantity);
-
-            }
+            Debug.LogWarning("SaveData or inventorySlots is null");
+            onInventoryChangedCallback?.Invoke();
+            return;
         }
 
-        
-        
+        LoadItemDatabase();
+        if (ItemDatabase.Instance == null)
+        {
+            Debug.LogError("ItemDatabase could not be loaded!");
+            onInventoryChangedCallback?.Invoke();
+            return;
+        }
+
+        foreach (var slotData in data.inventorySlots)
+        {
+            if (slotData == null) continue;
+
+            if (slotData.slotIndex < 0 || slotData.slotIndex >= itemSlots.Length)
+            {
+                Debug.LogWarning($"Invalid slot index: {slotData.slotIndex}");
+                continue;
+            }
+
+            ItemObject itemObj = ItemDatabase.Instance.GetItemByName(slotData.itemName);
+            if (itemObj != null)
+                itemSlots[slotData.slotIndex] = new InventoryItem(itemObj, slotData.quantity);
+            else
+                Debug.LogWarning($"Item '{slotData.itemName}' not found in database");
+        }
+
+        onInventoryChangedCallback?.Invoke();
     }
+
+    /// <summary>
+    /// Loads ItemDatabase from Resources if not already loaded.
+    /// </summary>
+    private void LoadItemDatabase()
+    {
+        if (ItemDatabase.Instance != null) return;
+
+        ItemDatabase database = Resources.Load<ItemDatabase>("ItemDatabase");
+        if (database != null)
+        {
+            var forceInit = database.allItems; // Force init
+        }
+        else
+        {
+            Debug.LogError("Could not load ItemDatabase from Resources!");
+        }
+    }
+
     #endregion
 }

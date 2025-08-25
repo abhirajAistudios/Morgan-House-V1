@@ -7,9 +7,6 @@ using UnityEngine.SceneManagement;
 /// </summary>
 public class SceneTrigger : MonoBehaviour
 {
-    // ---------------- INSPECTOR VARIABLES ----------------
-    [SerializeField] private string nextSceneName; // The name of the next scene to load
-
     // ---------------- PRIVATE VARIABLES ------------------
     private bool hasTriggered = false; // Prevents multiple triggers
 
@@ -19,22 +16,8 @@ public class SceneTrigger : MonoBehaviour
     {
         // Keep this trigger object persistent across scene loads
         DontDestroyOnLoad(gameObject);
-
-        // Subscribe to sceneLoaded event (needed to reset triggers in specific scenes)
-        SceneManager.sceneLoaded += OnSceneLoaded;
     }
-
-    private void Start()
-    {
-        // Currently unused but kept for possible future initialization
-    }
-
-    private void OnDestroy()
-    {
-        // Unsubscribe from sceneLoaded event to avoid memory leaks
-        SceneManager.sceneLoaded -= OnSceneLoaded;
-    }
-
+    
     private void OnTriggerEnter(Collider other)
     {
         // Prevent triggering more than once
@@ -46,7 +29,7 @@ public class SceneTrigger : MonoBehaviour
             hasTriggered = true;
 
             // Load the next scene using LoadingManager
-            LoadingManager.Instance.LoadSceneByName(nextSceneName);
+            SceneLoader.Instance.LoadNextScene();
 
             // Attempt to autosave after the new scene loads
             AutoSaveAfterSceneLoad();
@@ -67,25 +50,13 @@ public class SceneTrigger : MonoBehaviour
         {
             Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
 
-            saveManager.SaveAfterObjective(playerpos);
+            saveManager.SaveGame(playerpos);
             Debug.Log(" AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
         }
         else
         {
             Debug.LogWarning(" AutoSave skipped - SaveManager or Player not found in scene: "
                              + SceneManager.GetActiveScene().name);
-        }
-    }
-
-    /// <summary>
-    /// Resets trigger state when a specific scene is loaded.
-    /// </summary>
-    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
-    {
-        if (scene.name == nextSceneName)
-        {
-            hasTriggered = false;
-            Debug.Log(" SceneTrigger reset in " + scene.name);
         }
     }
 }

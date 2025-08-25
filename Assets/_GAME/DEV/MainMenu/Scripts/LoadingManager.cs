@@ -13,7 +13,7 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private CanvasGroup canvasGroup;
+    
 
     [Header("Settings")]
     [SerializeField] private float fadeDuration = 0.3f;
@@ -81,7 +81,7 @@ public class LoadingManager : MonoBehaviour
         IsLoading = true;
 
         if (loadingPanel != null) loadingPanel.SetActive(true);
-        if (canvasGroup != null) canvasGroup.alpha = 1f;
+       
 
         progressBar.value = 0f;
         progressText.text = "0%";

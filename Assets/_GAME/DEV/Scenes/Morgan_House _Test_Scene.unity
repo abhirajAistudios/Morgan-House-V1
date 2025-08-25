@@ -42,8 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 13
-  m_BakeOnSceneLoad: 0
+  serializedVersion: 12
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -5457,6 +5456,24 @@ Transform:
   - {fileID: 1828066759}
   m_Father: {fileID: 1388874718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1738363051 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 3269251908063047627, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
+  m_PrefabInstance: {fileID: 675935235368134444}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1738363053
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1738363051}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 22beb0c4126566945abd5fcbc9ce74e5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemData: {fileID: 0}
 --- !u!1 &1756781134
 GameObject:
   m_ObjectHideFlags: 0
@@ -8623,7 +8640,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7264105447383099526, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 70
       objectReference: {fileID: 0}
     - target: {fileID: 8392117218016101374, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
       propertyPath: m_AnchorMax.y
@@ -8712,7 +8729,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 3269251908063047627, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1738363053}
   m_SourcePrefab: {fileID: 100100000, guid: 1323e24860a01db4cb5ae054fd65c2b1, type: 3}
 --- !u!114 &675935235368134445 stripped
 MonoBehaviour:
@@ -13737,7 +13757,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1132430306123765786, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
       propertyPath: nextSceneName
-      value: Morgan_House _Test_Scene
+      value: Morgan_House1
       objectReference: {fileID: 0}
     - target: {fileID: 1132430306123765786, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
       propertyPath: disableInSceneName
@@ -16754,8 +16774,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047656351725338771}
   m_HandleRect: {fileID: 4806095384771888098}
   m_Direction: 2
-  m_Value: 0.99999976
-  m_Size: 0.76217335
+  m_Value: 0.999998
+  m_Size: 0.7621733
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:

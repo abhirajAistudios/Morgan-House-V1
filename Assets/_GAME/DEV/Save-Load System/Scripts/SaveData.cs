@@ -18,6 +18,8 @@ public class SaveData
     // Scene name where the player last was
     public string lastSceneName;
 
+    public int sceneIndex;
+
     // ----------------- Game State -----------------
 
     // List of collected item IDs/names
@@ -29,7 +31,7 @@ public class SaveData
     // Stores player inventory slots
     public List<InventorySlotData> inventorySlots = new();
 
-    // Objectives (quest progress) — Data from ScriptableObjects
+    // Objectives (quest progress) ï¿½ Data from ScriptableObjects
     public List<ObjectiveDataSO> objectives = new();
 
     // Triggers that track whether objectives were completed

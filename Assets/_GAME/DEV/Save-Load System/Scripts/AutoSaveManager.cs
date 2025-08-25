@@ -43,7 +43,7 @@ public class AutoSaveManager : MonoBehaviour
     /// Creates a save file after completing an objective.
     /// Stores player state, puzzles, inventory, etc.
     /// </summary>
-    public void SaveAfterObjective(Transform player)
+    public void SaveGame(Transform player)
     {
         // Build save data snapshot
         SaveData data = new SaveData
@@ -52,7 +52,8 @@ public class AutoSaveManager : MonoBehaviour
             playerPosY = player.position.y,
             playerPosZ = player.position.z,
             timestamp = System.DateTime.Now.ToString(),
-            lastSceneName = SceneManager.GetActiveScene().name
+            lastSceneName = SceneManager.GetActiveScene().name,
+            sceneIndex = SceneManager.GetActiveScene().buildIndex,
         };
 
         // Save states of all objects implementing ISaveable
@@ -97,7 +98,11 @@ public class AutoSaveManager : MonoBehaviour
         CurrentData = data;
 
         // Ensure scene name matches
-        data.lastSceneName = SceneManager.GetActiveScene().name;
+        //data.lastSceneName = SceneManager.GetActiveScene().name;
+        if(data.sceneIndex != SceneManager.GetActiveScene().buildIndex)
+        {
+            return;
+        }
 
         // Restore player state
         player.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);

@@ -1,7 +1,7 @@
 public enum DoorState
 {
-    Locked,
-    Unlocked,
-    Jammed,
-    FuseLockDoor
+    Locked,//Can be opened with key
+    Unlocked,//Can be opened directly
+    Jammed,//Some can be lockpicked
+    FuseLockDoor //Can be opened by solving the fuse puzzle
 }

@@ -8340,15 +8340,8 @@ MonoBehaviour:
   exit: {fileID: 3579574027186482497}
   open: {fileID: 8147915696978537228}
   openAudio: {fileID: 8681271857152639780}
-  lockSpeed: 10
-  unlockThreshold: 10
-  maxUnlockRotation: 90
+  unlockThreshold: 25
   rotationOffset: 90
-  unlockAngles:
-  - 0
-  - 0
-  - 0
-  - 0
 --- !u!223 &622614489642711356
 Canvas:
   m_ObjectHideFlags: 0
@@ -16757,7 +16750,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2047656351725338771}
   m_HandleRect: {fileID: 4806095384771888098}
   m_Direction: 2
-  m_Value: 0.9999982
+  m_Value: 0.99999875
   m_Size: 0.76217335
   m_NumberOfSteps: 0
   m_OnValueChanged:

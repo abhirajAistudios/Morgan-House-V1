@@ -3,28 +3,23 @@ using UnityEngine;
 public class Lockpick : MonoBehaviour
 {
     [Header("References")]
-    [SerializeField] private Camera cam;
-    [SerializeField] private Transform innerLock;
-    [SerializeField] private Transform pickPosition;
-    [SerializeField] private LockPickCameraManager exit;
-    [SerializeField] private DoorInteraction open;
-    [SerializeField] private AudioSource openAudio;
+    [SerializeField] private Camera cam;                      // Camera used for raycasting and mouse-to-world calculations
+    [SerializeField] private Transform innerLock;             // The static lock core (target point)
+    [SerializeField] private Transform pickPosition;          // The position where the lockpick is placed
+    [SerializeField] private LockPickCameraManager exit;      // Handles exiting lockpick mode
+    [SerializeField] private DoorInteraction open;            // Door interaction reference
+    [SerializeField] private AudioSource openAudio;           // Unlock sound
+    [SerializeField] private AudioSource wrongDirectionAudio; // Sound for wrong direction
 
     [Header("Lockpick Settings")]
-    [SerializeField] private float lockSpeed = 10f;
-    [SerializeField] private float unlockThreshold = 15f;
-    [SerializeField] private float maxUnlockRotation = 90f;
+    [SerializeField] private float unlockThreshold = 2f;      // Small threshold for precise matching
+    [SerializeField] private float rotationOffset = 0f;       // Adjustment offset for pick sprite/model
 
-    [Tooltip("Adjust to match your lockpick's default sprite/model orientation.")]
-    [SerializeField] private float rotationOffset = 0f;
-
-    [SerializeField]
-    private float[] unlockAngles = new float[4];
-
-    private float eulerAngle;
-    private bool isMouseHeld = false;
-    private bool isUnlocking = false;
-    private float currentTargetUnlockAngle = 0f;
+    private float eulerAngle;                  // Current pick angle
+    private float previousAngle;               // Previous frame's angle to detect direction
+    private bool isMouseHeld = false;          // Is mouse held down on the pick
+    private float targetUnlockAngle;           // Randomly assigned angle where the inner lock sits
+    private bool hasPassedTarget = false;      // Track if we've passed the target from the wrong direction
 
     private void Start()
     {
@@ -32,11 +27,20 @@ public class Lockpick : MonoBehaviour
         Cursor.lockState = CursorLockMode.None;
         Cursor.visible = true;
 
-        GenerateRandomUnlockAngles();
+        // Generate a random lock target angle (where inner lock will "sit")
+        targetUnlockAngle = Random.Range(0f, 360f);
 
-        // Place the lockpick at the designated position
+        // Rotate the inner lock to that static target angle (it won't rotate anymore)
+        innerLock.localEulerAngles = new Vector3(0, 0, targetUnlockAngle);
+
+        // Place the lockpick at its designated position
         if (pickPosition != null)
             transform.position = pickPosition.position;
+
+        // Initialize previous angle
+        previousAngle = NormalizeAngle(transform.eulerAngles.z);
+
+        Debug.Log("Target unlock angle: " + targetUnlockAngle); // For testing
     }
 
     private void Update()
@@ -44,11 +48,12 @@ public class Lockpick : MonoBehaviour
         HandleMouseInput();
 
         if (isMouseHeld)
-            RotatePickAndAttemptUnlock();
-        else
-            ResetInnerLockRotation();
+            RotatePickAndCheckUnlock();
+
+        // Update previous angle for next frame
+        previousAngle = NormalizeAngle(transform.eulerAngles.z);
     }
-    
+
     /// Handles mouse click and release detection.
     private void HandleMouseInput()
     {
@@ -59,6 +64,7 @@ public class Lockpick : MonoBehaviour
             if (Physics.Raycast(ray, out RaycastHit hit) && hit.collider.gameObject == gameObject)
             {
                 isMouseHeld = true;
+                hasPassedTarget = false; // Reset when starting new attempt
             }
         }
 
@@ -68,69 +74,88 @@ public class Lockpick : MonoBehaviour
             isMouseHeld = false;
         }
     }
-    
-    /// Handles pick rotation, sweet spot detection, and unlocking animation.
-    private void RotatePickAndAttemptUnlock()
+
+    /// Handles pick rotation and checks if it matches the lock's target angle.
+    private void RotatePickAndCheckUnlock()
     {
-        // Get angle based on mouse position and apply rotation
+        // Get angle based on mouse position and apply rotation to pick
         Vector3 dir = Input.mousePosition - cam.WorldToScreenPoint(transform.position);
         eulerAngle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
         transform.rotation = Quaternion.Euler(0, 0, eulerAngle - rotationOffset);
 
+        // Normalize pick angle and compare to lock target angle
         float currentPickAngle = NormalizeAngle(transform.eulerAngles.z);
-        isUnlocking = false;
 
-        // Check if current angle matches any unlock sweet spot
-        foreach (float unlockAngle in unlockAngles)
-        {
-            if (Mathf.Abs(Mathf.DeltaAngle(currentPickAngle, unlockAngle)) <= unlockThreshold)
-            {
-                currentTargetUnlockAngle = unlockAngle;
-                isUnlocking = true;
-                break;
-            }
-        }
+        // Check if we've passed the target from the wrong direction
+        CheckIfPassedTargetWrongDirection(currentPickAngle);
 
-        if (isUnlocking)
+        // Check if the pick is exactly at the inner lock's angle (within threshold)
+        // AND we're approaching from the correct direction
+        if (Mathf.Abs(Mathf.DeltaAngle(currentPickAngle, targetUnlockAngle)) <= unlockThreshold &&
+            IsApproachingFromCorrectDirection(currentPickAngle))
         {
-            // Rotate the inner lock towards the unlock position
-            float newZ = Mathf.LerpAngle(innerLock.eulerAngles.z, maxUnlockRotation, Time.deltaTime * lockSpeed);
-            innerLock.eulerAngles = new Vector3(0, 0, newZ);
+            // Snap the pick to exactly match the inner lock angle for visual feedback
+            transform.rotation = Quaternion.Euler(0, 0, targetUnlockAngle);
 
             // Unlock successful
-            if (Mathf.Abs(innerLock.eulerAngles.z) >= maxUnlockRotation - 2f)
+            openAudio.Play();
+            Debug.Log("Unlocked! Pick angle: " + currentPickAngle + " | Target angle: " + targetUnlockAngle);
+            isMouseHeld = false;
+            OnSuccessfulLockpick();
+        }
+    }
+
+    /// Checks if we're approaching the target from the correct (closest) direction
+    private bool IsApproachingFromCorrectDirection(float currentAngle)
+    {
+        // Calculate the shortest path to the target
+        float angleToTarget = Mathf.DeltaAngle(currentAngle, targetUnlockAngle);
+
+        // Calculate direction of movement
+        float angleChange = Mathf.DeltaAngle(previousAngle, currentAngle);
+
+        // If we're not moving, can't be approaching correctly
+        if (Mathf.Abs(angleChange) < 0.1f)
+            return false;
+
+        // If we've already passed the target from the wrong direction, fail
+        if (hasPassedTarget)
+            return false;
+
+        // Check if we're moving toward the target using the shortest path
+        // Moving clockwise toward target (angleToTarget is negative when we need to move clockwise)
+        if (angleToTarget < 0 && angleChange < 0)
+            return true;
+
+        // Moving counter-clockwise toward target (angleToTarget is positive when we need to move counter-clockwise)
+        if (angleToTarget > 0 && angleChange > 0)
+            return true;
+
+        return false;
+    }
+
+    /// Check if we've passed the target from the wrong direction
+    private void CheckIfPassedTargetWrongDirection(float currentAngle)
+    {
+        float angleToTarget = Mathf.DeltaAngle(currentAngle, targetUnlockAngle);
+        float angleChange = Mathf.DeltaAngle(previousAngle, currentAngle);
+
+        // If we're moving away from the target after passing it
+        if (Mathf.Abs(angleChange) > 1f) // Ignore tiny movements
+        {
+            // We've passed the target if the angle to target changed sign
+            bool wasApproaching = (angleToTarget > 0 && angleChange > 0) || (angleToTarget < 0 && angleChange < 0);
+            bool isNowMovingAway = (angleToTarget > 0 && angleChange < 0) || (angleToTarget < 0 && angleChange > 0);
+
+            if (!wasApproaching && isNowMovingAway)
             {
-                openAudio.Play();
-                Debug.Log("Unlocked! Target angle was: " + currentTargetUnlockAngle);
-                isMouseHeld = false;
-                enabled = false;
-                OnSuccessfulLockpick();
+                hasPassedTarget = true;
+                if (wrongDirectionAudio != null) wrongDirectionAudio.Play();
+                Debug.Log("Wrong direction! Passed the target angle.");
             }
         }
-        else
-        {
-            // Reset lock if pick is not in the sweet spot
-            float newZ = Mathf.LerpAngle(innerLock.eulerAngles.z, 0, Time.deltaTime * lockSpeed * 2);
-            innerLock.eulerAngles = new Vector3(0, 0, newZ);
-        }
     }
-    
-    /// Gradually resets the inner lock if not interacting.
-    private void ResetInnerLockRotation()
-    {
-        float newZ = Mathf.LerpAngle(innerLock.eulerAngles.z, 0, Time.deltaTime * lockSpeed);
-        innerLock.eulerAngles = new Vector3(0, 0, newZ);
-    }
-    
-    /// Generates random sweet spot angles for unlocking.
-    private void GenerateRandomUnlockAngles()
-    {
-        for (int i = 0; i < unlockAngles.Length; i++)
-        {
-            unlockAngles[i] = Random.Range(0f, 360f);
-        }
-    }
-    
+
     /// Ensures angles stay between 0 and 360.
     private float NormalizeAngle(float angle)
     {
@@ -138,7 +163,7 @@ public class Lockpick : MonoBehaviour
         if (angle < 0) angle += 360f;
         return angle;
     }
-    
+
     /// Called when lockpicking is successful.
     private void OnSuccessfulLockpick()
     {
@@ -147,8 +172,29 @@ public class Lockpick : MonoBehaviour
         Cursor.visible = false;
 
         // Set door state and force open
-         open.currentState = DoorState.Unlocked;
-         exit.ExitLockpickMode(); // Return to main scene
-         open.TryOpenDoor();    // Trigger door opening
+        open.currentState = DoorState.Unlocked;
+        exit.ExitLockpickMode(); // Return to main scene
+        open.TryOpenDoor();      // Trigger door opening
+
+        // Disable this script to prevent further interaction
+        enabled = false;
+    }
+
+    // Optional: Visual feedback in editor
+    private void OnDrawGizmos()
+    {
+        if (Application.isPlaying)
+        {
+            // Draw a line from the lockpick to the target angle for debugging
+            Vector3 dir = Quaternion.Euler(0, 0, targetUnlockAngle) * Vector3.right * 2f;
+            Gizmos.color = hasPassedTarget ? Color.red : Color.green;
+            Gizmos.DrawLine(transform.position, transform.position + dir);
+
+            // Draw the allowed approach direction
+            float approachAngle = targetUnlockAngle + 90f; // Perpendicular to show direction
+            Vector3 approachDir = Quaternion.Euler(0, 0, approachAngle) * Vector3.right * 0.5f;
+            Gizmos.color = Color.yellow;
+            Gizmos.DrawLine(transform.position, transform.position + approachDir);
+        }
     }
 }

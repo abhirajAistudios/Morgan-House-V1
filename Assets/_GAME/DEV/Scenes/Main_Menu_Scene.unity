@@ -402,6 +402,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8da8fe9549989b34fafe682fb9b2b8c3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  sceneAssets:
+  - {fileID: 102900000, guid: 3db6e1cd9b5269347a2479a1ecf9247d, type: 3}
+  - {fileID: 102900000, guid: af19f8c103d985a45bae961fa75ca9f2, type: 3}
+  - {fileID: 102900000, guid: 38c6aa0f950452e4588cd05965487f7a, type: 3}
   sceneNames:
   - Main_Menu_Scene
   - Morgan_House

@@ -28,6 +28,7 @@ public class SceneTrigger : MonoBehaviour
         {
             hasTriggered = true;
 
+            
             // Load the next scene using LoadingManager
             SceneLoader.Instance.LoadNextScene();
 

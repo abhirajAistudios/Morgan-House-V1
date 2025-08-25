@@ -98,11 +98,7 @@ public class AutoSaveManager : MonoBehaviour
         CurrentData = data;
 
         // Ensure scene name matches
-        //data.lastSceneName = SceneManager.GetActiveScene().name;
-        if(data.sceneIndex != SceneManager.GetActiveScene().buildIndex)
-        {
-            return;
-        }
+        data.lastSceneName = SceneManager.GetActiveScene().name;
 
         // Restore player state
         player.position = new Vector3(data.playerPosX, data.playerPosY, data.playerPosZ);

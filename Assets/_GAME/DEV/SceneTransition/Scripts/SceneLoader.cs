@@ -60,7 +60,7 @@ public class SceneLoader : MonoBehaviour
         int currentIndex = SceneManager.GetActiveScene().buildIndex;
         int nextIndex = currentIndex + 1;
 
-        if (nextIndex < sceneNames.Count)
+        if (nextIndex <= sceneNames.Count)
         {
             LoadSceneByIndex(nextIndex);
         }

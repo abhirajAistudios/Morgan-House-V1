@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System;
 using UnityEditor;
+using UnityEngine.Events; // ✅ Needed for UnityEvent
 
 /// <summary>
 /// A fuse box puzzle where the player must insert a required number of fuses
@@ -10,40 +11,43 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 {
     [Header("Fuse Puzzle Setup")]
     [Tooltip("Fuse slot objects that will be activated as fuses are inserted.")]
-    [SerializeField] private GameObject[] fuseSlots; // Array of fuse slot objects (turned on when fuses are inserted)
+    [SerializeField] private GameObject[] fuseSlots;
 
     [Tooltip("Renderer for the main fuse indicator light.")]
-    [SerializeField] private Renderer mainFuseRenderer; // The light/indicator for overall fuse box status
+    [SerializeField] private Renderer mainFuseRenderer;
 
-    [SerializeField] private Color incompleteColor = Color.red;   // Light color before puzzle is solved
-    [SerializeField] private Color completeColor = Color.green;   // Light color when puzzle is solved
+    [SerializeField] private Color incompleteColor = Color.red;
+    [SerializeField] private Color completeColor = Color.green;
 
     [Tooltip("The name of the required item to solve the puzzle.")]
-    [SerializeField] private string requiredItemName = "Fuse"; // What item is needed to insert into the slots
+    [SerializeField] private string requiredItemName = "Fuse";
 
     [Header("Puzzle Identification")]
-    [SerializeField] private string puzzleID = Guid.NewGuid().ToString(); // Unique ID for saving/loading
-    private int fusesInserted = 0; // Tracks number of fuses placed
-    private bool isSolved = false; // Has the puzzle been completed?
+    [SerializeField] private string puzzleID = Guid.NewGuid().ToString();
+    private int fusesInserted = 0;
+    private bool isSolved = false;
 
     [Header("Interactable UI")]
-    [SerializeField] private string displayName = "Fuse Box"; // Name shown in interaction UI
+    [SerializeField] private string displayName = "Fuse Box";
     [TextArea(3, 6)]
-    [SerializeField] private string description = "Insert fuses to power the system."; // Tooltip description
-    [SerializeField] private string tooltip = "Insert Fuse"; // Tooltip action text
+    [SerializeField] private string description = "Insert fuses to power the system.";
+    [SerializeField] private string tooltip = "Insert Fuse";
 
     // Expose UI values to base class
-    public override bool IsInteractable => !isSolved; // Only interactable until solved
+    public override bool IsInteractable => !isSolved;
     public override string DisplayName => displayName;
     public override string Description => description;
     public override string GetTooltipText() => tooltip;
 
     [Header("Door to Unlock on Solve (Optional)")]
-    [SerializeField] private DoorInteraction doorToUnlock; // Optional linked door that unlocks when puzzle is solved
+    [SerializeField] private DoorInteraction doorToUnlock;
+
+    [Header("Puzzle Events")]
+    [Tooltip("Triggered when puzzle is solved (designers can drag & drop any action here).")]
+    [SerializeField] private UnityEvent onPuzzleCompleted; // ✅ NEW generalized event
 
     private void Start()
     {
-        // If puzzle not solved yet, disable fuse slot visuals and set light to "incomplete"
         if (!isSolved)
         {
             foreach (var slot in fuseSlots)
@@ -54,44 +58,22 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         }
     }
 
-    public override void OnFocus() { } // Optional focus highlight (not used here)
-    public override void OnLoseFocus() { } // Optional focus removal (not used here)
+    public override void OnFocus() { }
+    public override void OnLoseFocus() { }
 
     public override void OnInteract()
     {
         if (IsInteractable)
-            TryInsertFuse(); // Insert fuse when interacted with
+            TryInsertFuse();
     }
 
-    /// <summary>
-    /// Attempts to insert a fuse into the next available slot.
-    /// </summary>
     private void TryInsertFuse()
     {
-        if (fusesInserted >= fuseSlots.Length) return; // No more slots left
+        if (fusesInserted >= fuseSlots.Length) return;
 
-        if (TryConsumeFuse()) // Check if player has fuse in inventory
+        if (TryConsumeFuse())
         {
-            ActivateFuseSlot(fusesInserted); // Show fuse visually
-            fusesInserted++;
-
-            if (fusesInserted == fuseSlots.Length) // All slots filled = puzzle solved
-                PuzzleCompleted();
-        }
-    }
-
-    /// <summary>
-    /// Attempts to insert a fuse into a specific slot (for drag/drop slot logic).
-    /// </summary>
-    public void TryInsertFuseAt(int slotIndex, FuseSlot fuseSlot)
-    {
-        if (slotIndex < 0 || slotIndex >= fuseSlots.Length) return; // Invalid slot
-        if (fuseSlots[slotIndex].activeSelf) return; // Already filled
-
-        if (TryConsumeFuse()) // Consume fuse from inventory
-        {
-            ActivateFuseSlot(slotIndex); // Show fuse visually
-            fuseSlot.MarkSolved(); // Mark slot solved
+            ActivateFuseSlot(fusesInserted);
             fusesInserted++;
 
             if (fusesInserted == fuseSlots.Length)
@@ -99,9 +81,22 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         }
     }
 
-    /// <summary>
-    /// Consumes a fuse item from inventory if available.
-    /// </summary>
+    public void TryInsertFuseAt(int slotIndex, FuseSlot fuseSlot)
+    {
+        if (slotIndex < 0 || slotIndex >= fuseSlots.Length) return;
+        if (fuseSlots[slotIndex].activeSelf) return;
+
+        if (TryConsumeFuse())
+        {
+            ActivateFuseSlot(slotIndex);
+            fuseSlot.MarkSolved();
+            fusesInserted++;
+
+            if (fusesInserted == fuseSlots.Length)
+                PuzzleCompleted();
+        }
+    }
+
     private bool TryConsumeFuse()
     {
         for (int i = 0; i < InventoryManager.Instance.itemSlots.Length; i++)
@@ -109,55 +104,45 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
             var item = InventoryManager.Instance.itemSlots[i];
             if (item != null && item.itemData.itemName == requiredItemName)
             {
-                InventoryManager.Instance.UseItem(item.itemData); // Remove fuse
+                InventoryManager.Instance.UseItem(item.itemData);
                 return true;
             }
         }
-        return false; // No fuse found
+        return false;
     }
 
-    /// <summary>
-    /// Activates a visual fuse slot.
-    /// </summary>
     private void ActivateFuseSlot(int index)
     {
         if (index < 0 || index >= fuseSlots.Length) return;
         fuseSlots[index].SetActive(true);
     }
 
-    /// <summary>
-    /// Called when all fuses have been inserted (puzzle complete).
-    /// </summary>
     private void PuzzleCompleted()
     {
         if (mainFuseRenderer != null)
-            mainFuseRenderer.material.color = completeColor; // Change indicator light to green
+            mainFuseRenderer.material.color = completeColor;
 
-        MarkSolved(); // Mark puzzle as solved internally
+        MarkSolved();
 
-        // Unlock linked door if assigned
         if (doorToUnlock != null)
             UnlockLinkedDoor();
+
+        //  Call generalized UnityEvent (drag & drop actions in inspector)
+        onPuzzleCompleted?.Invoke();
 
         // autosave
         var playerPos = FindAnyObjectByType<PlayerController>()?.transform;
         FindAnyObjectByType<AutoSaveManager>()?.SaveGame(playerPos);
 
-        OnLoseFocus(); // Clear interaction highlight
+        OnLoseFocus();
     }
 
-    /// <summary>
-    /// Marks the puzzle as solved and triggers event.
-    /// </summary>
     private void MarkSolved()
     {
         isSolved = true;
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(displayName);
     }
 
-    /// <summary>
-    /// Unlocks a linked door if it’s set to require this puzzle.
-    /// </summary>
     private void UnlockLinkedDoor()
     {
         if (doorToUnlock.currentState == DoorState.FuseLockDoor)
@@ -186,9 +171,6 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         }
     }
 
-    /// <summary>
-    /// Restores puzzle to solved state on load.
-    /// </summary>
     private void RestoreSolvedState()
     {
         MarkSolved();
@@ -197,9 +179,9 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
             mainFuseRenderer.material.color = completeColor;
 
         foreach (var slot in fuseSlots)
-            slot.SetActive(true); // Show all slots filled
+            slot.SetActive(true);
 
-        fusesInserted = fuseSlots.Length; // Match solved state
+        fusesInserted = fuseSlots.Length;
 
         if (doorToUnlock != null)
             UnlockLinkedDoor();
@@ -208,31 +190,3 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     }
     #endregion
 }
-
-#if UNITY_EDITOR
-/// <summary>
-/// Custom inspector for FuseBoxPuzzle to regenerate puzzleID manually.
-/// </summary>
-[CustomEditor(typeof(FuseBoxPuzzle))]
-public class FuseBoxPuzzleEditor : Editor
-{
-    public override void OnInspectorGUI()
-    {
-        base.OnInspectorGUI();
-        var puzzle = (FuseBoxPuzzle)target;
-
-        if (GUILayout.Button("Generate New Puzzle ID"))
-        {
-            Undo.RecordObject(puzzle, "Generate Puzzle ID");
-
-            // Uses reflection to set private field puzzleID
-            puzzle.GetType()
-                .GetField("puzzleID",
-                    System.Reflection.BindingFlags.NonPublic | System.Reflection.BindingFlags.Instance)
-                .SetValue(puzzle, Guid.NewGuid().ToString());
-
-            EditorUtility.SetDirty(puzzle); // Mark object as modified
-        }
-    }
-}
-#endif

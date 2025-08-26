@@ -14,9 +14,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/_GAME/DEV/Scenes/Morgan_House _Test_Scene.unity
     guid: 38c6aa0f950452e4588cd05965487f7a
-  - enabled: 1
-    path: Assets/_GAME/DEV/Scenes/Test Scene.unity
-    guid: 6609d50072676c84baa244e76fca52fb
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 35845fe01580c41289b024647b1d1c53, type: 3}
   m_UseUCBPForAssetBundles: 0

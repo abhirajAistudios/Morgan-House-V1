@@ -123,5 +123,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 8f134e122f9377e48bbb04cdddd8db53, type: 2}
   item: {fileID: 11400000, guid: 4a934c13797066f42bd2469756138aa1, type: 2}
-  uniqueID: 
+  uniqueID: Battery
   ItemName: Battery

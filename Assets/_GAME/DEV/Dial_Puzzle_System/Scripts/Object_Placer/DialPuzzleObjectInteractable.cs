@@ -72,7 +72,6 @@ public class DialPuzzleObjectInteractable : BaseInteractable, ISaveable
         InventoryManager.Instance.AddItem(item);
         //GameService.Instance.EventService.OnObjectCollected.InvokeEvent(ItemId);
         ItemTracker.Instance.OnPlayerCollectedItem(ItemId);
-        Debug.Log($"Picked up: {item.itemName}");
 
         hasBeenUsed = true;
         isCollected = true;

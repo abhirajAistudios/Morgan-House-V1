@@ -58,7 +58,7 @@ public class SwitchInteractable : BaseInteractable
         }
 
         // Play audio
-        GameService.Instance.SoundService?.Play(Sounds.SWITCH);
+        SoundService.Instance.Play(Sounds.SWITCH);
 
         // Visual feedback
         if (TryGetComponent<Renderer>(out var renderer))

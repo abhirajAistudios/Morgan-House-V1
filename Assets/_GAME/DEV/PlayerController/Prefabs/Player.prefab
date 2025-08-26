@@ -1226,7 +1226,6 @@ GameObject:
   m_Component:
   - component: {fileID: 8937824974858960955}
   - component: {fileID: 3270446424404897669}
-  - component: {fileID: 3991250452621451116}
   - component: {fileID: 7236139428388045047}
   - component: {fileID: 8493722678821067179}
   m_Layer: 0
@@ -1304,14 +1303,6 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
---- !u!81 &3991250452621451116
-AudioListener:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3781700285226104453}
-  m_Enabled: 1
 --- !u!114 &7236139428388045047
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3566,10 +3557,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
       propertyPath: ItemID
-      value: FlashLight
+      value: gg
       objectReference: {fileID: 0}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
       propertyPath: FlashlightRig
+      value: 
+      objectReference: {fileID: 7347272665670181648}
+    - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
+      propertyPath: flashlightRig
       value: 
       objectReference: {fileID: 7347272665670181648}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}

@@ -1,5 +1,4 @@
 using ExpressElevator.Utilities;
-using Inventory.Sound;
 using UnityEngine;
 
 public class GameService : GenericMonoSingleton<GameService>
@@ -7,7 +6,6 @@ public class GameService : GenericMonoSingleton<GameService>
     public EventService EventService { get; private set; }
     public InputHandler InputHandler;
     public ObjectViewer ObjectViewer;
-    public SoundService SoundService;
     public ObjectPlacer ObjectPlacer;
     
     [SerializeField]private UIService _uiService;

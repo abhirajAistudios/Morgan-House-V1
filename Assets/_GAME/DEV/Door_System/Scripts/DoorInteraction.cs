@@ -17,11 +17,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     [Header("References")]
     public Transform doorHinge;                         // Hinge transform for rotating door
-    public AudioSource audioSource;                     // Audio source for playing door sounds
-    public AudioClip soundLocked;                       // Sound when trying to open a locked door
-    public AudioClip soundUnlock;                       // Sound when unlocking a door
-    public AudioClip soundOpen;                         // Sound when door opens
-    public AudioClip soundClose;                        // Sound when door closes
 
     [Header("Rotation Settings")]
     public float openAngle = 90f;                       // Angle door opens
@@ -125,14 +120,14 @@ public class DoorInteraction : BaseInteractable, ISaveable
                 InventoryManager.Instance.UseItemByIndex(i);
 
                 currentState = DoorState.Unlocked;
-                PlaySound(soundUnlock);
+                SoundService.Instance.Play(Sounds.DOORUNLOCK);
                 OpenDoorBasedOnPlayerSide();
                 return;
             }
         }
 
         // If no key found → locked feedback
-        PlaySound(soundLocked);
+        SoundService.Instance.Play(Sounds.DOORLOCK);
         GameService.Instance.UIService.ShowMessage("You need a key.", 1.5f);
     }
 
@@ -147,7 +142,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
         else
         {
             // Otherwise show feedback
-            PlaySound(soundLocked);
+            SoundService.Instance.Play(Sounds.DOORLOCK);
             GameService.Instance.UIService.ShowMessage("This door is jammed.", 1.5f);
         }
     }
@@ -209,20 +204,14 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
         // Animate rotation using LeanTween
         LeanTween.rotateY(doorHinge.gameObject, targetYRotation, rotateTime).setEaseOutExpo();
-        PlaySound(soundOpen);
+        SoundService.Instance.Play(Sounds.DOOROPEN);
     }
 
     private void CloseDoor()
     {
         isOpen = false;
         LeanTween.rotateY(doorHinge.gameObject, hingeStartY, rotateTime).setEaseOutExpo();
-        PlaySound(soundClose);
-    }
-
-    private void PlaySound(AudioClip clip)
-    {
-        if (audioSource != null && clip != null)
-            audioSource.PlayOneShot(clip);
+        SoundService.Instance.Play(Sounds.DOORCLOSE);
     }
 
     // -------------------------

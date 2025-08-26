@@ -16,6 +16,7 @@ namespace ExpressElevator.Utilities
             if (_instance == null)
             {
                 _instance = this as T;
+                DontDestroyOnLoad(gameObject);
             }
             else
             {

@@ -47,8 +47,8 @@ public class PhotoInteractable : BaseInteractable
             switcher.EnterPuzzleView();
         }
 
-        GameService.Instance?.SoundService?.Play(Sounds.OBJECT);
-        GameService.Instance?.ObjectViewer?.Show(gameObject, this);
+        SoundService.Instance.Play(Sounds.OBJECT);
+        ObjectViewer.Instance.Show(gameObject, this);
 
         if (TryGetComponent<Renderer>(out var renderer))
         {

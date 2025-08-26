@@ -1,9 +1,7 @@
 using System;
+using ExpressElevator.Utilities;
 using UnityEngine;
-
-namespace Inventory.Sound
-{
-    public class SoundService : MonoBehaviour
+    public class SoundService : GenericMonoSingleton<SoundService>
     {
         public AudioSource soundEffect;
         public AudioSource soundMusic;
@@ -64,7 +62,6 @@ namespace Inventory.Sound
             return null;
         }
     }
-}
 
 [Serializable]
     public class SoundType

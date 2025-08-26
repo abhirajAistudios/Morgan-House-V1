@@ -58,10 +58,10 @@ public class LetterInteractable : BaseInteractable
         }
 
         // Open object viewer
-        GameService.Instance.ObjectViewer.Show(gameObject, this);
+        ObjectViewer.Instance.Show(gameObject, this);
 
         // Play sound if available
-        GameService.Instance.SoundService?.Play(Sounds.OBJECT);
+        SoundService.Instance.Play(Sounds.OBJECT);
         
         // Optional: switch view (only if needed)
         ObjectViewSwitcher switcher = FindObjectOfType<ObjectViewSwitcher>();

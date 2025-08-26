@@ -1,3 +1,4 @@
+using ExpressElevator.Utilities;
 using TMPro;
 using UnityEngine;
 
@@ -5,7 +6,7 @@ using UnityEngine;
 /// Displays a 3D object viewer with smooth zoom, rotation clamping,
 /// and idle autorotation when not interacting.
 /// </summary>
-public class ObjectViewer : MonoBehaviour
+public class ObjectViewer : GenericMonoSingleton<ObjectViewer>
 {
     [Header("References")]
     [SerializeField] private Transform pivot;
@@ -82,7 +83,7 @@ public class ObjectViewer : MonoBehaviour
         Cursor.visible = false;
     }
 
-    void Update()
+    private void Update()
     {
         bool interacted = false;
 
@@ -147,7 +148,7 @@ public class ObjectViewer : MonoBehaviour
         return bounds;
     }
 
-    void SetLayerRecursively(GameObject obj, int layer)
+    private void SetLayerRecursively(GameObject obj, int layer)
     {
         obj.layer = layer;
         foreach (Transform child in obj.transform)

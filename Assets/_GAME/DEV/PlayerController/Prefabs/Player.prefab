@@ -3566,10 +3566,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
       propertyPath: ItemID
-      value: FlashLight
+      value: gg
       objectReference: {fileID: 0}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
       propertyPath: FlashlightRig
+      value: 
+      objectReference: {fileID: 7347272665670181648}
+    - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}
+      propertyPath: flashlightRig
       value: 
       objectReference: {fileID: 7347272665670181648}
     - target: {fileID: 3307470513119390936, guid: b04176415bf379d40aaa6f5bb85bab72, type: 3}

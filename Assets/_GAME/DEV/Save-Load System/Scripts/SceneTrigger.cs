@@ -44,8 +44,6 @@ public class SceneTrigger : MonoBehaviour
         {
             player.transform.position = saveManager.spawnPoint.position;
             saveManager.SaveGame(player.transform);
-
-            Debug.Log("✅ AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
         }
         else
         {

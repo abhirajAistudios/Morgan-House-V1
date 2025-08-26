@@ -44,14 +44,11 @@ public class AutoSaveManager : MonoBehaviour
     {
         if (player == null)
         {
-            Debug.LogError("SaveGame failed: Player transform is null");
             return;
         }
 
         try
         {
-            Debug.Log("Starting SaveGame process...");
-            
             // Build save data snapshot
             SaveData data = new SaveData
             {
@@ -62,12 +59,7 @@ public class AutoSaveManager : MonoBehaviour
                 lastSceneName = SceneManager.GetActiveScene().name,
                 sceneIndex = SceneManager.GetActiveScene().buildIndex,
             };
-
-            Debug.Log($"Saving game data for player at position: {player.position}");
             
-            // Cache all ISaveable objects to avoid multiple FindObject calls
-            Debug.Log("Finding all ISaveable objects...");
-            var saveTime = System.Diagnostics.Stopwatch.StartNew();
             
             // Get all ISaveable components more efficiently
             var saveables = new List<ISaveable>();
@@ -80,8 +72,6 @@ public class AutoSaveManager : MonoBehaviour
                     saveables.Add(saveable);
                 }
             }
-            
-            Debug.Log($"Found {saveables.Count} ISaveable objects in {saveTime.ElapsedMilliseconds}ms");
 
             // Save states of all objects implementing ISaveable
             foreach (var saveable in saveables)
@@ -99,7 +89,6 @@ public class AutoSaveManager : MonoBehaviour
             // Save objective states if ObjectiveManager exists
             if (ObjectiveManager.Instance != null)
             {
-                Debug.Log($"Saving {ObjectiveManager.Instance.completedObjectives.Count} completed objectives");
                 foreach (var objective in ObjectiveManager.Instance.completedObjectives)
                 {
                     if (objective is ISaveable s)
@@ -121,14 +110,10 @@ public class AutoSaveManager : MonoBehaviour
             }
 
             // Convert to JSON and write to disk
-            Debug.Log("Serializing save data to JSON...");
             CurrentData = data;
             string json = JsonUtility.ToJson(data, true);
             
-            Debug.Log($"Writing save file to: {savePath}");
             File.WriteAllText(savePath, json);
-            
-            Debug.Log($"Game saved successfully! Save file size: {json.Length} bytes");
             
             // Show UI message if available
             if (GameService.Instance != null && GameService.Instance.UIService != null)

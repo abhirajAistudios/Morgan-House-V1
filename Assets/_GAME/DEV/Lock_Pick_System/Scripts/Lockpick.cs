@@ -34,8 +34,6 @@ public class Lockpick : MonoBehaviour
         // Place the lockpick at its designated position
         if (pickPosition != null)
             transform.position = pickPosition.position;
-
-        Debug.Log("Target unlock angle: " + targetUnlockAngle); // For testing
     }
 
     private void Update()

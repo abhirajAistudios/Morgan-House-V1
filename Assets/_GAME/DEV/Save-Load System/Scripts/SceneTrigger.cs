@@ -46,12 +46,13 @@ public class SceneTrigger : MonoBehaviour
     {
         AutoSaveManager saveManager = FindObjectOfType<AutoSaveManager>();
         GameObject player = GameObject.FindWithTag("Player");
+        GameObject spawnPoint = GameObject.FindWithTag("Spawn Point");
 
         if (saveManager != null && player != null)
         {
-            Transform playerpos = FindAnyObjectByType<PlayerController>().transform;
+            player.transform.position = spawnPoint.transform.position;
 
-            saveManager.SaveGame(playerpos);
+            saveManager.SaveGame(player.transform);
             Debug.Log(" AutoSave triggered after scene load: " + SceneManager.GetActiveScene().name);
         }
         else

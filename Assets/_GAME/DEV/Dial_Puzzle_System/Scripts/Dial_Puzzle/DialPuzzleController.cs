@@ -1,5 +1,6 @@
 using System;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.UI;
 
 public class DialPuzzleController : MonoBehaviour, ISaveable
@@ -23,9 +24,12 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     private DialPuzzleInteractable dialPuzzleInteractable;
     public DialPuzzleViewSwitcher dialPuzzleViewSwitcher;
 
-
     [Header("Unique Save ID")]
     [SerializeField] private string uniqueID;
+    
+    [Header("Puzzle Solved Events")]
+    [Tooltip("Triggered when puzzle is solved.")]
+    [SerializeField] private UnityEvent onPuzzleCompleted; // ✅ NEW generalized event
     
     #endregion
 
@@ -121,6 +125,7 @@ public class DialPuzzleController : MonoBehaviour, ISaveable
     {
         isSolved = true;
         
+        onPuzzleCompleted?.Invoke();                                                                        
         dialPuzzleInteractable?.MarkSolved();                                                               // Mark the puzzle as solved in the puzzle interactable
         solvedText?.SetActive(true);                                                                        // Show the solved text
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(dialPuzzleName);                       // Notify the game service and event service that the puzzle is solved

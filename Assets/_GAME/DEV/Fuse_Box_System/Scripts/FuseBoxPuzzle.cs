@@ -39,11 +39,8 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     public override string Description => description;
     public override string GetTooltipText() => tooltip;
 
-    [Header("Door to Unlock on Solve (Optional)")]
-    [SerializeField] private DoorInteraction doorToUnlock;
-
-    [Header("Puzzle Events")]
-    [Tooltip("Triggered when puzzle is solved (designers can drag & drop any action here).")]
+    [Header("Puzzle Solved Events")]
+    [Tooltip("Triggered when puzzle is solved.")]
     [SerializeField] private UnityEvent onPuzzleCompleted; // ✅ NEW generalized event
 
     private void Start()
@@ -124,9 +121,6 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
         MarkSolved();
 
-        if (doorToUnlock != null)
-            UnlockLinkedDoor();
-
         //  Call generalized UnityEvent (drag & drop actions in inspector)
         onPuzzleCompleted?.Invoke();
 
@@ -142,13 +136,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         isSolved = true;
         GameService.Instance.EventService.OnPuzzleSolved.InvokeEvent(displayName);
     }
-
-    private void UnlockLinkedDoor()
-    {
-        if (doorToUnlock.currentState == DoorState.FuseLockDoor)
-            doorToUnlock.currentState = DoorState.Unlocked;
-    }
-
+    
     #region Save/Load
     public void SaveState(ref SaveData data)
     {
@@ -182,9 +170,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
             slot.SetActive(true);
 
         fusesInserted = fuseSlots.Length;
-
-        if (doorToUnlock != null)
-            UnlockLinkedDoor();
+        onPuzzleCompleted?.Invoke();
 
         OnLoseFocus();
     }

@@ -176,6 +176,22 @@ public class DoorInteraction : BaseInteractable, ISaveable
             }
         }
     }
+    
+    public void UnlockFuseDoor()
+    {
+        if(currentState == DoorState.FuseLockDoor)
+        {
+            currentState = DoorState.Unlocked;
+        }
+    }
+    
+    public void UnlockDialDoor()
+    {
+        if(currentState == DoorState.DialLockDoor)
+        {
+            currentState = DoorState.Unlocked;
+        }
+    }
 
     private void OpenDoorBasedOnPlayerSide()
     {
@@ -207,18 +223,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
     {
         if (audioSource != null && clip != null)
             audioSource.PlayOneShot(clip);
-    }
-
-    public void UnlockViaLockpick()
-    {
-        // Called from lockpick success
-        currentState = DoorState.Unlocked;
-        PlaySound(soundUnlock);
-        OpenDoorBasedOnPlayerSide();
-
-        // Restore cursor lock (for gameplay after lockpick minigame)
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     // -------------------------

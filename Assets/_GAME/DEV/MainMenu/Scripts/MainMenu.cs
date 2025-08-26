@@ -14,6 +14,11 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button yesExitButton;
     [SerializeField] private Button noExitButton;
 
+    [Header("New Game Confirmation Popup")]
+    [SerializeField] private GameObject newGameConfirmationPanel;
+    [SerializeField] private Button yesNewGameButton;
+    [SerializeField] private Button noNewGameButton;
+
     private string savePath;
 
     private void Awake()
@@ -26,15 +31,36 @@ public class MainMenu : MonoBehaviour
         if (resumeButton != null)
             resumeButton.gameObject.SetActive(File.Exists(savePath));
 
-        if (newGameButton != null) newGameButton.onClick.AddListener(StartNewGame);
+        if (newGameButton != null) newGameButton.onClick.AddListener(OnNewGamePressed);
         if (resumeButton != null) resumeButton.onClick.AddListener(ResumeGame);
         if (exitButton != null) exitButton.onClick.AddListener(ShowExitPopup);
 
         if (yesExitButton != null) yesExitButton.onClick.AddListener(ExitGame);
         if (noExitButton != null) noExitButton.onClick.AddListener(HideExitPopup);
 
+        if (yesNewGameButton != null) yesNewGameButton.onClick.AddListener(StartNewGame);
+        if (noNewGameButton != null) noNewGameButton.onClick.AddListener(HideNewGamePopup);
+
         if (exitConfirmationPanel != null)
             exitConfirmationPanel.SetActive(false);
+
+        if (newGameConfirmationPanel != null)
+            newGameConfirmationPanel.SetActive(false);
+    }
+
+    private void OnNewGamePressed()
+    {
+        if (File.Exists(savePath))
+        {
+            // Show confirmation popup if save exists
+            if (newGameConfirmationPanel != null)
+                newGameConfirmationPanel.SetActive(true);
+        }
+        else
+        {
+            // Directly start new game if no save
+            StartNewGame();
+        }
     }
 
     private void StartNewGame()
@@ -42,10 +68,11 @@ public class MainMenu : MonoBehaviour
         if (File.Exists(savePath))
             File.Delete(savePath);
 
-        GameManager.Instance?.StartNewGame();
+        if (newGameConfirmationPanel != null)
+            newGameConfirmationPanel.SetActive(false);
 
+        GameManager.Instance?.StartNewGame();
         SceneLoader.Instance.LoadSceneByIndex(1);
-        
     }
 
     private void ResumeGame()
@@ -63,7 +90,7 @@ public class MainMenu : MonoBehaviour
 
                 if (LoadingManager.Instance != null)
                 {
-                    LoadingManager.ResumeRequested = true; 
+                    LoadingManager.ResumeRequested = true;
                     SceneLoader.Instance.LoadSceneByIndex(data.sceneIndex);
                 }
                 else
@@ -82,7 +109,6 @@ public class MainMenu : MonoBehaviour
         }
     }
 
-
     private void ShowExitPopup()
     {
         if (exitConfirmationPanel != null)
@@ -93,6 +119,12 @@ public class MainMenu : MonoBehaviour
     {
         if (exitConfirmationPanel != null)
             exitConfirmationPanel.SetActive(false);
+    }
+
+    private void HideNewGamePopup()
+    {
+        if (newGameConfirmationPanel != null)
+            newGameConfirmationPanel.SetActive(false);
     }
 
     private void ExitGame()

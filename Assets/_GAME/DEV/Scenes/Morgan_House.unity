@@ -8644,7 +8644,7 @@ MonoBehaviour:
   exit: {fileID: 3579574027186482497}
   open: {fileID: 8147915696978537228}
   openAudio: {fileID: 8681271857152639780}
-  innerLockVisual: {fileID: 0}
+  innerLockVisual: {fileID: 705353916075695229}
   rotationOffset: 90
 --- !u!223 &622614489642711356
 Canvas:
@@ -9044,6 +9044,7 @@ GameObject:
   - component: {fileID: 7743041407504667434}
   - component: {fileID: 7050463228916840167}
   - component: {fileID: 8121324802655709624}
+  - component: {fileID: 8121324802655709625}
   m_Layer: 0
   m_Name: For_Visual
   m_TagString: Untagged
@@ -13109,8 +13110,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.25275335, y: 2.2754705, z: 0.1857639}
-  m_Center: {x: -0.060452834, y: 1.0929481, z: -0.14728022}
+  m_Size: {x: 0.09706483, y: 2.2754705, z: 0.18576388}
+  m_Center: {x: 0.00071042456, y: 1.0929481, z: -0.14728022}
 --- !u!114 &4526615087152540223
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13765,6 +13766,7 @@ GameObject:
   - component: {fileID: 545213660979913612}
   - component: {fileID: 4526357151017545981}
   - component: {fileID: 8681271857152639780}
+  - component: {fileID: 8681271857152639781}
   m_Layer: 0
   m_Name: Lock_Pick
   m_TagString: Untagged
@@ -16021,6 +16023,27 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!65 &8121324802655709625
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 705353916075695229}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.99999994, y: 1.0000002, z: 1.0000002}
+  m_Center: {x: -0.000015258789, y: 0, z: -0.0000076293945}
 --- !u!114 &8122256557100873642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16968,6 +16991,33 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!54 &8681271857152639781
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5221523158480680521}
+  serializedVersion: 5
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 1
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!65 &8702452666323923473
 BoxCollider:
   m_ObjectHideFlags: 0

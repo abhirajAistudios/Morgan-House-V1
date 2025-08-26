@@ -19,11 +19,8 @@ public class AutoSaveManager : MonoBehaviour
     // Reference to the current save data
     public SaveData CurrentData { get; private set; } = new SaveData();
     
-
-    #region Properties
-    // CurrentData is now defined above for better organization
-    #endregion
-
+    public Transform spawnPoint;
+    
     #region Unity Methods
     private void Awake()
     {
@@ -45,41 +42,105 @@ public class AutoSaveManager : MonoBehaviour
     /// </summary>
     public void SaveGame(Transform player)
     {
-        // Build save data snapshot
-        SaveData data = new SaveData
+        if (player == null)
         {
-            playerPosX = player.position.x,
-            playerPosY = player.position.y,
-            playerPosZ = player.position.z,
-            timestamp = System.DateTime.Now.ToString(),
-            lastSceneName = SceneManager.GetActiveScene().name,
-            sceneIndex = SceneManager.GetActiveScene().buildIndex,
-        };
-
-        // Save states of all objects implementing ISaveable
-        foreach (var saveable in FindObjectsOfType<MonoBehaviour>(true))
-        {
-            if (saveable is ISaveable s)
-                s.SaveState(ref data);
+            Debug.LogError("SaveGame failed: Player transform is null");
+            return;
         }
 
-        // Save objective states
-        foreach (var objective in ObjectiveManager.Instance.completedObjectives)
+        try
         {
-            if (objective is ISaveable s)
+            Debug.Log("Starting SaveGame process...");
+            
+            // Build save data snapshot
+            SaveData data = new SaveData
             {
-                s.SaveState(ref data);
-               
+                playerPosX = player.position.x,
+                playerPosY = player.position.y,
+                playerPosZ = player.position.z,
+                timestamp = System.DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                lastSceneName = SceneManager.GetActiveScene().name,
+                sceneIndex = SceneManager.GetActiveScene().buildIndex,
+            };
+
+            Debug.Log($"Saving game data for player at position: {player.position}");
+            
+            // Cache all ISaveable objects to avoid multiple FindObject calls
+            Debug.Log("Finding all ISaveable objects...");
+            var saveTime = System.Diagnostics.Stopwatch.StartNew();
+            
+            // Get all ISaveable components more efficiently
+            var saveables = new List<ISaveable>();
+            var allMonoBehaviours = FindObjectsOfType<MonoBehaviour>(true);
+            
+            foreach (var mb in allMonoBehaviours)
+            {
+                if (mb is ISaveable saveable)
+                {
+                    saveables.Add(saveable);
+                }
+            }
+            
+            Debug.Log($"Found {saveables.Count} ISaveable objects in {saveTime.ElapsedMilliseconds}ms");
+
+            // Save states of all objects implementing ISaveable
+            foreach (var saveable in saveables)
+            {
+                try
+                {
+                    saveable.SaveState(ref data);
+                }
+                catch (System.Exception e)
+                {
+                    Debug.LogError($"Error saving state for {saveable.GetType().Name}: {e.Message}");
+                }
+            }
+
+            // Save objective states if ObjectiveManager exists
+            if (ObjectiveManager.Instance != null)
+            {
+                Debug.Log($"Saving {ObjectiveManager.Instance.completedObjectives.Count} completed objectives");
+                foreach (var objective in ObjectiveManager.Instance.completedObjectives)
+                {
+                    if (objective is ISaveable s)
+                    {
+                        try
+                        {
+                            s.SaveState(ref data);
+                        }
+                        catch (System.Exception e)
+                        {
+                            Debug.LogError($"Error saving objective {objective.name}: {e.Message}");
+                        }
+                    }
+                }
+            }
+            else
+            {
+                Debug.LogWarning("ObjectiveManager.Instance is null - skipping objective saving");
+            }
+
+            // Convert to JSON and write to disk
+            Debug.Log("Serializing save data to JSON...");
+            CurrentData = data;
+            string json = JsonUtility.ToJson(data, true);
+            
+            Debug.Log($"Writing save file to: {savePath}");
+            File.WriteAllText(savePath, json);
+            
+            Debug.Log($"Game saved successfully! Save file size: {json.Length} bytes");
+            
+            // Show UI message if available
+            if (GameService.Instance != null && GameService.Instance.UIService != null)
+            {
+                GameService.Instance.UIService.ShowMessage("Game Autosaved!", 1.5f);
             }
         }
-
-        // Convert to JSON and write to disk
-        CurrentData = data;
-        string json = JsonUtility.ToJson(data, true);
-        File.WriteAllText(savePath, json);
-
-        Debug.Log(" Game Autosaved!");
-        GameService.Instance.UIService.ShowMessage("Game Autosaved!", 1.5f);
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Error in SaveGame: {e.Message}\n{e.StackTrace}");
+            throw; // Re-throw to allow callers to handle the error if needed
+        }
     }
     #endregion
 

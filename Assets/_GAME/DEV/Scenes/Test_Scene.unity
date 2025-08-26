@@ -1131,6 +1131,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   instance: {fileID: 0}
+  spawnPoint: {fileID: 1227498158}
 --- !u!114 &1368648166
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -193,7 +193,7 @@ public class InventoryManager : MonoBehaviour, ISaveable
     {
         if (ItemDatabase.Instance != null) return;
 
-        ItemDatabase database = Resources.Load<ItemDatabase>("ItemDatabase");
+        ItemDatabase database = Resources.Load<ItemDatabase>("Assets/_GAME/DEV/Inventory_System/Scriptable_Objects/Data Base/ItemDatabase.asset");
         if (database != null)
         {
             var forceInit = database.allItems; // Force init

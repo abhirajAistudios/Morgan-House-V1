@@ -84,7 +84,6 @@ public class Lockpick : MonoBehaviour
             // Unlock successful
             isUnlocked = true;
             openAudio.Play();
-            Debug.Log("Unlocked! Lockpick entered trigger zone of inner lock visual. Target angle was: " + targetUnlockAngle);
             isMouseHeld = false;
             OnSuccessfulLockpick();
         }

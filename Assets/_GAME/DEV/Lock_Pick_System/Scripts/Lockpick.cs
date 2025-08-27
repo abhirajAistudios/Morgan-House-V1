@@ -5,7 +5,6 @@ public class Lockpick : MonoBehaviour
     [Header("References")]
     [SerializeField] private Camera cam;                      // Camera used for raycasting and mouse-to-world calculations
     [SerializeField] private Transform innerLock;             // The static lock core (target point)
-    [SerializeField] private Transform pickPosition;          // The position where the lockpick is placed
     [SerializeField] private LockPickCameraManager exit;      // Handles exiting lockpick mode
     [SerializeField] private DoorInteraction open;            // Door interaction reference
     [SerializeField] private AudioSource openAudio;           // Unlock sound
@@ -30,10 +29,6 @@ public class Lockpick : MonoBehaviour
 
         // Rotate the inner lock to that static target angle (it won't rotate anymore)
         innerLock.localEulerAngles = new Vector3(0, 0, targetUnlockAngle);
-
-        // Place the lockpick at its designated position
-        if (pickPosition != null)
-            transform.position = pickPosition.position;
     }
 
     private void Update()

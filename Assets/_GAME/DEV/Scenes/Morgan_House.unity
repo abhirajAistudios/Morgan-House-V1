@@ -6778,11 +6778,6 @@ ReflectionProbe:
   m_UseOcclusionCulling: 1
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
---- !u!4 &2128876818 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2127424637310573158, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
-  m_PrefabInstance: {fileID: 8764966156577509125}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2135013892
 GameObject:
   m_ObjectHideFlags: 0
@@ -10664,10 +10659,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336622025}
     m_Modifications:
-    - target: {fileID: 2904240670942741600, guid: 710b9a1d31a74c6449c5957bdd21683a, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4741674661569747485, guid: 710b9a1d31a74c6449c5957bdd21683a, type: 3}
       propertyPath: m_Name
       value: Lockpick_Puzzle_2
@@ -11335,10 +11326,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336622025}
     m_Modifications:
-    - target: {fileID: 651175638000763813, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
-      propertyPath: probeLayerMask.m_Bits
-      value: 119
-      objectReference: {fileID: 0}
     - target: {fileID: 2532477897691084668, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: player
       value: 
@@ -11387,25 +11374,12 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3971461496627900692, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
-      propertyPath: m_CullingMask.m_Bits
-      value: 119
-      objectReference: {fileID: 0}
     - target: {fileID: 5651905415708372345, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: m_Name
       value: Lockpick_Puzzle_1
       objectReference: {fileID: 0}
-    - target: {fileID: 6033090478468933603, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
-      propertyPath: pickPosition
-      value: 
-      objectReference: {fileID: 2128876818}
-    - target: {fileID: 8469074258830005415, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 4940180950602807888, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}

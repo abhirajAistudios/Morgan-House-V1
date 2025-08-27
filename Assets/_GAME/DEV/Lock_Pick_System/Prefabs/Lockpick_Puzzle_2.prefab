@@ -768,7 +768,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cam: {fileID: 8770004470704665202}
   innerLock: {fileID: 6740404808088451500}
-  pickPosition: {fileID: 1603729481583375114}
   exit: {fileID: 8670696220174731071}
   open: {fileID: 9197295781275928279}
   openAudio: {fileID: 1090251865408306381}

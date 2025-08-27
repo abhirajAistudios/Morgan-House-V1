@@ -11,12 +11,18 @@ public class LockPickCameraManager : MonoBehaviour
     [SerializeField] private GameObject[] lockpickObjects;
 
     private bool isLockpicking = false;
+    private GameObject objectiveCanvas;
 
+    private void Start()
+    {
+        objectiveCanvas = GameObject.FindWithTag("Objective Canvas");
+    }
     // Call this to start lockpicking
     public void EnterLockpickMode()
     {
         isLockpicking = true;
-
+        
+        objectiveCanvas.SetActive(false);
         lockpickCamera.gameObject.SetActive(true);
         lockpickCamera.enabled = true;
         mainCamera.enabled = false;
@@ -31,7 +37,8 @@ public class LockPickCameraManager : MonoBehaviour
     public void ExitLockpickMode()
     {
         isLockpicking = false;
-
+        
+        objectiveCanvas.SetActive(true);
         lockpickCamera.gameObject.SetActive(false);
         lockpickCamera.enabled = false;
         mainCamera.enabled = true;

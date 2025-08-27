@@ -15,6 +15,12 @@ public class DialPuzzleViewSwitcher : MonoBehaviour
 
     // Tracks whether we're currently in puzzle view
     private bool inPuzzle = false;
+    private GameObject objectiveCanvas;
+    
+    private void Start()
+    {
+        objectiveCanvas = GameObject.FindWithTag("Objective Canvas");
+    }
 
     /// <summary>
     /// Switches from main game view to puzzle view
@@ -28,6 +34,8 @@ public class DialPuzzleViewSwitcher : MonoBehaviour
     {
         if (inPuzzle) return;
         inPuzzle = true;
+        
+        objectiveCanvas.SetActive(false);
 
         // Switch to puzzle camera
         puzzleCamera.gameObject.SetActive(true);
@@ -55,6 +63,8 @@ public class DialPuzzleViewSwitcher : MonoBehaviour
     {
         if (!inPuzzle) return;
         inPuzzle = false;
+        
+        objectiveCanvas.SetActive(true);
 
         // Switch back to main camera
         puzzleCamera.gameObject.SetActive(false);

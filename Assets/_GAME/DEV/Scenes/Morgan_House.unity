@@ -7941,6 +7941,10 @@ PrefabInstance:
       propertyPath: onPuzzleCompleted.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1111111649}
+    - target: {fileID: 8432024564565193757, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 4294967295
+      objectReference: {fileID: 0}
     - target: {fileID: 8490937558506273547, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
       propertyPath: mainCamera
       value: 
@@ -8581,7 +8585,7 @@ Canvas:
   m_Enabled: 1
   serializedVersion: 3
   m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_Camera: {fileID: 1385137765}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -8592,7 +8596,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 25
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 2
   m_TargetDisplay: 0
 --- !u!4 &2346884095975604924
 Transform:
@@ -10365,7 +10369,7 @@ GameObject:
   - component: {fileID: 8789593292613545106}
   m_Layer: 5
   m_Name: Objective_Canvas
-  m_TagString: Untagged
+  m_TagString: Objective Canvas
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10895,7 +10899,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 264.12704, y: -90}
+  m_AnchoredPosition: {x: 264.127, y: -90}
   m_SizeDelta: {x: 509.6217, y: 96.457}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!33 &7617503577731709618
@@ -11322,6 +11326,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336622025}
     m_Modifications:
+    - target: {fileID: 651175638000763813, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
+      propertyPath: probeLayerMask.m_Bits
+      value: 119
+      objectReference: {fileID: 0}
     - target: {fileID: 2532477897691084668, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: player
       value: 
@@ -11369,6 +11377,10 @@ PrefabInstance:
     - target: {fileID: 3311508573040149148, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3971461496627900692, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 119
       objectReference: {fileID: 0}
     - target: {fileID: 5651905415708372345, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: m_Name

@@ -46,8 +46,6 @@ public class PauseMenu : MonoBehaviour
         isPaused = false;
         Time.timeScale = 1f; // Resume normal time
         pausePanel.gameObject.SetActive(false); // Hide pause menu
-        Cursor.lockState = CursorLockMode.Locked;
-        Cursor.visible = false;
     }
 
     //  Uses LoadingManager instead of SceneManager directly
@@ -57,6 +55,8 @@ public class PauseMenu : MonoBehaviour
 
         if (LoadingManager.Instance != null)
         {
+            Time.timeScale = 0f;
+            gameObject.SetActive(false);
             SceneLoader.Instance.LoadSceneByIndex(0);
         }
         else

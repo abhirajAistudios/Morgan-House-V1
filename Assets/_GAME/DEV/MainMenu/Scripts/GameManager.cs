@@ -226,12 +226,14 @@ public class GameManager : MonoBehaviour, ISaveable
     public void StartNewGame()
     {
         isNewGame = true;
+        Time.timeScale = 1f;
     }
 
     // Resumes game (not a new game)
     public void ResumeGame()
     {
         isNewGame = false;
+        Time.timeScale = 1f;
     }
 
     // Interface method to save the game state (currently not implemented)

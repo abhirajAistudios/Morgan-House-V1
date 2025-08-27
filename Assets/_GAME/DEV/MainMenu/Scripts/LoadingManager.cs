@@ -3,22 +3,24 @@ using UnityEngine.SceneManagement;
 using TMPro;
 using UnityEngine.UI;
 using System.Collections;
+using System.Collections.Generic;
 
 public class LoadingManager : MonoBehaviour
 {
     public static LoadingManager Instance;
-    public static bool ResumeRequested = false; 
+    public static bool ResumeRequested = false;
 
     [Header("UI refs (assign in Inspector)")]
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
-    
+    [SerializeField] private Image loadingImage; // 👈 Image component to display tips/art
+    [SerializeField] private List<Sprite> loadingImages = new List<Sprite>(); // 👈 Assign multiple sprites here
 
     [Header("Settings")]
     [SerializeField] private float fadeDuration = 0.3f;
     [SerializeField] private float minShowTimeAfterReady = 0.5f;
-    [SerializeField] private float fakeLoadSpeed = 0.5f;
+    [SerializeField] private float fakeLoadSpeed = 0.2f; //  Lower to make it "slower"
 
     public bool IsLoading { get; private set; } = false;
 
@@ -28,7 +30,7 @@ public class LoadingManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-            SceneManager.sceneLoaded += OnSceneLoaded; 
+            SceneManager.sceneLoaded += OnSceneLoaded;
         }
         else
         {
@@ -62,7 +64,6 @@ public class LoadingManager : MonoBehaviour
         var autosavemanager = FindObjectOfType<AutoSaveManager>();
         if (autosavemanager != null)
         {
-
             autosavemanager.LoadGame(player);
         }
         else
@@ -70,6 +71,7 @@ public class LoadingManager : MonoBehaviour
             Debug.LogWarning(" No AutoSaveManager found in scene!");
         }
     }
+
     public void LoadSceneByName(string sceneName)
     {
         if (!IsLoading)
@@ -81,10 +83,16 @@ public class LoadingManager : MonoBehaviour
         IsLoading = true;
 
         if (loadingPanel != null) loadingPanel.SetActive(true);
-       
 
         progressBar.value = 0f;
         progressText.text = "0%";
+
+        // Show a random image from the list
+        if (loadingImages.Count > 0 && loadingImage != null)
+        {
+            int randomIndex = Random.Range(0, loadingImages.Count);
+            loadingImage.sprite = loadingImages[randomIndex];
+        }
 
         yield return null;
 

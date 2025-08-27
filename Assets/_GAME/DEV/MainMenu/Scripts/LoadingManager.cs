@@ -14,15 +14,17 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private GameObject loadingPanel;
     [SerializeField] private Slider progressBar;
     [SerializeField] private TextMeshProUGUI progressText;
-    [SerializeField] private Image loadingImage; // 👈 Image component to display tips/art
-    [SerializeField] private List<Sprite> loadingImages = new List<Sprite>(); // 👈 Assign multiple sprites here
+    [SerializeField] private Image loadingImage; //  Image component to display tips/art
+    [SerializeField] private List<Sprite> loadingImages = new List<Sprite>(); //  Assign multiple sprites here
 
     [Header("Settings")]
-    [SerializeField] private float fadeDuration = 0.3f;
+    [SerializeField] private float fadeDuration = 1.5f;   //  longer so fade-out is visible
     [SerializeField] private float minShowTimeAfterReady = 0.5f;
-    [SerializeField] private float fakeLoadSpeed = 0.2f; //  Lower to make it "slower"
+    [SerializeField] private float fakeLoadSpeed = 0.2f; // Lower to make it "slower"
 
     public bool IsLoading { get; private set; } = false;
+
+    private CanvasGroup loadingCanvasGroup;
 
     private void Awake()
     {
@@ -38,8 +40,23 @@ public class LoadingManager : MonoBehaviour
             return;
         }
 
+        // Ensure we have a CanvasGroup for fading
         if (loadingPanel != null)
+        {
+            loadingCanvasGroup = loadingPanel.GetComponent<CanvasGroup>();
+            if (loadingCanvasGroup == null)
+            {
+                loadingCanvasGroup = loadingPanel.AddComponent<CanvasGroup>();
+            }
             loadingPanel.SetActive(false);
+            loadingCanvasGroup.alpha = 0f;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        // Clean up event subscription
+        SceneManager.sceneLoaded -= OnSceneLoaded;
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -68,7 +85,7 @@ public class LoadingManager : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning(" No AutoSaveManager found in scene!");
+            Debug.LogWarning("⚠️ No AutoSaveManager found in scene!");
         }
     }
 
@@ -82,8 +99,7 @@ public class LoadingManager : MonoBehaviour
     {
         IsLoading = true;
 
-        if (loadingPanel != null) loadingPanel.SetActive(true);
-
+        // Reset UI elements before showing
         progressBar.value = 0f;
         progressText.text = "0%";
 
@@ -93,6 +109,9 @@ public class LoadingManager : MonoBehaviour
             int randomIndex = Random.Range(0, loadingImages.Count);
             loadingImage.sprite = loadingImages[randomIndex];
         }
+
+        // Fade in loading screen at the beginning
+        yield return StartCoroutine(FadeLoadingScreen(1f, true));
 
         yield return null;
 
@@ -125,7 +144,50 @@ public class LoadingManager : MonoBehaviour
         while (!op.isDone)
             yield return null;
 
-        if (loadingPanel != null) loadingPanel.SetActive(false);
+        // --- FADE OUT HAPPENS HERE ---
+        yield return StartCoroutine(FadeLoadingScreen(0f, false));
+
         IsLoading = false;
+    }
+
+    /// <summary>
+    /// Fades the loading screen to a target alpha.
+    /// </summary>
+    private IEnumerator FadeLoadingScreen(float targetAlpha, bool isFadeIn)
+    {
+        if (loadingPanel != null && loadingCanvasGroup != null)
+        {
+            if (isFadeIn && !loadingPanel.activeSelf)
+            {
+                loadingPanel.SetActive(true);
+            }
+
+            float startAlpha = loadingCanvasGroup.alpha; // 👈 Use current alpha
+            float elapsedTime = 0f;
+
+            while (elapsedTime < fadeDuration)
+            {
+                elapsedTime += Time.unscaledDeltaTime;
+                float t = Mathf.Clamp01(elapsedTime / fadeDuration);
+                loadingCanvasGroup.alpha = Mathf.Lerp(startAlpha, targetAlpha, t);
+                yield return null;
+            }
+
+            loadingCanvasGroup.alpha = targetAlpha;
+
+            if (!isFadeIn && loadingPanel.activeSelf)
+            {
+                // small delay so fade-out is noticeable
+                yield return new WaitForSecondsRealtime(0.1f);
+                loadingPanel.SetActive(false);
+            }
+        }
+        else
+        {
+            if (loadingPanel != null)
+            {
+                loadingPanel.SetActive(isFadeIn);
+            }
+        }
     }
 }

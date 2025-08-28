@@ -21,6 +21,10 @@ public class LoadingManager : MonoBehaviour
     [SerializeField] private Image loadingImage;            // Optional loading artwork/tip
     [SerializeField] private List<Sprite> loadingImages = new List<Sprite>(); // Pool of images
 
+    [Header("Hint System")]
+    [SerializeField] private TextMeshProUGUI hintText;      // Text component for hints
+    [SerializeField] private List<string> hints = new List<string>(); // List of hint texts
+
     [Header("Settings")]
     [SerializeField] private float fadeDuration = 1.5f;        // Fade in/out duration
     [SerializeField] private float minShowTimeAfterReady = 0.5f; // Delay before hiding after load
@@ -127,6 +131,13 @@ public class LoadingManager : MonoBehaviour
         {
             int randomIndex = Random.Range(0, loadingImages.Count);
             loadingImage.sprite = loadingImages[randomIndex];
+        }
+
+        // Show a random hint (if available)
+        if (hints.Count > 0 && hintText != null)
+        {
+            int randomHintIndex = Random.Range(0, hints.Count);
+            hintText.text = hints[randomHintIndex];
         }
 
         // Fade in loading screen

@@ -10390,6 +10390,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3647737240293289803, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
+      propertyPath: rotateTime
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5651905415708372345, guid: 7a75998cd5f080e4dbaff043963113c8, type: 3}
       propertyPath: m_Name
       value: Lockpick_Puzzle_1

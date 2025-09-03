@@ -1048,7 +1048,7 @@ MonoBehaviour:
   canBeLockpicked: 1
   doorHinge: {fileID: 5492049730012820674}
   openAngle: 90
-  rotateTime: 0.2
+  rotateTime: 1
   autoCloseEnabled: 1
   autoCloseDistance: 5
   disableInteraction: 0

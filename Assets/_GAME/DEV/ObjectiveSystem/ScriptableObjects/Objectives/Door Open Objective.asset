@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 735fe0d79354ccb469a8036446f804cb, type: 3}
+  m_Name: Door Open Objective
+  m_EditorClassIdentifier: 
+  objectiveName: 'Open Door '
+  dialogDisplay: Open the Door
+  objective: 2
+  objectiveType: 0
+  objectiveState: 1
+  objectiveStatus: 1
+  hasUnlockables: 1
+  parentObjective: {fileID: 0}
+  unlockingObjective: {fileID: 0}
+  ChildObjectives:
+  - {fileID: 11400000, guid: 1992388ef9aa72e4b89ba2133599ea13, type: 2}
+  UnlockOnComplete:
+  - {fileID: 11400000, guid: 6d9a7a885f8cc6043a96ad622acca2bd, type: 2}
+  ItemId: Door

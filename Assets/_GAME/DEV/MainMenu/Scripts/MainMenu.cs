@@ -18,21 +18,30 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private GameObject newGameConfirmationPanel;
     [SerializeField] private Button yesNewGameButton;
     [SerializeField] private Button noNewGameButton;
-    
-    [Header("Sound")]
-    [SerializeField] private Sounds mainMenuBGM;
 
     private string savePath;
+    private string saveFolderPath;
 
     private void Awake()
     {
-        savePath = Path.Combine(Application.persistentDataPath, "savegame.json");
+        // Create custom save directory in Documents folder
+        string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+        saveFolderPath = Path.Combine(documentsPath, "Horror_Engine", "Save_File");
+
+        // Create the directory if it doesn't exist
+        if (!Directory.Exists(saveFolderPath))
+        {
+            Directory.CreateDirectory(saveFolderPath);
+            Debug.Log("Created save directory: " + saveFolderPath);
+        }
+
+        // Build save path
+        savePath = Path.Combine(saveFolderPath, "savegame.json");
+        
     }
 
     private void Start()
     {
-        SoundService.Instance.PlayMusic(mainMenuBGM);
-        
         if (resumeButton != null)
             resumeButton.gameObject.SetActive(File.Exists(savePath));
 
@@ -140,4 +149,12 @@ public class MainMenu : MonoBehaviour
         Application.Quit();
 #endif
     }
+
+    // Optional: Method to get the save folder path for other scripts
+    public string GetSaveFolderPath()
+    {
+        return saveFolderPath;
+    }
+
+   
 }

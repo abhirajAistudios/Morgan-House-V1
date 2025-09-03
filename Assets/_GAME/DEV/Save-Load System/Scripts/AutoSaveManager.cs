@@ -6,27 +6,41 @@ using System.Linq;
 
 /// <summary>
 /// Handles auto-saving and loading of game state (player, inventory, puzzles, doors, flashlight, etc.)
-/// Uses JSON persistence at Application.persistentDataPath.
+/// Uses JSON persistence in Documents/Horror_Engine/Save_File/ folder.
 /// </summary>
 public class AutoSaveManager : MonoBehaviour
 {
     #region Singleton
     private string savePath;                   // File path for save file
+    private string saveFolderPath;            // Custom save folder path
     [HideInInspector]
     public AutoSaveManager instance;           // Singleton instance (not static for inspector visibility)
     #endregion
 
     // Reference to the current save data
     public SaveData CurrentData { get; private set; } = new SaveData();
-    
+
     public Transform spawnPoint { get; private set; }
-    
+
     #region Unity Methods
     private void Awake()
-    { 
+    {
         spawnPoint = GameObject.FindGameObjectsWithTag("Spawn Point")[0].transform;
-        // Build save path once
-        savePath = Path.Combine(Application.persistentDataPath, "savegame.json");
+
+        // Create custom save directory in Documents folder
+        string documentsPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.MyDocuments);
+        saveFolderPath = Path.Combine(documentsPath, "Horror_Engine", "Save_File");
+
+        // Create the directory if it doesn't exist
+        if (!Directory.Exists(saveFolderPath))
+        {
+            Directory.CreateDirectory(saveFolderPath);
+            Debug.Log("Created save directory: " + saveFolderPath);
+        }
+
+        // Build save path
+        savePath = Path.Combine(saveFolderPath, "savegame.json");
+        Debug.Log("Save file will be stored at: " + savePath);
 
         // Ensure only one AutoSaveManager exists
         if (instance == null)
@@ -60,12 +74,12 @@ public class AutoSaveManager : MonoBehaviour
                 lastSceneName = SceneManager.GetActiveScene().name,
                 sceneIndex = SceneManager.GetActiveScene().buildIndex,
             };
-            
-            
+
+
             // Get all ISaveable components more efficiently
             var saveables = new List<ISaveable>();
             var allMonoBehaviours = FindObjectsOfType<MonoBehaviour>(true);
-            
+
             foreach (var mb in allMonoBehaviours)
             {
                 if (mb is ISaveable saveable)
@@ -113,9 +127,9 @@ public class AutoSaveManager : MonoBehaviour
             // Convert to JSON and write to disk
             CurrentData = data;
             string json = JsonUtility.ToJson(data, true);
-            
+
             File.WriteAllText(savePath, json);
-            
+
             // Show UI message if available
             if (UIService.Instance != null)
             {
@@ -158,7 +172,7 @@ public class AutoSaveManager : MonoBehaviour
         }
 
     }
-    
+
 
     /// <summary>
     /// Reloads saved objectives and child objectives from CurrentData.
@@ -181,4 +195,7 @@ public class AutoSaveManager : MonoBehaviour
         }
     }
     #endregion
+
+    
+    
 }

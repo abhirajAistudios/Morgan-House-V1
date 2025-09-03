@@ -2,21 +2,12 @@
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
-
 public class SceneLoader : MonoBehaviour
 {
     public static SceneLoader Instance;
 
-    [Header("Drag & Drop Scenes Here")]
-#if UNITY_EDITOR
-    public List<SceneAsset> sceneAssets = new List<SceneAsset>(); // Editor-only scene references
-#endif
-
-    [HideInInspector]
-    public List<string> sceneNames = new List<string>(); // Actual names used at runtime
+    [Header("Enter Scene Names Here")]
+    public List<string> sceneNames = new List<string>(); // Scene names used at runtime
 
     private void Awake()
     {
@@ -24,18 +15,6 @@ public class SceneLoader : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
-
-#if UNITY_EDITOR
-            // Convert SceneAssets to string names at runtime
-            sceneNames.Clear();
-            foreach (var sceneAsset in sceneAssets)
-            {
-                if (sceneAsset != null)
-                {
-                    sceneNames.Add(sceneAsset.name);
-                }
-            }
-#endif
         }
         else
         {
@@ -47,7 +26,15 @@ public class SceneLoader : MonoBehaviour
     {
         if (index >= 0 && index < sceneNames.Count)
         {
-            LoadingManager.Instance.LoadSceneByName(sceneNames[index]);
+            string sceneName = sceneNames[index];
+            if (!string.IsNullOrEmpty(sceneName))
+            {
+                LoadingManager.Instance.LoadSceneByName(sceneName);
+            }
+            else
+            {
+                Debug.LogError("Scene name is empty at index: " + index);
+            }
         }
         else
         {
@@ -57,16 +44,28 @@ public class SceneLoader : MonoBehaviour
 
     public void LoadNextScene()
     {
-        int currentIndex = SceneManager.GetActiveScene().buildIndex;
-        int nextIndex = currentIndex + 1;
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        int currentIndex = sceneNames.IndexOf(currentSceneName);
 
-        if (nextIndex <= sceneNames.Count)
+        if (currentIndex >= 0)
         {
-            LoadSceneByIndex(nextIndex);
+            int nextIndex = currentIndex + 1;
+            if (nextIndex < sceneNames.Count)
+            {
+                LoadSceneByIndex(nextIndex);
+            }
+            else
+            {
+                Debug.Log("No more scenes in list!");
+            }
         }
         else
         {
-            Debug.Log("No more scenes in list!");
+            Debug.LogWarning("Current scene not found in sceneNames list. Loading first scene as fallback.");
+            if (sceneNames.Count > 0)
+            {
+                LoadSceneByIndex(0);
+            }
         }
     }
 }

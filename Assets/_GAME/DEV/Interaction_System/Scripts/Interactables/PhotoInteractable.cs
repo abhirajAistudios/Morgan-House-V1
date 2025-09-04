@@ -1,3 +1,5 @@
+using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -50,12 +52,15 @@ public class PhotoInteractable : BaseInteractable
     /// Called when the player presses the interact key.
     public override void OnInteract()
     {
+        if(interacted) return;
+        
         ObjectViewSwitcher switcher = FindObjectOfType<ObjectViewSwitcher>();
         if (switcher != null)
         {
             switcher.EnterObjectView();
         }
 
+        SetInteracted(true);
         SoundService.Instance.Play(Sounds.OBJECT);
         objectViewer.Show(gameObject, this);
 
@@ -64,7 +69,18 @@ public class PhotoInteractable : BaseInteractable
             renderer.material.color = Color.green;
         }
     }
+
+    public void SetInteracted(bool value)
+    {
+        interacted = value;
+    }
     
+    public override IEnumerator InteractOnce()
+    {
+        yield return new WaitForSeconds(3);
+        SetInteracted(false);
+    }
+
     /// Returns the tooltip string to show in the UI.
     public override string GetTooltipText()
     {

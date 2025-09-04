@@ -6225,6 +6225,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
   currentState: 4
   itemname: Door
   requiredKeyName: Key
@@ -6506,6 +6507,10 @@ PrefabInstance:
       propertyPath: playerController
       value: 
       objectReference: {fileID: 3761855558946907519}
+    - target: {fileID: 8789972794359499653, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -7089,6 +7094,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
   currentState: 0
   itemname: Door
   requiredKeyName: Key
@@ -8012,6 +8018,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
   currentState: 2
   itemname: Door
   requiredKeyName: Key
@@ -8570,6 +8577,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
   currentState: 3
   itemname: Door
   requiredKeyName: Key
@@ -9084,6 +9092,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
   currentState: 1
   itemname: Door
   requiredKeyName: Key

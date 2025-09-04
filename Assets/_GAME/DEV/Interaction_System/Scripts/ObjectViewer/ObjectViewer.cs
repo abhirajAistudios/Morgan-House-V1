@@ -35,6 +35,7 @@ public class ObjectViewer : MonoBehaviour
     private float lastInteractionTime;
     
     private GameObject objectiveCanvas;
+    private GameObject prefabObject;
 
     private float xRotation = 0f; // for clamping X-axis rotation
 
@@ -49,6 +50,7 @@ public class ObjectViewer : MonoBehaviour
         objectiveCanvas.SetActive(false);
 
         currentObject = Instantiate(prefab, pivot);
+        prefabObject = prefab;
 
         _currentInteractor = interactables;
 
@@ -87,6 +89,7 @@ public class ObjectViewer : MonoBehaviour
     public void Close()
     {
         if (currentObject) Destroy(currentObject);
+        StartCoroutine(prefabObject.GetComponent<BaseInteractable>().InteractOnce());
         view.SetActive(false);
         objectiveCanvas.SetActive(true);
         FindObjectOfType<ObjectViewSwitcher>().ExitObjectView();

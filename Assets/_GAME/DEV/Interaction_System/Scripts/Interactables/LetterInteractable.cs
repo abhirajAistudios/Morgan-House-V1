@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 /// <summary>
@@ -60,6 +61,8 @@ public class LetterInteractable : BaseInteractable
 
     public override void OnInteract()
     {
+        if(interacted) return;
+        
         base.OnInteract(); // sets hasBeenUsed if !isReusable
 
         if (!IsInteractable)
@@ -67,6 +70,7 @@ public class LetterInteractable : BaseInteractable
             return;
         }
 
+        SetInteracted(true);
         // Open object viewer
         objectViewer.Show(gameObject, this);
 
@@ -76,5 +80,16 @@ public class LetterInteractable : BaseInteractable
         // Optional: switch view (only if needed)
         ObjectViewSwitcher switcher = FindObjectOfType<ObjectViewSwitcher>();
         switcher?.EnterObjectView();
+    }
+    
+    public void SetInteracted(bool value)
+    {
+        interacted = value;
+    }
+    
+    public override IEnumerator InteractOnce()
+    {
+        yield return new WaitForSeconds(3);
+        SetInteracted(false);
     }
 }

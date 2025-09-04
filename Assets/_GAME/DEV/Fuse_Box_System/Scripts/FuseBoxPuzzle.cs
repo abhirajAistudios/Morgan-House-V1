@@ -74,18 +74,24 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     {
         if (Time.timeScale != 0.0f)
         {
-            generatorOnSound.enabled = true;
-            if (isSolved && player.activeSelf)
+            if (isSolved && player.activeInHierarchy)
             {
-                if (generatorOnSound.isPlaying) return;
-                generatorOnSound.Play();
+                if (!generatorOnSound.isPlaying)
+                    generatorOnSound.Play();
+            }
+            else
+            {
+                if (generatorOnSound.isPlaying)
+                    generatorOnSound.Stop();
             }
         }
-        else if(Time.timeScale == 0.0f)
+        else // Game is paused
         {
-            generatorOnSound.enabled = false;
+            if (generatorOnSound.isPlaying)
+                generatorOnSound.Stop();
         }
     }
+
 
     public override void OnFocus() { }
     public override void OnLoseFocus() { }

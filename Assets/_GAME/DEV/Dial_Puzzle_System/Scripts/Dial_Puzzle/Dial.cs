@@ -12,6 +12,9 @@ public class Dial : MonoBehaviour
     [SerializeField] private int totalPositions = 3;        // Total number of positions the dial can rotate through (e.g., 3 positions = 0, 1, 2)
     [SerializeField] private float rotationStep = 90f;      // Degrees to rotate per step (e.g., 90° for 4 directions)
     [SerializeField] private float rotationSpeed = 10f;     // Speed at which the dial smoothly rotates
+    
+    public enum RotationAxis { X, Y, Z }
+    [SerializeField] private RotationAxis rotationAxis = RotationAxis.Y;
 
     [Header("UI Control")]
     [SerializeField] private Button rotateButton;           // Optional UI button to rotate this dial
@@ -69,7 +72,19 @@ public class Dial : MonoBehaviour
 
         // Calculate the new target rotation angle
         float angle = currentIndex * rotationStep;
-        targetRotation = Quaternion.Euler(0, angle, 0);
+
+        switch (rotationAxis)
+        {
+            case RotationAxis.X:
+                targetRotation = Quaternion.Euler(angle, 0, 0);
+                break;
+            case RotationAxis.Y:
+                targetRotation = Quaternion.Euler(0, angle, 0);
+                break;
+            case RotationAxis.Z:
+                targetRotation = Quaternion.Euler(0, 0, angle);
+                break;
+        }
 
         // Notify the puzzle controller to check if the current combination is correct
         puzzleController?.CheckSolution();

@@ -172,7 +172,7 @@ MonoBehaviour:
   newGameConfirmationPanel: {fileID: 1785562907}
   yesNewGameButton: {fileID: 1751353349}
   noNewGameButton: {fileID: 1045211126}
-  mainMenuBGM: 21
+  mainMenuSound: 21
 --- !u!1 &115643824
 GameObject:
   m_ObjectHideFlags: 0

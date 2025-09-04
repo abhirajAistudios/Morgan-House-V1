@@ -19,6 +19,8 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button yesNewGameButton;
     [SerializeField] private Button noNewGameButton;
 
+    [Header("Sound")] [SerializeField] private Sounds mainMenuSound;
+
     private string savePath;
     private string saveFolderPath;
 
@@ -42,6 +44,7 @@ public class MainMenu : MonoBehaviour
 
     private void Start()
     {
+        SoundService.Instance.PlayMusic(mainMenuSound);
         if (resumeButton != null)
             resumeButton.gameObject.SetActive(File.Exists(savePath));
 

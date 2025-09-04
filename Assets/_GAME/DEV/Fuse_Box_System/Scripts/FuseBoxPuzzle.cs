@@ -27,6 +27,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
     [SerializeField] private string puzzleID = Guid.NewGuid().ToString();
     private int fusesInserted = 0;
     private bool isSolved = false;
+    private GameObject player; 
 
     [Header("Interactable UI")]
     [SerializeField] private string displayName = "Fuse Box";
@@ -51,6 +52,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
     private void Start()
     {
+        player = FindAnyObjectByType<PlayerController>().gameObject;
         if (!isSolved)
         {
             foreach (var slot in fuseSlots)
@@ -73,7 +75,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
         if (Time.timeScale != 0.0f)
         {
             generatorOnSound.enabled = true;
-            if (isSolved)
+            if (isSolved && player.activeSelf)
             {
                 if (generatorOnSound.isPlaying) return;
                 generatorOnSound.Play();
@@ -87,7 +89,7 @@ public class FuseBoxPuzzle : BaseInteractable, ISaveable
 
     public override void OnFocus() { }
     public override void OnLoseFocus() { }
-
+    
     public void TryInsertFuseAt(int slotIndex, FuseSlot fuseSlot)
     {
         if (slotIndex < 0 || slotIndex >= fuseSlots.Length) return;

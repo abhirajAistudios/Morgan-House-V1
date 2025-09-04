@@ -339,6 +339,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: 80f356d0ad2125340b93e59657a91c15, type: 2}
+  interacted: 0
   tooltip: Enter Puzzle
   displayName: Puzzle Base
   description: Interact to enter the puzzle view.
@@ -1714,6 +1715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c78ef4c1dfc52854ea7272996e437ccb, type: 2}
+  interacted: 0
   noObjectText: {fileID: 854450531832019966}
   requiredItemName: Dial Puzzle Object
   placedObject: {fileID: 9117622569954938256}
@@ -1852,9 +1854,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6079735397181214157}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: -0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 22.16, y: 0.97, z: -17.52}
-  m_LocalScale: {x: 0.4160235, y: 0.4160235, z: 0.4160235}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 4490499198780252536}
@@ -1862,7 +1864,7 @@ Transform:
   - {fileID: 3981834273421829814}
   - {fileID: 1983001655674376271}
   m_Father: {fileID: 6735357590664912497}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -90}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &7234575331372421642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2026,6 +2028,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c78ef4c1dfc52854ea7272996e437ccb, type: 2}
+  interacted: 0
   noObjectText: {fileID: 854450531832019966}
   requiredItemName: Dial Puzzle Object
   placedObject: {fileID: 5782687068454522379}
@@ -2193,8 +2196,8 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7143772323734001679}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -17.52}
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2207,7 +2210,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 22.16, y: 0.97}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0, y: 0}
 --- !u!223 &3507956099329596294
@@ -2299,9 +2302,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7188672490185350904}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: 0.7071068, w: 0.7071068}
-  m_LocalPosition: {x: 1.8300002, y: 7.57, z: 0}
-  m_LocalScale: {x: 14.398593, y: 0.28537598, z: 14.398593}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 25.309298, y: 0.20867634, z: -17.52}
+  m_LocalScale: {x: 5.9901547, y: 0.11872314, z: 5.990153}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 554990018860529780}
@@ -2812,6 +2815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c78ef4c1dfc52854ea7272996e437ccb, type: 2}
+  interacted: 0
   noObjectText: {fileID: 854450531832019966}
   requiredItemName: Dial Puzzle Object
   placedObject: {fileID: 8588497272498912482}
@@ -2949,9 +2953,9 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8658051310087259287}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalRotation: {x: -0, y: -0, z: -0.7071068, w: 0.7071068}
+  m_LocalPosition: {x: 22.16, y: 0.97, z: -17.52}
+  m_LocalScale: {x: 0.41602355, y: 0.41602355, z: 0.4160235}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 6983995912784364652}
@@ -3373,6 +3377,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   data: {fileID: 11400000, guid: c78ef4c1dfc52854ea7272996e437ccb, type: 2}
+  interacted: 0
   noObjectText: {fileID: 854450531832019966}
   requiredItemName: Dial Puzzle Object
   placedObject: {fileID: 4412897825577189641}

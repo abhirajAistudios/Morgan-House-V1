@@ -1157,6 +1157,41 @@ Transform:
   - {fileID: 1852846893}
   m_Father: {fileID: 1388874718}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &622542871
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 622542872}
+  m_Layer: 0
+  m_Name: Dial_Puzzle_2_Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &622542872
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 622542871}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1414031755}
+  - {fileID: 744468929}
+  - {fileID: 2032862421}
+  - {fileID: 1061424989}
+  m_Father: {fileID: 882767272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &639898404
 GameObject:
   m_ObjectHideFlags: 0
@@ -1674,6 +1709,76 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 2560279154843866778, guid: 0d82b8fe175c6154a96f470411ab4c1a, type: 3}
   m_PrefabInstance: {fileID: 716781552}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &744468928
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 622542872}
+    m_Modifications:
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.586
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.46245098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374586950940980129, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_Name
+      value: Dial_Puzzle_Object_2 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: ec62e7919bbebb84dbacf9407bf488df, type: 2}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: ItemId
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+--- !u!4 &744468929 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+  m_PrefabInstance: {fileID: 744468928}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &756474586
 GameObject:
   m_ObjectHideFlags: 0
@@ -1859,10 +1964,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4355945361794777060}
-  - {fileID: 1919512913}
-  - {fileID: 1062743615}
-  - {fileID: 1406015586}
+  - {fileID: 2124697359}
+  - {fileID: 622542872}
   m_Father: {fileID: 1208638006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &936871019
@@ -2214,13 +2317,83 @@ Transform:
   - {fileID: 1412876044639447135}
   m_Father: {fileID: 1208638006}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1061424988
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 622542872}
+    m_Modifications:
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.626
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.46245098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374586950940980129, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_Name
+      value: Dial_Puzzle_Object_4 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: ec62e7919bbebb84dbacf9407bf488df, type: 2}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: ItemId
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+--- !u!4 &1061424989 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+  m_PrefabInstance: {fileID: 1061424988}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1062743614
 PrefabInstance:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 882767272}
+    m_TransformParent: {fileID: 2124697359}
     m_Modifications:
     - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3043,7 +3216,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 882767272}
+    m_TransformParent: {fileID: 2124697359}
     m_Modifications:
     - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3134,6 +3307,76 @@ Transform:
   - {fileID: 1571494543}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &1414031754
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 622542872}
+    m_Modifications:
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 23.156603
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.46245098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374586950940980129, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_Name
+      value: Dial_Puzzle_Object_1 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: ec62e7919bbebb84dbacf9407bf488df, type: 2}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: ItemId
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+--- !u!4 &1414031755 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+  m_PrefabInstance: {fileID: 1414031754}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1434326784
 GameObject:
   m_ObjectHideFlags: 0
@@ -4224,9 +4467,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 969258499517054914, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324610976361104916, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
     - target: {fileID: 2330287394017938871, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
       propertyPath: rotationAxis
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2537274963135333461, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183663385881636748, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 2 Object
       objectReference: {fileID: 0}
     - target: {fileID: 3429009134182712306, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
       propertyPath: rotationAxis
@@ -4776,7 +5035,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 882767272}
+    m_TransformParent: {fileID: 2124697359}
     m_Modifications:
     - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -5136,6 +5395,76 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2027198162}
   m_CullTransparentMesh: 1
+--- !u!1001 &2032862420
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 622542872}
+    m_Modifications:
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.46245098
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 13.05
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6374586950940980129, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: m_Name
+      value: Dial_Puzzle_Object_3 (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 11400000, guid: ec62e7919bbebb84dbacf9407bf488df, type: 2}
+    - target: {fileID: 8435684590971327568, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+      propertyPath: ItemId
+      value: Dial Puzzle 2 Object
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+--- !u!4 &2032862421 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
+  m_PrefabInstance: {fileID: 2032862420}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2043149420
 GameObject:
   m_ObjectHideFlags: 0
@@ -5797,6 +6126,41 @@ ReflectionProbe:
   m_UseOcclusionCulling: 1
   m_Importance: 1
   m_CustomBakedTexture: {fileID: 0}
+--- !u!1 &2124697358
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2124697359}
+  m_Layer: 0
+  m_Name: Dial_Puzzle_1_Objects
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2124697359
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2124697358}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 4355945361794777060}
+  - {fileID: 1919512913}
+  - {fileID: 1062743615}
+  - {fileID: 1406015586}
+  m_Father: {fileID: 882767272}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &2135013892
 GameObject:
   m_ObjectHideFlags: 0
@@ -5826,7 +6190,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f59b2cebfea1f2a47a7ac16cc61f9963, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  slotCount: 4
+  slotCount: 5
   dataBase: {fileID: 11400000, guid: 39344fe0f0003a346af233ea3359bde8, type: 2}
   itemSlots: []
 --- !u!4 &2135013894
@@ -6670,6 +7034,26 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 336622025}
     m_Modifications:
+    - target: {fileID: 969258499517054914, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 1 Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 1324610976361104916, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 1 Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 2330287394017938871, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: rotationAxis
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2537274963135333461, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 1 Object
+      objectReference: {fileID: 0}
+    - target: {fileID: 3183663385881636748, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
+      propertyPath: requiredItemName
+      value: Dial Puzzle 1 Object
+      objectReference: {fileID: 0}
     - target: {fileID: 4368310016088020011, guid: b92b28b43e965b3408abfd3027454a25, type: 3}
       propertyPath: m_Name
       value: Dial_Puzzle_System
@@ -9043,7 +9427,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 882767272}
+    m_TransformParent: {fileID: 2124697359}
     m_Modifications:
     - target: {fileID: 2989670423782869261, guid: ccc2b1002dd7d494f8297d105081f2b2, type: 3}
       propertyPath: m_LocalPosition.x

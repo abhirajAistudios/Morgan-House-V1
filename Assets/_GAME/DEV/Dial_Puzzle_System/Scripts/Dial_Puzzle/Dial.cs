@@ -10,7 +10,7 @@ public class Dial : MonoBehaviour
     
     [Header("Dial Settings")]
     [SerializeField] private int totalPositions = 3;        // Total number of positions the dial can rotate through (e.g., 3 positions = 0, 1, 2)
-    [SerializeField] private float rotationStep = 90f;      // Degrees to rotate per step (e.g., 90° for 4 directions)
+    [SerializeField] private float rotationStep = 90f;      // Degrees to rotate per step
     [SerializeField] private float rotationSpeed = 10f;     // Speed at which the dial smoothly rotates
     
     public enum RotationAxis { X, Y, Z }
@@ -25,8 +25,9 @@ public class Dial : MonoBehaviour
     private int currentIndex;                  // Current dial index (position player has rotated to)
     private bool isInteractable;               // Whether the dial can be interacted with
     private Quaternion targetRotation;         // Target rotation the dial should smoothly rotate to
+    private Vector3 baseEuler;                 // Store the starting local rotation (Euler angles)
 
-    public int CurrentIndex => currentIndex; // Public read-only access to the current index
+    public int CurrentIndex => currentIndex;   // Public read-only access to the current index
 
     [SerializeField] private DialPuzzleController puzzleController; // Reference to the central puzzle controller
     
@@ -34,27 +35,26 @@ public class Dial : MonoBehaviour
 
     private void Start()
     {
-        // Store the current rotation as the initial target
-        targetRotation = transform.rotation;
+        // Store the initial local rotation as the base
+        baseEuler = transform.localEulerAngles;
+        targetRotation = transform.localRotation;
 
-        // Find the puzzle controller in the scene (assumes only one exists).
         if (puzzleController == null)
         {
             Debug.LogError("DialPuzzleController not found in scene!");
         }
 
-        // Set up the UI button to trigger the Rotate method
         if (rotateButton != null)
         {
             rotateButton.onClick.AddListener(Rotate);
-            rotateButton.interactable = false; // Initially disabled until activated by the controller
+            rotateButton.interactable = false; 
         }
     }
 
     private void Update()
     {
         // Smoothly rotate the dial toward the target rotation using interpolation
-        transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, targetRotation, Time.deltaTime * rotationSpeed);
     }
 
     /// <summary>
@@ -67,32 +67,29 @@ public class Dial : MonoBehaviour
 
         SoundService.Instance.Play(rotateSound);
         
-        // Advance to the next index, looping back to 0 if needed
         currentIndex = (currentIndex + 1) % totalPositions;
 
-        // Calculate the new target rotation angle
         float angle = currentIndex * rotationStep;
+        Vector3 newEuler = baseEuler;
 
         switch (rotationAxis)
         {
             case RotationAxis.X:
-                targetRotation = Quaternion.Euler(angle, 0, 0);
+                newEuler.x = baseEuler.x + angle;
                 break;
             case RotationAxis.Y:
-                targetRotation = Quaternion.Euler(0, angle, 0);
+                newEuler.y = baseEuler.y + angle;
                 break;
             case RotationAxis.Z:
-                targetRotation = Quaternion.Euler(0, 0, angle);
+                newEuler.z = baseEuler.z + angle;
                 break;
         }
 
-        // Notify the puzzle controller to check if the current combination is correct
+        targetRotation = Quaternion.Euler(newEuler);
+
         puzzleController?.CheckSolution();
     }
 
-    /// <summary>
-    /// Enables or disables interaction with this dial (both via button and direct click).
-    /// </summary>
     public void SetInteractable(bool interact)
     {
         isInteractable = interact;
@@ -101,9 +98,6 @@ public class Dial : MonoBehaviour
             rotateButton.interactable = interact;
     }
 
-    /// <summary>
-    /// Optional: allow the player to rotate the dial by clicking it directly in the scene (if using colliders).
-    /// </summary>
     private void OnMouseDown()
     {
         Rotate();

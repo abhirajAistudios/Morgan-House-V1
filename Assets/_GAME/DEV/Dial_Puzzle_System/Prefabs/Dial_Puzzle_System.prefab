@@ -603,6 +603,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
+  rotationAxis: 0
   rotateButton: {fileID: 2582194924074211266}
   rotateSound: 25
   puzzleController: {fileID: 7234575331372421642}
@@ -708,6 +709,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
+  rotationAxis: 0
   rotateButton: {fileID: 5060429699378931624}
   rotateSound: 25
   puzzleController: {fileID: 7234575331372421642}
@@ -1589,6 +1591,7 @@ MonoBehaviour:
   totalPositions: 10
   rotationStep: 30
   rotationSpeed: 5
+  rotationAxis: 0
   rotateButton: {fileID: 9033021439947900095}
   rotateSound: 25
   puzzleController: {fileID: 7234575331372421642}

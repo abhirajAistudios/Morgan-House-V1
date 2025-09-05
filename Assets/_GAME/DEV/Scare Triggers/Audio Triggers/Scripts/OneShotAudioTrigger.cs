@@ -22,6 +22,8 @@ public class OneShotAudioTrigger : MonoBehaviour
             {
                 audio.PlayOneShot(clip); 
             }
+            
+            gameObject.SetActive(false);
         }
     }
 }

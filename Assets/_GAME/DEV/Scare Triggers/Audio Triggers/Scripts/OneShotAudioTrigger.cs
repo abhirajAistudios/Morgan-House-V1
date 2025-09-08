@@ -6,7 +6,9 @@ public class OneShotAudioTrigger : MonoBehaviour
 {
     private AudioSource audio;            // Reference to the AudioSource component
     
-    public List<AudioClip> soundClip;     // List of sound clips to play on trigger
+    [SerializeField] private List<AudioClip> soundClip;     // List of sound clips to play on trigger
+    [SerializeField] private bool playOnce;
+    private bool hasPlayed;
 
     private void Start()
     {
@@ -17,13 +19,23 @@ public class OneShotAudioTrigger : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            // Play each clip in the list once (in sequence, overlapping if multiple exist)
-            foreach (var clip in soundClip)
+            if (!playOnce)
             {
-                audio.PlayOneShot(clip); 
+                PlayAudio();
+            } 
+            else if (playOnce && !hasPlayed)
+            {
+                PlayAudio();
+                hasPlayed = true;
             }
-            
-            gameObject.SetActive(false);
+        }
+    }
+
+    private void PlayAudio()
+    {
+        foreach (var clip in soundClip)
+        {
+            audio.PlayOneShot(clip); 
         }
     }
 }

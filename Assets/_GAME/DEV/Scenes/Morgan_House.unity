@@ -7351,7 +7351,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd5f5854e69709841a4f93882fa0ccae, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!23 &1722400407555522227
@@ -7425,7 +7425,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4a21d8817a4765d419e2cf9780bb6eae, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!4 &1783957394198865512
@@ -7914,7 +7914,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47cbb525903c549498e29a1ac1b568d4, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!223 &2326482673611180352
@@ -9842,7 +9842,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e89ac46dfecdfb4c98a0bd438795033, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &5779740543301039719
@@ -10790,14 +10790,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 465957699939988136, guid: befe202c02acfc64abf50b1025da1563, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600674215384947647, guid: befe202c02acfc64abf50b1025da1563, type: 3}
-      propertyPath: moveDirection.x
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4600674215384947647, guid: befe202c02acfc64abf50b1025da1563, type: 3}
-      propertyPath: moveDirection.z
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5763423185695180571, guid: befe202c02acfc64abf50b1025da1563, type: 3}

@@ -146,9 +146,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 6711029513124166065}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2e89ac46dfecdfb4c98a0bd438795033, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: {x: 1, y: 0, z: 0}
-  forceAmount: 10
+  actionType: 0
+  forceDirection: {x: 0, y: 0, z: 1}
+  forceAmount: 25
+  moveDirection: {x: 0, y: 0, z: 1}
+  moveSpeed: 5
   moveDistance: 10
+  shakeDuration: 1
+  shakeMagnitude: 0.1
+  dampingSpeed: 1

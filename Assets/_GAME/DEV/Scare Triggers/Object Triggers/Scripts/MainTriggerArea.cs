@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class MainTriggerArea : MonoBehaviour
 {
     [Header("Trigger Events")]
-    public List<BaseTrigger> triggerEvents = new List<BaseTrigger>();
+    public List<ObjectTriggerAction> triggerEvents = new List<ObjectTriggerAction>();
 
     private Collider triggerCollider;
     private bool hasActivated = false; // ✅ prevent re-triggering
@@ -25,8 +25,6 @@ public class MainTriggerArea : MonoBehaviour
 
         if (other.CompareTag("Player"))
         {
-            Debug.Log("Trigger Area Activated!");
-
             // Call all events in the list
             foreach (var triggerEvent in triggerEvents)
             {
@@ -38,8 +36,6 @@ public class MainTriggerArea : MonoBehaviour
             hasActivated = true;
             if (triggerCollider != null)
                 triggerCollider.enabled = false;
-
-            Debug.Log("MainTriggerArea has been deactivated permanently.");
         }
     }
 }

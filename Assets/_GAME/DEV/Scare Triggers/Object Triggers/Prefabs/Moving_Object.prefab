@@ -29,7 +29,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5763423185695180571}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -25.12011, y: 1.07, z: -22.36425}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -134,9 +134,9 @@ Rigidbody:
   m_ImplicitTensor: 1
   m_UseGravity: 1
   m_IsKinematic: 0
-  m_Interpolate: 0
+  m_Interpolate: 1
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &4600674215384947647
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -146,9 +146,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 5763423185695180571}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd5f5854e69709841a4f93882fa0ccae, type: 3}
+  m_Script: {fileID: 11500000, guid: 84010a6d9acb2db41aa809d87aa5939c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveDirection: {x: 0, y: 0, z: 1}
+  actionType: 2
+  forceDirection: {x: 0, y: 0, z: 1}
+  forceAmount: 25
+  moveDirection: {x: 1, y: 0, z: 0}
   moveSpeed: 5
   moveDistance: 10
+  shakeDuration: 1
+  shakeMagnitude: 0.1
+  dampingSpeed: 1

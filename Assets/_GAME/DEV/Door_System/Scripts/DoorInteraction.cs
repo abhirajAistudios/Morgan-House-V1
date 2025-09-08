@@ -20,7 +20,7 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     [Header("Rotation Settings")]
     public float openAngle = 90f;                       // Angle door opens
-    public float rotateTime = 1f;                       // Time taken to open/close door
+    public float rotateSpeed = 1f;                       // Time taken to open/close door
 
     [Header("Auto-Close Settings")]
     public bool autoCloseEnabled = true;                // Should door auto-close when player leaves?
@@ -202,14 +202,14 @@ public class DoorInteraction : BaseInteractable, ISaveable
         lastOpenDirection = direction;
         float targetYRotation = hingeStartY + (direction * openAngle);
 
-        LeanTween.rotateY(doorHinge.gameObject, targetYRotation, rotateTime).setEaseOutExpo();
+        LeanTween.rotateY(doorHinge.gameObject, targetYRotation, rotateSpeed).setEaseOutExpo();
         SoundService.Instance.Play(Sounds.DOOROPEN);
     }
 
     private void CloseDoor()
     {
         isOpen = false;
-        LeanTween.rotateY(doorHinge.gameObject, hingeStartY, rotateTime).setEaseOutExpo();
+        LeanTween.rotateY(doorHinge.gameObject, hingeStartY, rotateSpeed).setEaseOutExpo();
         SoundService.Instance.Play(Sounds.DOORCLOSE);
     }
 

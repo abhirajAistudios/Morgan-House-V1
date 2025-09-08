@@ -1,0 +1,159 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &3629665599858764965
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 12.418811
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -2.00816
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 18.98644
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2923187795608820542, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -2705502782917326973, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Name
+      value: Maingate
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2955670527092185780, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2981802745086842308, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5251255526908467020, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      propertyPath: m_Layer
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2705502782917326973, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5870873047822499256}
+    - targetCorrespondingSourceObject: {fileID: -2705502782917326973, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8236613108548496088}
+  m_SourcePrefab: {fileID: 100100000, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+--- !u!4 &2372408385300648531 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1347514698153180918, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+  m_PrefabInstance: {fileID: 3629665599858764965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &7506152768569649958 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2705502782917326973, guid: 38d4c1444cf13f842ab9c0129e270ba9, type: 3}
+  m_PrefabInstance: {fileID: 3629665599858764965}
+  m_PrefabAsset: {fileID: 0}
+--- !u!65 &5870873047822499256
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506152768569649958}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1.0483572, y: 3.008915, z: 0.06504515}
+  m_Center: {x: 0.5683753, y: 2.0021882, z: 0.11571052}
+--- !u!114 &8236613108548496088
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7506152768569649958}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e1c54b8e24529e4f9d190954e66a3e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: d49f1e039615d4b43b293f410cb76cc6, type: 2}
+  interacted: 0
+  currentState: 1
+  itemname: Door
+  requiredKeyName: Key
+  canBeLockpicked: 1
+  doorHinge: {fileID: 2372408385300648531}
+  openAngle: 90
+  rotateTime: 1
+  autoCloseEnabled: 1
+  autoCloseDistance: 5
+  disableInteraction: 0
+  openOnlyOnce: 0
+  transition: {fileID: 0}
+  uniqueID: 246f39e8-0fa0-465a-a728-241192f7514f

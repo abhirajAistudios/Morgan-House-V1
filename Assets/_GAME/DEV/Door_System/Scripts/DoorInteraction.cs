@@ -28,6 +28,8 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     [Header("Designer Control")]
     public bool disableInteraction = false;             // Can be disabled in editor for scripted events
+    public bool openOnlyOnce = false;                   // ✅ If true, door can only be opened once
+    private bool hasOpenedOnce = false;                 // ✅ Tracks if door was opened before
 
     [Header("Lockpick Transition")]
     public LockPickCameraManager transition;            // Reference to lockpick transition handler
@@ -78,15 +80,18 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     public override void OnInteract()
     {
-        if (disableInteraction) return; // If disabled → do nothing
+        if (disableInteraction) return;
+
+        // ✅ Prevent reopening if openOnlyOnce is true
+        if (openOnlyOnce && hasOpenedOnce)
+            return;
 
         if (currentState == DoorState.Jammed)
         {
-            TryLockpick(); // Jammed = lockpick attempt
+            TryLockpick();
             return;
         }
 
-        // Toggle between open/close when interacting
         if (isOpen) CloseDoor();
         else TryOpenDoor();
     }
@@ -98,10 +103,10 @@ public class DoorInteraction : BaseInteractable, ISaveable
     {
         switch (currentState)
         {
-            case DoorState.Unlocked:   // If unlocked → open
+            case DoorState.Unlocked:
                 OpenDoorBasedOnPlayerSide();
                 break;
-            case DoorState.Locked:     // If locked → check for key
+            case DoorState.Locked:
                 TryUseKey();
                 break;
         }
@@ -115,7 +120,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
             var item = InventoryManager.Instance.itemSlots[i];
             if (item != null && item.itemData.itemName == requiredKeyName)
             {
-                // Use the key & unlock
                 EventService.Instance.OnObjectUsed.InvokeEvent(itemname);
                 InventoryManager.Instance.UseItemByIndex(i);
 
@@ -126,14 +130,12 @@ public class DoorInteraction : BaseInteractable, ISaveable
             }
         }
 
-        // If no key found → locked feedback
         SoundService.Instance.Play(Sounds.DOORLOCK);
         UIService.Instance.ShowMessage("You need a key.", 1.5f);
     }
 
     private void TryLockpick()
     {
-        // If lockpick is available → enter lockpick mode
         if (canBeLockpicked && PlayerHasLockpick())
         {
             transition.EnterLockpickMode();
@@ -141,7 +143,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
         }
         else
         {
-            // Otherwise show feedback
             SoundService.Instance.Play(Sounds.DOORLOCK);
             UIService.Instance.ShowMessage("This door is jammed.", 1.5f);
         }
@@ -149,7 +150,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     private bool PlayerHasLockpick()
     {
-        // Search for lockpick in inventory
         foreach (var item in InventoryManager.Instance.itemSlots)
         {
             if (item != null && item.itemData.itemName == "Lockpick")
@@ -160,7 +160,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     private void ConsumeLockpick()
     {
-        // Consume first found lockpick item
         for (int i = 0; i < InventoryManager.Instance.itemSlots.Length; i++)
         {
             var item = InventoryManager.Instance.itemSlots[i];
@@ -191,10 +190,11 @@ public class DoorInteraction : BaseInteractable, ISaveable
     private void OpenDoorBasedOnPlayerSide()
     {
         isOpen = true;
+        //hasOpenedOnce = true; // ✅ Mark as opened forever if openOnlyOnce is enabled
+
         playerTransform = FindAnyObjectByType<PlayerController>()?.transform;
         if (playerTransform == null) return;
 
-        // Decide whether to push or pull based on player position
         Vector3 doorForward = doorHinge.forward;
         Vector3 toPlayer = (playerTransform.position - doorHinge.position).normalized;
         float direction = Vector3.Dot(doorForward, toPlayer) > 0 ? 1f : -1f;
@@ -202,7 +202,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
         lastOpenDirection = direction;
         float targetYRotation = hingeStartY + (direction * openAngle);
 
-        // Animate rotation using LeanTween
         LeanTween.rotateY(doorHinge.gameObject, targetYRotation, rotateTime).setEaseOutExpo();
         SoundService.Instance.Play(Sounds.DOOROPEN);
     }
@@ -214,34 +213,40 @@ public class DoorInteraction : BaseInteractable, ISaveable
         SoundService.Instance.Play(Sounds.DOORCLOSE);
     }
 
+    public void MarkAsOpendOnce()
+    {
+        hasOpenedOnce = true;
+        CloseDoor();
+    }
+
     // -------------------------
     // Save / Load
     // -------------------------
     public void SaveState(ref SaveData data)
     {
-        // Store door state inside save data list
         data.doors.Add(new DoorStateData
         {
             doorID = uniqueID,
             doorState = currentState,
             isOpen = isOpen,
             lastOpenDirection = lastOpenDirection,
-            currentYRotation = doorHinge.eulerAngles.y // ✅ Save actual rotation
+            currentYRotation = doorHinge.eulerAngles.y,
+            hasOpenedOnce = hasOpenedOnce // ✅ Save once-only state
         });
     }
 
     public void LoadState(SaveData data)
     {
-        // Restore saved state if ID matches
         foreach (var state in data.doors)
         {
             if (state.doorID == uniqueID)
             {
                 currentState = state.doorState;
                 lastOpenDirection = state.lastOpenDirection;
+                hasOpenedOnce = state.hasOpenedOnce; // ✅ Restore once-only state
 
                 if (state.isOpen)
-                    RestoreOpenState(state.currentYRotation); // ✅ restore exact rotation
+                    RestoreOpenState(state.currentYRotation);
                 else
                     RestoreClosedState();
 
@@ -254,14 +259,10 @@ public class DoorInteraction : BaseInteractable, ISaveable
     {
         isOpen = true;
 
-        // Normalize the angles to handle 360-degree wrap-around
         float normalizedSaved = NormalizeAngle(savedYRotation);
         float normalizedStart = NormalizeAngle(hingeStartY);
-
-        // Calculate the expected open rotation
         float expectedRotation = NormalizeAngle(hingeStartY + (lastOpenDirection * openAngle));
 
-        // Use the saved rotation if it's close to expected, otherwise use expected
         if (Mathf.Abs(normalizedSaved - expectedRotation) < 1f)
         {
             LeanTween.rotateY(doorHinge.gameObject, savedYRotation, 0f);
@@ -281,7 +282,6 @@ public class DoorInteraction : BaseInteractable, ISaveable
 
     private void RestoreClosedState()
     {
-        // Instantly set door to closed state without animation
         isOpen = false;
         LeanTween.rotateY(doorHinge.gameObject, hingeStartY, 0f);
     }

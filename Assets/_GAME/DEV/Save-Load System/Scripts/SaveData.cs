@@ -65,6 +65,7 @@ public class DoorStateData
     public bool isOpen;        // Is the door currently open?
     public float lastOpenDirection;
     public float currentYRotation;
+    public bool hasOpenedOnce;
 }
 
 /// <summary>

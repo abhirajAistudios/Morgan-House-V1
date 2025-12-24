@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a1a6e62d8a7dfa449da340db22c6bed, type: 3}
+  m_Name: FinalReachObjective
+  m_EditorClassIdentifier: 
+  objectiveName: Final Objective
+  dialogDisplay: Reach The Point
+  objective: 0
+  objectiveType: 0
+  objectiveState: 1
+  objectiveStatus: 0
+  hasUnlockables: 0
+  parentObjective: {fileID: 0}
+  unlockingObjective: {fileID: 0}
+  ChildObjectives: []
+  UnlockOnComplete: []
+  TargetPosition: {fileID: 3847894129247716065, guid: 39c1abbaf9b8c4b489ce6a64bdbf869f, type: 3}
+  Threshold: 3

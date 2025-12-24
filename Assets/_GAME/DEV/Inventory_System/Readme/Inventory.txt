@@ -1,0 +1,69 @@
+﻿📄 README: Interactable + Door System Integration Guide
+========================================================
+
+This guide explains how to integrate the Interactable Item Pickup System and Door System 
+in your Unity project.
+
+⚙ REQUIREMENTS
+--------------
+- LeanTween plugin (for animations)
+- Player must have Tag = "Player"
+
+========================================================
+
+🎒 INTERACTABLE ITEM PICKUP SYSTEM
+----------------------------------
+
+🧩 Scripts Used:
+- Interactable.cs          → Attached to world item pickups (e.g., Battery, Fuse, Key)
+- InventoryManager.cs      → Singleton to manage item collection and usage
+- InventoryItem.cs         → Holds item reference and quantity
+- ItemObject.cs            → ScriptableObject for item data (name, icon, type)
+- InventoryUI.cs           → Controls inventory UI and item display
+
+🛠 Scene Setup:
+
+1. Create ScriptableObject:
+   - Right-click in Project window → Create → ItemObject
+   - Set: Name = "Key", Type = Key, Add Icon
+
+2. Setup World Item:
+   - Create a Cube (or model) → Add Collider (Is Trigger ✅)
+   - Attach `Interactable.cs`
+   - Drag the corresponding `ItemObject` into the `itemObject` field
+   - Tag the item as `Untagged` (or "Item" if used for filtering)
+
+3. InventoryManager:
+   - Create an empty GameObject called "InventorySystem"
+   - Attach `InventoryManager.cs`
+   - This auto-registers on start
+
+4. Inventory UI:
+   - Create a Canvas → Add Inventory Panel
+   - Add an `InventoryUI.cs` script to the panel
+   - Assign:
+     - `ItemSlotPrefab` (your slot UI prefab)
+     - `ItemListParent` (a Horizontal/Vertical Layout Group)
+
+5. Input:
+   - Press `E` to pick up items
+   - Press `I` to toggle inventory
+   - Press `U` to test using the first item (for debug)
+
+🎯 Integration Point — Call Custom Function on Pickup:
+------------------------------------------------------
+Inside `InventoryManager.cs`, in `AddItem()` method:
+
+```csharp
+public void AddItem(ItemObject itemObject)
+{
+    // ... existing add logic ...
+    
+    Debug.Log($"Picked up: {itemObject.itemName}");
+
+    // ✅ CALL YOUR FUNCTION HERE
+    // Example:
+    // PuzzleManager.Instance.OnItemCollected(itemObject.itemName);
+    
+    onInventoryChangedCallback?.Invoke();
+}

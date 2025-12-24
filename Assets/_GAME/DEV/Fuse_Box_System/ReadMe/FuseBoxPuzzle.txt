@@ -1,0 +1,102 @@
+#  FuseBox Puzzle System – README
+
+##  Required Scripts
+- FuseBoxPuzzle.cs 
+- InventoryManager.cs  (already exists in your system)
+- ItemObject.cs  (used to define the Fuse item)
+---
+
+##  Goal
+Player needs to insert 3 fuses from their inventory into a FuseBox.
+- The fuse slots are hidden by default.
+- When the player is near and presses **E**, if they have a fuse:
+  - The current slot becomes visible with animation.
+  - One fuse is consumed from inventory.
+- After all 3 slots are filled, the main fuse box changes color (puzzle complete).
+- You can trigger further events (like door opening) in `PuzzleCompleted()`.
+
+---
+
+##  Script: FuseBoxPuzzle.cs
+Attach this script to the **FuseBox parent GameObject** in your scene.
+
+###  Inspector Setup
+| Field                 | Assign This                                  |
+|----------------------|-----------------------------------------------|
+| `Fuse Slots`         | 3 GameObjects (slot placeholders, disabled by default) |
+| `Main Fuse Renderer` | MeshRenderer of fuse box for color feedback   |
+| `Required Item Name` | Match the name of your Fuse item (e.g. "Fuse") |
+
+---
+
+## 🧩 Fuse Insertion Logic
+
+1.  All slots are disabled at start.
+2.  Player enters trigger → `isPlayerNear = true`.
+3.  If player presses `E`:
+   - Check inventory for "Fuse".
+   - If available:
+     - Consume 1 fuse.
+     - Reveal the next hidden slot using LeanTween.
+     - `fusesInserted++`.
+4.  After 3 insertions:
+   - `PuzzleCompleted()` is called.
+   - Main fuse material color turns green.
+   - You can call your event here (e.g., open door).
+
+---
+
+##  Inputs
+| Key | Function            |
+|-----|---------------------|
+| `E` | Insert a fuse if near the fuse box |
+
+---
+
+## 🎥 Visual/Animation
+LeanTween is used for pop-in animation when slot appears:
+```csharp
+currentSlot.transform.localScale = Vector3.zero;
+LeanTween.scale(currentSlot, Vector3.one, 0.4f).setEaseOutBack();
+```
+
+---
+
+##  Inventory Dependency
+Your inventory system must:
+- Include an item named `"Fuse"` (`ItemObject`)
+- Support `AddItem()` and `UseItem()` logic in `InventoryManager.cs`
+
+---
+
+##  Notes for Designer Integration
+
+- Make sure the 3 fuse slot GameObjects are **disabled** in the Hierarchy by default.
+- Tag your player as **"Player"**
+- The FuseBox should have a **Collider** with `isTrigger = true`.
+- Color feedback is handled via a Renderer material (`mainFuseRenderer`)
+- You can customize the puzzle complete effect in the `PuzzleCompleted()` method.
+- Supports easy expansion to more than 3 fuses – just increase `fuseSlots[]`.
+
+---
+
+##  Checklist Before Running
+- [ ] FuseBox GameObject has `FuseBoxPuzzle.cs`
+- [ ] Slots are assigned in Inspector and disabled by default
+- [ ] Player has Fuse item in inventory (named exactly "Fuse")
+- [ ] LeanTween is imported
+- [ ] `InventoryManager.Instance` exists in scene
+- [ ] Player is tagged "Player" and has a Collider
+
+---
+
+## 🔧 To Trigger External Event on Completion
+Inside `PuzzleCompleted()` method, add your logic:
+```csharp
+GetComponent<Door>().Unlock(); // example
+GameEvents.OnPuzzleComplete?.Invoke(); // optional
+```
+
+---
+
+Let me know if you need the same format for the Door system, Key puzzle, or interaction UI too!

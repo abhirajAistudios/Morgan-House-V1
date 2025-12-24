@@ -1,0 +1,105 @@
+For the lockpick to open the lockpick is set to 90 degree of rotation as it is perpendicular its attached to the innerlock child# 🔐 Lockpick System Setup (Unity)
+
+This setup allows the player to unlock a **jammed door** by solving a **lockpick minigame** through a camera switch. The door unlocks when the lockpick is rotated to the correct angle (90 degrees). It uses `Additive Scene Loading`, a `PuzzleViewSwitcher`, and an inventory system to consume a Lockpick item.
+
+---
+
+## 🔧 Hierarchy Setup
+
+### 🔲 Main Scene (`GameScene`)
+- `Door`  
+  └── `DoorInteraction` (script to check unlock state)
+- `Player`  
+  └── `PlayerController`  
+- `Cameras`  
+  ├── `MainCamera`  
+  └── `PuzzleCamera` (disabled by default)
+- `PuzzleViewSwitcher` (script to switch between cameras/UI)
+
+### 🔲 Lockpick Scene (`LockpickScene`)
+- `Canvas`
+  └── `LockPickUI`
+- `LockPickSystem`  
+  ├── `InnerLock` (rotates at random correct angle)  
+  └── `PickObject` (rotatable image or mesh)  
+- `LockPickScript` (attached to root object managing rotation + logic)
+
+---
+
+## 🎮 Flow Summary
+
+1. Player interacts with a **jammed door** (`DoorManager`).
+2. Checks inventory for **Lockpick item**.
+3. If found:
+   - Deducts the Lockpick.
+   - Loads the Lockpick minigame using `SceneManager.LoadScene("LockpickScene", LoadSceneMode.Additive);`
+   - Switches camera using `PuzzleViewSwitcher.EnterPuzzleView();`
+4. In Lockpick game:
+   - Rotating the lockpick to the **correct angle** (90°) unlocks the door.
+   - If incorrect, displays "Incorrect lock position".
+   - On success, exits puzzle view using `ExitPuzzleView()` and calls back to `DoorManager` to open the door.
+5. The door will **no longer be jammed**, and will open.
+
+---
+
+## 🧩 Scripts Involved
+
+### ✅ LockPick.cs
+- Handles lock rotation, success detection.
+- Rotates the pick based on mouse drag.
+- Triggers door unlock when angle ≈ 90°.
+
+### ✅ LockpickViewSwitcher.cs
+- Switches between gameplay and puzzle UI/cameras.
+- Disables player controller during puzzle.
+- Shows UI for LockPick game.
+
+### ✅ DoorManager.cs
+- Handles interaction with the jammed door.
+- Checks for Lockpick in inventory.
+- Initiates the puzzle on interaction.
+- Unlocks the door after successful minigame.
+
+---
+
+## 📦 Inventory System
+
+- Lockpick is an item in `InventoryManager.Instance.itemSlots`.
+- When door is interacted with:
+```csharp
+for (int i = 0; i < InventoryManager.Instance.itemSlots.Length; i++)
+{
+    InventoryItem item = InventoryManager.Instance.itemSlots[i];
+    if (item != null && item.itemData.itemName == "Lockpick")
+    {
+        Debug.Log("Lockpic Deducted");
+        InventoryManager.Instance.UseItem(item.itemData);
+        break;
+    }
+}
+```
+
+Make sure the item name is exactly **"Lockpick"** in your `ItemData`.
+
+---
+
+## 🎥 Important Notes
+
+- The correct unlock angle is set randomly (e.g., 90°) in the LockPick script and must match player rotation.
+- `InnerLock` should be a child transform inside the lock prefab and rotate toward target angle.
+- The Puzzle Camera should be **disabled by default** and only enabled during minigame.
+- Cursor is unlocked during puzzle mode and locked again when exiting.
+
+---
+
+## ✅ Checklist
+
+- [x] Dragged `LockpickViewSwitcher` to scene
+- [x] Connected `MainCamera`, `PuzzleCamera`, `PlayerController`, and `PuzzleUI`
+- [x] Attached `LockPick.cs` in the Lockpick scene
+- [x] Connected `InnerLock`, `PickObject`, `TextMeshProUGUI` for status
+- [x] Door prefab has `DoorManager` that controls the lock logic
+- [x] Lockpick item added to Inventory
+
+
+--- prefab in the child prefab when i open the jammed door it goes to the other camera whre the lockpick game is .It will open at a random angle
